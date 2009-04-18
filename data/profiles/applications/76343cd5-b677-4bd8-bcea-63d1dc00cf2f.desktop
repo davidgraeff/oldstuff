@@ -1,0 +1,219 @@
+[Desktop Entry]
+Version=1.0
+X-Version=1.0
+Encoding=UTF-8
+Type=LiriApplicationProfile
+Authors=David Gräff <david.graeff@cs.udo.edu>
+Name=Kuechenradio
+Comment=Control the Kuechenradio (no X required)
+Icon=alsaplayer
+
+[busservices]
+session://org.kuechenradio=autostart
+
+[group]
+Key=#1
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s 1
+
+[group]
+Key=#2
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s 2
+
+[group]
+Key=#3
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s 3
+
+[group]
+Key=#4
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s 4
+
+[group]
+Key=#5
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s 5
+
+[group]
+Key=#6
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s 6
+
+[group]
+Key=#7
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s 7
+
+[group]
+Key=#8
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s 8
+
+[group]
+Key=#9
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s 9
+
+[group]
+Key=#0
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s 0
+
+[group]
+Key=#UP
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s valentin
+
+[group]
+Key=#RIGHT
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s david
+
+[group]
+Key=#DOWN
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s waldemar
+
+[group]
+Key=#LEFT
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
+Arg=res in s peihua
+
+[group]
+Key=#VOL+
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio volume_relative
+Arg=relative in i 5
+
+[group]
+Key=#VOL-
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio volume_relative
+Arg=relative in i -5
+
+[group]
+Key=#MUTE
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio mute
+
+[group]
+Key=#STEP
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio pause
+
+[group]
+Key=#PLAY
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio play
+
+[group]
+Key=#PREVIOUS
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio previous
+
+[group]
+Key=#STOP
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio stop
+
+[group]
+Key=#NEXT
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio next
+
+[group]
+Key=pbc
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
+Arg=setState in b true
+Arg=id in u 0
+
+[group]
+Key=#MAINMENU
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
+Arg=setState in b true
+Arg=id in u 1
+
+[group]
+Key=title
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
+Arg=setState in b true
+Arg=id in u 2
+
+[group]
+Key=#SUBTITLE
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
+Arg=setState in b true
+Arg=id in u 3
+
+[group]
+Key=#ANGLE
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
+Arg=setState in b true
+Arg=id in u 4
+
+[group]
+Key=#AUDIOMENU
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
+Arg=setState in b true
+Arg=id in u 5
+
+[group]
+Key=zoom
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
+Arg=setState in b true
+Arg=id in u 6
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio resetallEffects

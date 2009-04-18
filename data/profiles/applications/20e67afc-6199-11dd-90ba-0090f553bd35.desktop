@@ -1,0 +1,178 @@
+[Desktop Entry]
+Version=1.0
+X-Version=1.0
+Encoding=UTF-8
+Type=LiriApplicationProfile
+Authors=David Gräff <david.graeff@cs.udo.edu>
+Name=Generic Media Player Interface
+Comment=Generic Media Player Interface (MPRIS)
+Icon=mediaplayer
+
+[busservices]
+session://org.mpris.=lazy
+
+[variables]
+VOLUME=i
+POSITION=i
+
+[group]
+Mode=music
+Key=#TOP
+
+[changebusinstance]
+Serviceid=0
+Mod=+
+
+[group]
+Mode=music
+Key=#DOWN
+
+[changebusinstance]
+Serviceid=0
+Mod=-
+
+[group]
+Mode=music
+Key=#OK
+
+[changebusinstance]
+Serviceid=0
+Mod=*
+
+[group]
+Mode=music
+Key=#VOL+
+Repeat=700 250
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer VolumeGet
+Arg=arg1 out i VOLUME
+
+[changevariable]
+Name=VOLUME
+Mod=@CHANGEVOLUME +
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer VolumeSet
+Arg=arg1 in i VOLUME
+
+[group]
+Mode=music
+Key=#RIGHT
+Repeat=700 250
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer VolumeGet
+Arg=arg1 out i VOLUME
+
+[changevariable]
+Name=VOLUME
+Mod=@CHANGEVOLUME +
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer VolumeSet
+Arg=arg1 in i VOLUME
+
+[group]
+Mode=music
+Key=#VOL-
+Repeat=700 250
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer VolumeGet
+Arg=arg1 out i VOLUME
+
+[changevariable]
+Name=VOLUME
+Mod=@CHANGEVOLUME -
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer VolumeSet
+Arg=arg1 in i VOLUME
+
+[group]
+Repeat=700 250
+Mode=music
+Key=#LEFT
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer VolumeGet
+Arg=arg1 out i VOLUME
+
+[changevariable]
+Name=VOLUME
+Mod=@CHANGEVOLUME -
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer VolumeSet
+Arg=arg1 in i VOLUME
+
+[group]
+Repeat=700 500
+Mode=music
+Key=#FORWARD
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer PositionGet
+Arg=arg1 out i POSITION
+
+[changevariable]
+Name=POSITION
+Mod=@CHANGE 5000
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer PositionSet
+Arg=arg1 in i POSITION
+
+[group]
+Repeat=700 500
+Mode=music
+Key=#REWIND
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer PositionGet
+Arg=arg1 out i POSITION
+
+[changevariable]
+Name=POSITION
+Mod=@CHANGE -5000
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer PositionSet
+Arg=arg1 in i POSITION
+
+[group]
+Mode=music
+Key=#PLAY
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer Play
+
+[group]
+Mode=music
+Key=#PAUSE
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer Pause
+
+[group]
+Mode=music
+Key=#STOP
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer Stop
+
+[group]
+Mode=music
+Key=#NEXT
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer Next
+
+[group]
+Mode=music
+Key=#PREVIOUS
+
+[bus]
+Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer Prev
+

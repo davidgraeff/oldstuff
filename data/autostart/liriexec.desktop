@@ -1,0 +1,10 @@
+
+[Desktop Entry]
+Type=Application
+Name=Liriexec
+Exec=/usr/bin/liriexec
+Icon=system-run
+Comment=
+Name[de_DE]=Liriexec
+Comment[de_DE]=Remote Controls - Execution Engine
+X-GNOME-Autostart-enabled=true

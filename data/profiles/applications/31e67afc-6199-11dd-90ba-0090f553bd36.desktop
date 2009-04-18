@@ -1,0 +1,24 @@
+[Desktop Entry]
+Version=1.0
+X-Version=1.0
+Encoding=UTF-8
+Type=LiriApplicationProfile
+Authors=David Gräff <david.graeff@cs.udo.edu>
+Name=Amarok
+Comment=Start/Quit the kde music player. Use MPRIS for controlling.
+Icon=amarok
+
+[group]
+Mode=music
+Key=#RED
+
+[program]
+Program=killall amarok
+
+[group]
+Mode=music
+Key=#GREEN
+
+[program]
+Program=/usr/bin/amarok
+

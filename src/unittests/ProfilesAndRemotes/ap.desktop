@@ -1,0 +1,249 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=LiriApplicationProfile
+Authors=David Gräff <david.graeff@cs.udo.edu>
+Name=Rhythmbox
+Comment=The gnome media player
+Icon=rhythmbox
+X-UID={5a90875b-43ec-4cfb-b5ad-3ebfb901da68}
+X-DBUS-service=org.gnome.Rhythmbox
+X-App-Desc=applications/rhythmbox.desktop
+
+[Action/music.#RED]
+Type=Program
+Program=/usr/bin/killrhythmbox
+Mode=music
+Key=#RED
+
+[Action/music.#GREEN]
+Type=Program
+Program=/usr/bin/rhythmbox
+Mode=music
+Key=#GREEN
+
+[Action/music.#MUTE]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=getMute
+BusArgument=mute out b $MUTE
+Mode=music
+Key=#MUTE
+
+[Successor/music.#MUTE]
+Type=ChangeVariable
+VariableName=$MUTE
+VariableValue=@INVERT
+
+[Successor/music.#MUTE]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=setMute
+BusArgument=mute in b $MUTE
+
+[Action/music.#VOL+]
+Type=SessionBus
+Repeat=700 250
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=getVolume
+BusArgument=volume out d $VOLUME
+Mode=music
+Key=#VOL+
+
+[Successor/music.#VOL+]
+Type=ChangeVariable
+VariableName=$VOLUME
+VariableValue=@CHANGEVOLUME +
+
+[Successor/music.#VOL+]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=setVolume
+BusArgument=volume in d $VOLUME
+
+[Action/music.#VOL-]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=getVolume
+BusArgument=volume out d $VOLUME
+Repeat=700 250
+Mode=music
+Key=#VOL-
+
+[Successor/music.#VOL-]
+Type=ChangeVariable
+VariableName=$VOLUME
+VariableValue=@CHANGEVOLUME -
+
+[Successor/music.#VOL-]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=setVolume
+BusArgument=volume in d $VOLUME
+
+[Action/music.#UP]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=getVolume
+BusArgument=volume out d $VOLUME
+Repeat=700 250
+Mode=music
+Key=#UP
+
+[Successor/music.#UP]
+Type=ChangeVariable
+VariableName=$VOLUME
+VariableValue=@CHANGEVOLUME +
+
+[Successor/music.#UP]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=setVolume
+BusArgument=volume in d $VOLUME
+
+[Action/music.#DOWN]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=getVolume
+BusArgument=volume out d $VOLUME
+Repeat=700 250
+Mode=music
+Key=#DOWN
+
+[Successor/music.#DOWN]
+Type=ChangeVariable
+VariableName=$VOLUME
+VariableValue=@CHANGEVOLUME -
+
+[Successor/music.#DOWN]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=setVolume
+BusArgument=volume in d $VOLUME
+
+[Action/music.#FORWARD]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=getElapsed
+BusArgument=elapsed out u $POSITION
+Repeat=700 500
+Mode=music
+Key=#FORWARD
+
+[Successor/music.#FORWARD]
+Type=ChangeVariable
+VariableName=$POSITION
+VariableValue=@CHANGE 10
+
+[Successor/music.#FORWARD]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=setElapsed
+BusArgument=elapsed in u $POSITION
+
+[Action/music.#REWIND]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=getElapsed
+BusArgument=elapsed out u $POSITION
+Repeat=700 500
+Mode=music
+Key=#REWIND
+
+[Successor/music.#REWIND]
+Type=ChangeVariable
+VariableName=$POSITION
+VariableValue=@CHANGE -10
+
+[Successor/music.#REWIND]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=setElapsed
+BusArgument=elapsed in u $POSITION
+
+[Action/music.#PLAY]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=getPlaying
+BusArgument=playing out b $PLAYING
+BusAutostart=true
+Mode=music
+Key=#PLAY
+
+[Successor/music.#PLAY]
+Type=ChangeVariable
+VariableName=$PLAYING
+VariableValue=@INVERT
+
+[Successor/music.#PLAY]
+Type=SessionBus
+Condition=$PLAYING
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=playPause
+BusArgument=arg0 in b 1
+
+[Action/music.#PAUSE]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=getPlaying
+BusArgument=playing out b $PLAYING
+Mode=music
+Key=#PAUSE
+
+[Successor/music.#PAUSE]
+Type=SessionBus
+Condition=$PLAYING
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=playPause
+BusArgument=arg0 in b 1
+
+[Action/music.#STOP]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=getPlaying
+BusArgument=playing out b $PLAYING
+Mode=music
+Key=#STOP
+
+[Successor/music.#STOP]
+Type=SessionBus
+Condition=$PLAYING
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=playPause
+BusArgument=arg0 in b 1
+
+[Action/music.#NEXT]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=next
+Mode=music
+Key=#NEXT
+
+[Action/music.#PREVIOUS]
+Type=SessionBus
+BusObject=/org/gnome/Rhythmbox/Player
+BusInterface=org.gnome.Rhythmbox.Player
+BusMethod=next
+Mode=music
+Key=#PREVIOUS

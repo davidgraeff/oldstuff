@@ -1,0 +1,226 @@
+Revision: 1.0 - Date: December, 12th 2008
+The application profile format bases on the desktop file format spec
+and some extensions. First the usual desktop spec header. An example:
+
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=LiriApplicationProfile
+Authors=Author Name <author.name@web.mail.address>, Second <author.second@web.mail.address>
+Name=The application name or another describing short text
+Comment=What works, what doesn't. Special circumstances etc.
+Comment[en]=Also allowed in different languages.
+Icon=application-icon
+
+Comments:
+---------
+Comments begin with ";" or "#". Although not forbidden you should avoid putting
+comments right at the start of the file. Read the desktop specification at
+http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#basic-format
+for further information.
+
+Dynamic Variables:
+------------------
+Instead of a static value as for instance a dbus-method-argument-value you may use
+dynamic variables. They are declared within the [variables] section and are bound
+to given types, optional with an initial value. Few ascii characters
+except line breaks and whitespaces are preferred and most efficient regarding the name.
+Dynamic variables are for example necessary if you want to read out the volume
+of your favourite media player, manipulate it and write the result back to the player via dbus.
+
+Example:
+[variables]
+VOLUME=i 0
+
+This defines a variable VOLUME as an integer with the initial value of 0. More
+types are described below and are taken from the dbus protocol specification.
+Should be one of the following: "d" (double), "u" (uint), "i" (int), "s" (string), "b" (bool).
+
+
+DBUS Services:
+--------------
+To use dbus for communicating with running programs you must first define all
+later used services. A few examples:
+
+[busservices]
+singleOne=system an.example.a_service single autostart
+multiExa1=session an.other.one- all
+multiExa2=session an.other.one- 1
+multiExa3=session an.other.one- all user
+
+A few words to the general structure of these instructions.
+All of your services have got a unique string (also called "Service ID" in the editor)
+that is used in your actions to refer to one of this bus services.
+Your destination service bus has to be on one of the dbus predefined busses ("session", "system").
+Your destination service must not contain whitespaces. You can get the busname of a service via
+for example qdbusviewer or the editor.
+
+singleOne: We want to control a single-instance program. The program has a dbus service file therefore
+we can use the keyword "autostart" to start a not-already-running program.
+
+multiExa1: We want to control all instances of a program. Each instance is registered to the session bus
+with the same substring "an.other.one-" and differ only in the last charachters.
+
+multiExa2: We want to control only the first instance of a program that is capable of running multiple
+instances.
+
+multiExa3: The user should be asked every time a new instance of the program appears.
+As long as the user does not answer or if no client is running to ask the user then this example
+works exactly the same as multiExa1.
+
+Read the next paragraph for further information regarding multiple target application instances.
+
+Definition: DBUS Service Instances
+----------------------------------
+Some applications are able to run several instances at the same time for
+example the kde document viewer okular. Each instance register
+at the dbus session bus with the pattern org.kde.okular-NUMBER
+where NUMBER is a unique number.
+Another example is the mpris specification for media players.
+Supporting players use service names such as org.mpris.PLAYERNAME
+where PLAYERNAME distinct between different players.
+If you want to control multiple service instances for example
+all org.mpris.ANYTHING instances you can do the following:
+
+[busservices]
+0=session org.mpris. 0
+
+Pay attention to the white space! As you can see 0 is defined as "all".
+If you want to control a specific instance, say the first one, replace the 0 with 1.
+Currently the order of instances is arbitrary. That may change in future releases.
+
+[busservices]
+0=org.mpris. 1
+
+If you deal with multiple instances you can also change the target instance at runtime. For
+example if you want to switch between your running mpris compliant video and
+music players.
+You can do this with the "ChangeServiceInstance"-Action.
+See also the description of "ChangeServiceInstance" below.
+
+Action group:
+-------------
+Actions are grouped by an action group. if you activate a group by pressing
+a key every action within that group is executed one after the other in the
+order they are written to the file. Well, how to define such a group?
+An example:
+
+[group]
+Mode=a_mode_name
+Key=a_key_name
+KeyState=down
+Repeat=300 100
+
+	Mode:
+	Optional! The mode of this action. It will only be triggered if the remote has changed to that mode before.
+	May not be specified (=triggered on all modes)
+
+	Key:
+	Mandatory! The keyname that is necessary to trigger this action.
+
+	KeyState:
+	Optional! The keystate to trigger this action. One of those: "down", "up", "downup" or not specified (=down).
+
+	Repeat:
+	Optional! First Argument is an initial time span in milliseconds before the execution engine
+	begin to repeat this action. A good value is around 700ms.
+	Second value is a time in millisecons between each repetition.
+	Good values are between 250 and 500ms.
+
+Actions:
+--------
+After you specified a group, every action following that definition belong to that group.
+Depending on the type you choose for an action the mandatory keys differ therefore
+you will find an example below for every type of action.
+
+Condition:
+Optional! Name a condition that should be evaluated before executing this action. See below!
+
+Action - [program]
+------------------
+Program:
+Mandatory! The absolute filepath and name of an executable and additional parameters.
+
+WorkingDirectory:
+Optional! The working directory for the executable. Default directory is the liriexec working dir (eg /usr/bin)
+
+WithUser:
+Optional! Execute the program as that user. Default one is the user that started the liri daemon.
+Only possible if started as root/administrator.
+
+Action - [changemode]
+---------------------
+NewMode:
+Mandatory! The new mode.
+
+Action - [changevariable]
+-------------------------
+Name:
+Mandatory! Variable name. Has to be defined above
+
+Mod:
+Mandatory! You can either name a variable that you defined in [variables] or
+use a modification plugin. If you name a variable the content will be copied,
+if you choose to take a modification plugin it depends on that plugin what
+will happen to your variable. Arguments for plugins are whitespace
+separated after the plugin name. An example with a variable:
+
+Name=VOLUME
+Mod=LOUDVOLUME
+
+This will copy the content of LOUDVOLUME to VOLUME. Now an example with a plugin:
+
+Name=VOLUME
+Mod=@CHANGEVOLUME -
+
+This will for example take the variable and call the function @CHANGEVOLUME on it with one
+argument "-". You may use one of the following predefined functions:
+(You can find them in src/liriexec/mod_plugins)
+@INVERT				Invert a boolean.
+@CHANGEVOLUME +		Increase the value. Non-linear change.
+@CHANGEVOLUME -		Decrease the value. Non-linear change.
+@CHANGE {integer}	{integer}: A number without brackets. Negatives are allowed, eg -10.
+
+Action - [changeServiceInstance]
+--------------------------------
+Serviceid: The number referring to the target bus service name defined in [busservices].
+Mod: +,-,0,1..n
+
+Actions - [bus]
+---------------
+Bus: BUS_SERVICE_NR BUS_OBJECT BUS_INTERFACE BUS_METHOD
+All values are mandatory!
+BUS_SERVICE_NR: Defined in the [busservices] section.
+BUS_OBJECT BUS_INTERFACE BUS_METHOD: See dbus documentation.
+
+Arg: ARGUMENT_NAME DIRECTION TYPE VALUE
+ARGUMENT_NAME: Argument name of the dbus method.
+DIRECTION: Either "out" or "in". "Out" is something you get from the target.
+TYPE: One of "d" (double), "u" (uint), "i" (int), "s" (string), "b" (bool).
+VALUE: Value of the dbus method. You may use variables defined in the [variables] section.
+
+Timeout:
+Timeout in ms for this operation. Optional!
+
+For the following example assume this:
+[busservices]
+0=system org.freedesktop.ConsoleKit
+
+The example:
+[bus]
+Bus=0 /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager Stop
+Timeout=1000
+
+Conditions:
+-----------
+3 Examples:
+$VALUE1 < $VALUE2
+$VALUE1 = $VALUE2
+$VALUE1 > $VALUE2
+
+Both sides have to be dynamic variables. If you want static values, please define
+dynamic variables in the [variables] section with an initial value.
+Be aware that the whitespaces are necessary!
+
+The engine will evaluate a condition and only trigger the action if the result is true.
+

@@ -1,0 +1,34 @@
+[Desktop Entry]
+Version=1.0
+X-Version=1.0
+Encoding=UTF-8
+Type=LiriApplicationProfile
+Authors=David Gräff <david.graeff@cs.udo.edu>
+Name=Okular
+Comment=Document Viewer
+Icon=okular
+
+[busservices]
+session://org.kde.okular-=lazy 0
+
+[group]
+Mode=photo
+Key=#UP
+
+[bus]
+Bus=session://org.kde.okular- /okular org.kde.okular slotPreviousPage
+
+[group]
+Mode=photo
+Key=#DOWN
+
+[bus]
+Bus=session://org.kde.okular- /okular org.kde.okular slotNextPage
+
+[group]
+Mode=photo
+Key=#FULLSCREEN
+
+[bus]
+Bus=session://org.kde.okular- /okular org.kde.okular slotTogglePresentation
+

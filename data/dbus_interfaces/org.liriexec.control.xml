@@ -1,0 +1,46 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+ "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+<interface name="org.liri.Control">
+	<method name="quit">
+	</method>
+	<method name="started">
+	<arg name="datetime" direction="out" type="s"/>
+	</method>
+	<method name="version">
+	<arg name="version" direction="out" type="s"/>
+	</method>
+
+	<method name="getTargets">
+	<arg name="targets" direction="out" type="as"/>
+	</method>
+	<method name="setTarget">
+	<arg name="targetid" direction="in" type="s"/>
+	<arg name="active" direction="in" type="b"/>
+	</method>
+
+	<signal name="targetChanged">
+	<arg name="state" type="i"/>
+	<arg name="targetid" type="s"/>
+	</signal>
+	<signal name="modeChanged">
+	<arg name="rid" type="i"/>
+	<arg name="oldmode" type="s"/>
+	<arg name="newmode" type="s"/>
+	</signal>
+	<signal name="executed">
+	<arg name="rid" type="i"/>
+	<arg name="result" type="i"/>
+	<arg name="executed" type="s"/>
+	</signal>
+	<signal name="deviceAddedExecution">
+	<arg name="rid" type="i"/>
+	</signal>
+	<signal name="deviceRemovedExecution">
+	<arg name="rid" type="i"/>
+	</signal>
+	<signal name="profilesLoaded">
+	<arg name="rid" type="i"/>
+	</signal>
+</interface>
+</node>

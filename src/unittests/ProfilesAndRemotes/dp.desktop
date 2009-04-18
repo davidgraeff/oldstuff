@@ -1,0 +1,18 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=LiriDesktopProfile
+Authors=David Gräff <david.graeff@cs.udo.edu>
+Name=Gnome
+Comment=The gnome desktop with common additional software like rhythmbox
+Comment[de_DE]=Der Gnome Desktop mit bekannter zusätzlicher Software wie etwa Rhythmbox
+X-UID={18972856-fc83-487b-8d62-a4c992035112}
+Icon=gnome-logo-icon
+
+[Uses]
+1={5a90875b-43ec-4cfb-b5ad-3ebfb901da68}
+2={5a26ecbf-5ada-4a2d-b427-cc031e13b1c5}
+3={c2e7f8e5-d620-45d0-95fe-505e4eebe2ab}
+
+[Controlled]
+1=ALL

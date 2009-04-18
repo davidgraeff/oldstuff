@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- -*- SGML -*- -->
+<!-- Infrared/Radio Remote Receivers - liri project - fdi -->
+<deviceinfo version="0.2">
+ <device>
+  <match key="info.subsystem" string="usb_device">
+   <match key="usb_device.vendor_id" int="1003">
+    <match key="usb_device.product_id" int="2">
+     <merge key="info.category" type="string">remotereceiver</merge>
+     <append key="info.capabilities" type="strlist">infrared</append>
+     <append key="info.capabilities" type="strlist">receiver</append>
+     <merge key="remotereceiver.protocoll" type="string">igorplug</merge>
+     <merge key="remotereceiver.driver" type="string">igorplug</merge>
+     <append key="info.callouts.add" type="strlist">liricallout</append>
+    </match>
+   </match>
+  </match>
+ </device>
+</deviceinfo>

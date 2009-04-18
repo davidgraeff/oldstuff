@@ -1,0 +1,46 @@
+[Desktop Entry]
+Version=1.0
+X-Version=1.0
+Encoding=UTF-8
+Type=LiriApplicationProfile
+Authors=David Gräff <david.graeff@cs.udo.edu>
+Name=Modes
+Comment=Common modes defined and connected to common keynames
+Icon=
+
+[group]
+Key=*TV
+
+[changemode]
+NewMode=tv
+
+[group]
+Key=*VCR
+
+[changemode]
+NewMode=vcr
+
+[group]
+Key=*DISC
+
+[changemode]
+NewMode=disc
+
+[group]
+Key=*MUSIC
+
+[changemode]
+NewMode=music
+
+[group]
+Key=*RADIO
+
+[changemode]
+NewMode=radio
+
+[group]
+Key=*PHOTO
+
+[changemode]
+NewMode=photo
+

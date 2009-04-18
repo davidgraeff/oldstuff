@@ -1,0 +1,23 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+ "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.liri.Device">
+    <method name="getVariables">
+      <arg name="vars" direction="out" type="as"/>
+    </method>
+    <method name="getProfileUids">
+      <arg name="vars" direction="out" type="as"/>
+    </method>
+
+    <method name="getMode">
+      <arg name="mode" direction="out" type="s"/>
+    </method>
+    <method name="setMode">
+      <arg name="mode" direction="in" type="s"/>
+    </method>
+
+    <method name="reload">
+    </method>
+
+  </interface>
+</node>

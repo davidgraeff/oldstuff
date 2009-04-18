@@ -1,0 +1,27 @@
+The settings are always stored in a std::map<std::string, std::string> to
+allow lowlevel (without qtcore) use in the drivers.
+
+--- Device ---
+remotereceiver.haludi  Example: usb_device_4fc_5d8_noserial_if
+remotereceiver.rid     Example: 1            (identifies a receiver during a session)
+remotereceiver.did     Example: ati.3015.6   (driver.usb_vendorid.usb_productid; to associate with remotes)
+remotereceiver.duid    Example: ati.3015.6.1 (driver.usb_vendorid.usb_productid.rid; to display a session-unique name)
+remotereceiver.timeout.init
+remotereceiver.timeout.keyrelease
+remotereceiver.timeout.listen
+remotereceiver.connected
+remotereceiver.disconnected
+--- Treiber ---
+remotereceiver.blocking
+remotereceiver.driver
+remotereceiver.version
+remotereceiver.protocoll
+--- Remote ---
+remote.uid
+remote.file
+-- USB --
+usb_device.vendor_id
+usb_device.product_id
+usb_device.configuration
+usb_device.interface
+usb_device.altsetting

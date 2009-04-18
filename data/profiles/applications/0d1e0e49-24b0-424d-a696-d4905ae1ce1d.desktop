@@ -1,0 +1,18 @@
+[Desktop Entry]
+Version=1.0
+X-Version=1.0
+Encoding=UTF-8
+Type=LiriApplicationProfile
+Authors=David Gräff <david.graeff@cs.udo.edu>
+Name=ConsoleKit
+Comment=For shutting down, rebooting, hibernating
+Icon=gnome-computer
+
+[busservices]
+system://org.freedesktop.ConsoleKit=
+
+[group]
+Key=#POWER
+
+[bus]
+Bus=system://org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager Stop

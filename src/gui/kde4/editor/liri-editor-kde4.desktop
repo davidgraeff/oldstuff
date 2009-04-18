@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Liri Editor
+Comment=Add and modify remotes and application/desktop profiles
+Icon=liri-editor
+Exec=/usr/bin/liri-edior-kde4
+Terminal=false
+Type=Application
+Categories=Qt;KDE;System;RemoteAccess;

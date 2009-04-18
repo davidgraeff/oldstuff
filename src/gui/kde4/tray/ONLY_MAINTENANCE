@@ -1,0 +1,14 @@
+Maintenance-only as of Jan 2009
+-------------------------------
+
+No further development for the kde4 tray icon, because the X11 Trayicon Specification
+seems to be really ugly and there are people from both of the bigger desktop environments (gnome,kde)
+that predict no future for that specification.
+
+Additionaly both environments have 'replacements' that are more powerful.
+
+
+Successors:
+For gnome2.22+: panel-applet
+For kde4.1+   : plasmoid
+Other desktops: not supported
