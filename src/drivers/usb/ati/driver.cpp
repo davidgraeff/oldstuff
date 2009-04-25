@@ -43,7 +43,7 @@ int Driver::init() {
 
 liri::KeyCode Driver::listen(int timeout) {
 	/* read from the device */
-	readed = usb_read_interrupt( &(char*)buffer, LIRI_KEYCODE_LENGTH, timeout );
+	readed = usb_read_interrupt( (char*)buffer, LIRI_KEYCODE_LENGTH, timeout );
 
 	if (readed < 0) { //igore timeouts
 		key.state = readed;
