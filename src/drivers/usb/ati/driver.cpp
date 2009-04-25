@@ -57,12 +57,10 @@ liri::KeyCode Driver::listen(int timeout) {
 		/* get channel */
 		key.channel = (buffer[3] >> 4) & 0x0F;
 
-		/* copy the two data bytes and erase first bit (togglebit) for each of them */
-		key.keycode[0] = buffer[1] & 0x7f;
+		/* copy the two data bytes and erase first bit (togglebit) for each of them
+		 * and also erase channel code that is encoded into the first 4 bits of the data byte */
+		key.keycode[0] = buffer[1] & 0x0f;
 		key.keycode[1] = buffer[2] & 0x7f;
-
-		/* erase channel code that is also encoded into the first data byte */
-		key.keycode[0] -= (key.channel<<4);
 
 		/* this receiver can only send one type of events: "Pressed" */
 		key.pressed = 1;
