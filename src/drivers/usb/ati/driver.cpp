@@ -9,6 +9,8 @@
 ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 ****************************************************************************/
 #include "driver.h"
+#include <QDebug>
+#include <QByteArray>
 
 Driver::Driver(DeviceSettings* settings) : liri::IDriverUSB(settings) {}
 char buffer[LIRI_KEYCODE_LENGTH];
@@ -48,21 +50,21 @@ liri::KeyCode Driver::listen(int timeout) {
 	if (readed < 0) { //igore timeouts
 		key.state = readed;
 		if (key.state == LIRIERR_timeout) key.state = 0;
-	} else if (readed != 4 || buffer[0] != 14) {
+	} else if (readed < 2 || buffer[0] != 20) {
 		/* ignore init bits and code without correct header */
-		key.state = 0;
+		key.state = -1;
 	} else {
 		/* get channel */
 		key.channel = (buffer[3] >> 4) & 0x0F;
 
-		/* copy two data bytes and erase first bit (togglebit) for each of them */
+		/* copy the two data bytes and erase first bit (togglebit) for each of them */
 		key.keycode[0] = buffer[1] & 0x7f;
 		key.keycode[1] = buffer[2] & 0x7f;
 
 		/* erase channel code that is also encoded into the first data byte */
 		key.keycode[0] -= (key.channel<<4);
 
-		/* this receiver can only send pressed events */
+		/* this receiver can only send one type of events: "Pressed" */
 		key.pressed = 1;
 
 		/* valid */

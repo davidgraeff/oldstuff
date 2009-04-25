@@ -46,10 +46,10 @@ void DeviceListenThread::run() {
 		timeoutListen = di->deviceSettings()->get( QLatin1String("remotereceiver.timeout.listen") ).toInt();
 	if (timeoutListen < LIRI_DRIVERLISTEN_TIMEOUT) timeoutListen = LIRI_DRIVERLISTEN_TIMEOUT;
 
-	// minimum 50ms for the key release event timeout
+	// minimum 100ms for the key release event timeout
 	if (di->deviceSettings()->has(QLatin1String("remotereceiver.timeout.keyrelease")))
 		timeoutKeyRelease = di->deviceSettings()->get( QLatin1String("remotereceiver.timeout.keyrelease") ).toInt();
-	if (timeoutKeyRelease < 50) timeoutKeyRelease = 50;
+	if (timeoutKeyRelease < 100) timeoutKeyRelease = 100;
 
 	/* init device */
 	DeviceInitThread* initThread = new DeviceInitThread(di);
@@ -151,6 +151,7 @@ void DeviceListenThread::listen() {
 
 		/* Abort Conditions */
 		if (rState == LIRI_DEVICE_CANCEL) break;
+		if (key.state==-1) continue;
 		if (key.state < 0) {
 			rState = key.state;
 			break;
