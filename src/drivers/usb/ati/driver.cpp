@@ -11,6 +11,7 @@
 #include "driver.h"
 
 Driver::Driver(DeviceSettings* settings) : liri::IDriverUSB(settings) {}
+char buffer[LIRI_KEYCODE_LENGTH];
 
 int Driver::init() {
 	/* init base class */
@@ -33,31 +34,33 @@ int Driver::init() {
 	res = usb_write_interrupt(&init2[0], sizeof(init2));
 	if (res) return res;
 
+	key.keycodeLen = 2;
+	/* set keycode bytes to zeros */
+	memset(key.keycode, 0, sizeof(key.keycode));
+
 	return LIRI_DEVICE_RUNNING;
 }
 
 liri::KeyCode Driver::listen(int timeout) {
 	/* read from the device */
-	readed = usb_read_interrupt( &(key.keycode)[0], sizeof(key.keycode), timeout );
+	readed = usb_read_interrupt( &buffer, LIRI_KEYCODE_LENGTH, timeout );
 
 	if (readed < 0) { //igore timeouts
 		key.state = readed;
 		if (key.state == LIRIERR_timeout) key.state = 0;
-	} else if (readed < 2)
-		/* ignore init bits */
+	} else if (readed != 4 || buffer[0] != 14) {
+		/* ignore init bits and code without correct header */
 		key.state = 0;
-	else {
-		/* length */
-		key.keycodeLen = readed;
+	} else {
 		/* get channel */
-		key.channel = (key.keycode[key.keycodeLen - 1] >> 4) & 0x0F;
+		key.channel = (buffer[3] >> 4) & 0x0F;
 
-		/* pad the code with zeros (if shorter than sizeof(key.keycode)) */
-		memset(key.keycode + key.keycodeLen, 0, sizeof(key.keycode) - key.keycodeLen);
+		/* copy two data bytes and erase first bit (togglebit) for each of them */
+		key.keycode[0] = buffer[1] & 0x7f;
+		key.keycode[1] = buffer[2] & 0x7f;
 
-		/* erase the channel code */
-		key.keycode[key.keycodeLen - 1] &= 0x0F;
-		//buf[bytes_r - 3] -= (chan<<4);
+		/* erase channel code that is also encoded into the first data byte */
+		key.keycode[0] -= (key.channel<<4);
 
 		/* this receiver can only send pressed events */
 		key.pressed = 1;
