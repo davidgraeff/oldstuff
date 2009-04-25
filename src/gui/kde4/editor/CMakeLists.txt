@@ -3,12 +3,13 @@ SET (SRCS
 ${FILEFORMAT_SRC} ${PROFILES_SRC} ${REMOTES_SRC} ${BUSINTERCONNECTION_SRC}
 AP_Model.cpp DP_Model.cpp Remotes_Model.cpp
 main.cpp
-editAppProfile/editAppProfile.cpp editAppProfile/Variables_Model.cpp
-editAppProfile/Busservices_Model.cpp
+editAppProfile/editAppProfile.cpp
 editDesktopProfile/editDesktopProfile.cpp editRemote/editRemote.cpp
 editRemote/Settings_Model.cpp editRemote/Keys_Model.cpp editRemote/Receivers_Model.cpp
 mainwindow.cpp
 )
+#editAppProfile/Variables_Model.cpp
+#editAppProfile/Busservices_Model.cpp
 
 include_directories( ${KDE4_INCLUDES})
 

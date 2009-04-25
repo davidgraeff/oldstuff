@@ -4,8 +4,8 @@ SET (BUILDGUI "${BUILDGUI}KDE4 " CACHE INTERNAL "" FORCE)
 
 include_directories( . )
 
-set(KDE_MIN_VERSION "4.1.85")
-find_package(KDE4 "4.1.85" REQUIRED)
+set(KDE_MIN_VERSION "4.2.0")
+find_package(KDE4 "4.2.0" REQUIRED)
 include (KDE4Defaults)
 
 add_subdirectory(tray)

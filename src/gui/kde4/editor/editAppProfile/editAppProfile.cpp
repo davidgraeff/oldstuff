@@ -19,8 +19,8 @@ EditAppProfileDialog::EditAppProfileDialog(ApplicationProfileFile* file, QWidget
 
 	lblStatus->setText(QLatin1String("Ready"));
 
-	viewVariables->setModel  (new Variables_Model(file, this));
-	viewBusservices->setModel(new Busservices_Model(file, this));
+	//viewVariables->setModel  (new Variables_Model(file, this));
+	//viewBusservices->setModel(new Busservices_Model(file, this));
 }
 
 
