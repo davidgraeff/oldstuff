@@ -9,38 +9,43 @@ Comment=Common modes defined and connected to common keynames
 Icon=
 
 [group]
+Channel=1
 Key=*TV
 
 [changemode]
 NewMode=tv
 
 [group]
-Key=*VCR
+Channel=1
+Key=*RECTV
 
 [changemode]
-NewMode=vcr
+NewMode=rectv
 
 [group]
+Channel=1
 Key=*DISC
 
 [changemode]
 NewMode=disc
 
 [group]
+Channel=1
 Key=*MUSIC
 
 [changemode]
 NewMode=music
 
 [group]
-Key=*RADIO
+Channel=1
+Key=*VIDEO
 
 [changemode]
-NewMode=radio
+NewMode=video
 
 [group]
+Channel=1
 Key=*PHOTO
 
 [changemode]
 NewMode=photo
-

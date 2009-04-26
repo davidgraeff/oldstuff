@@ -16,6 +16,7 @@ VOLUME=i
 POSITION=i
 
 [group]
+Channel=1
 Mode=music
 Key=#TOP
 
@@ -24,6 +25,7 @@ Serviceid=0
 Mod=+
 
 [group]
+Channel=1
 Mode=music
 Key=#DOWN
 
@@ -32,6 +34,7 @@ Serviceid=0
 Mod=-
 
 [group]
+Channel=1
 Mode=music
 Key=#OK
 
@@ -40,6 +43,7 @@ Serviceid=0
 Mod=*
 
 [group]
+Channel=1
 Mode=music
 Key=#VOL+
 Repeat=700 250
@@ -57,6 +61,7 @@ Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer VolumeSet
 Arg=arg1 in i VOLUME
 
 [group]
+Channel=1
 Mode=music
 Key=#RIGHT
 Repeat=700 250
@@ -74,6 +79,7 @@ Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer VolumeSet
 Arg=arg1 in i VOLUME
 
 [group]
+Channel=1
 Mode=music
 Key=#VOL-
 Repeat=700 250
@@ -142,6 +148,7 @@ Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer PositionSet
 Arg=arg1 in i POSITION
 
 [group]
+Channel=1
 Mode=music
 Key=#PLAY
 
@@ -149,6 +156,7 @@ Key=#PLAY
 Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer Play
 
 [group]
+Channel=1
 Mode=music
 Key=#PAUSE
 
@@ -156,6 +164,7 @@ Key=#PAUSE
 Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer Pause
 
 [group]
+Channel=1
 Mode=music
 Key=#STOP
 
@@ -163,6 +172,7 @@ Key=#STOP
 Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer Stop
 
 [group]
+Channel=1
 Mode=music
 Key=#NEXT
 
@@ -170,6 +180,7 @@ Key=#NEXT
 Bus=session://org.mpris. /Player org.freedesktop.MediaPlayer Next
 
 [group]
+Channel=1
 Mode=music
 Key=#PREVIOUS
 

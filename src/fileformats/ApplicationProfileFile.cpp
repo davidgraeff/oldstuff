@@ -91,6 +91,15 @@ bool ApplicationProfileFile::save_private(QFile& inifile) {
 		// actiongroups
 		for (int i=0; i < size(); ++i) {
 			inifile.write("[group]\n");
+			//FIXME channels
+			if (at(i)->channels.size()) {
+				QString a;
+				foreach(unsigned int i, at(i)->channels) {
+					a.append(QString::number(i));
+					a.append(QLatin1Char(' '));
+				}
+				inifile.write("Channel=" + a.toUtf8() + "\n");
+			}
 			if (at(i)->mode.size())
 				inifile.write("Mode=" + at(i)->mode.toUtf8() + "\n");
 			if (at(i)->key.size())
@@ -210,6 +219,11 @@ bool ApplicationProfileFile::readline(const QString& group, const QString& key, 
 		if (tmp.size() > 0) variables.append(tmpvar);
 	}
 	else if (group == QLatin1String("group") && lastActionGroup) {
+		if (k == "Channel") {
+			lastActionGroup->channels.clear();
+			QList<QString> l = value.trimmed().split(QLatin1Char(' '));
+			foreach (QString s, l) lastActionGroup->channels.insert(s.toUInt());
+			return true; }
 		if (k == "Mode") { lastActionGroup->mode = value; return true; }
 		if (k == "Key") { lastActionGroup->key = value; return true; }
 		if (k == "KeyState") { lastActionGroup->keystate = value.toInt(); return true; }

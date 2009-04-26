@@ -12,6 +12,8 @@ Icon=gnome-computer
 system://org.freedesktop.ConsoleKit=
 
 [group]
+Channel=1
+Mode=photo
 Key=#POWER
 
 [bus]

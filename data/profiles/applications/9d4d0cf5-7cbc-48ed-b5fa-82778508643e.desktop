@@ -12,6 +12,7 @@ Icon=gnome-computer
 session://org.gnome.ScreenSaver=
 
 [group]
+Channel=2
 Key=#SETUP
 
 [bus]

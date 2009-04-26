@@ -106,7 +106,6 @@ void DeviceInstance::remoteStateChanged(int state) {
 
 void DeviceInstance::key(const QString &keycode, const QString &keyname, uint channel, int pressed) {
 	Q_UNUSED(keycode);
-	Q_UNUSED(channel);
 
 	if (!keyname.size()) return;
 
@@ -119,6 +118,9 @@ void DeviceInstance::key(const QString &keycode, const QString &keyname, uint ch
 		if (it == actions.end()) return;
 	}
 	ActionGroup* actiongroup = it.value();
+
+	/* only trigger if channel is fitting (if any) */
+	if (actiongroup->channels.size() && !actiongroup->channels.contains(channel)) return;
 
 	devicelist->stopJobs();
 	if (actiongroup && actiongroup->keystate == pressed) {

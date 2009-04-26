@@ -12,6 +12,7 @@ Icon=okular
 session://org.kde.okular-=lazy 0
 
 [group]
+Channel=1
 Mode=photo
 Key=#UP
 
@@ -19,6 +20,7 @@ Key=#UP
 Bus=session://org.kde.okular- /okular org.kde.okular slotPreviousPage
 
 [group]
+Channel=1
 Mode=photo
 Key=#DOWN
 
@@ -26,6 +28,7 @@ Key=#DOWN
 Bus=session://org.kde.okular- /okular org.kde.okular slotNextPage
 
 [group]
+Channel=1
 Mode=photo
 Key=#FULLSCREEN
 

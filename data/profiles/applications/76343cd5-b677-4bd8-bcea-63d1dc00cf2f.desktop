@@ -12,6 +12,7 @@ Icon=alsaplayer
 session://org.kuechenradio=autostart
 
 [group]
+Channel=2
 Key=#1
 
 [bus]
@@ -19,6 +20,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s 1
 
 [group]
+Channel=2
 Key=#2
 
 [bus]
@@ -26,6 +28,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s 2
 
 [group]
+Channel=2
 Key=#3
 
 [bus]
@@ -33,6 +36,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s 3
 
 [group]
+Channel=2
 Key=#4
 
 [bus]
@@ -40,6 +44,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s 4
 
 [group]
+Channel=2
 Key=#5
 
 [bus]
@@ -47,6 +52,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s 5
 
 [group]
+Channel=2
 Key=#6
 
 [bus]
@@ -54,6 +60,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s 6
 
 [group]
+Channel=2
 Key=#7
 
 [bus]
@@ -61,6 +68,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s 7
 
 [group]
+Channel=2
 Key=#8
 
 [bus]
@@ -68,6 +76,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s 8
 
 [group]
+Channel=2
 Key=#9
 
 [bus]
@@ -75,6 +84,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s 9
 
 [group]
+Channel=2
 Key=#0
 
 [bus]
@@ -82,6 +92,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s 0
 
 [group]
+Channel=2
 Key=#UP
 
 [bus]
@@ -89,6 +100,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s valentin
 
 [group]
+Channel=2
 Key=#RIGHT
 
 [bus]
@@ -96,6 +108,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s david
 
 [group]
+Channel=2
 Key=#DOWN
 
 [bus]
@@ -103,6 +116,7 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s waldemar
 
 [group]
+Channel=2
 Key=#LEFT
 
 [bus]
@@ -110,57 +124,68 @@ Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
 Arg=res in s peihua
 
 [group]
+Channel=2
 Key=#VOL+
+Repeat=700 250
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio volume_relative
 Arg=relative in i 5
 
 [group]
+Channel=2
 Key=#VOL-
+Repeat=700 250
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio volume_relative
 Arg=relative in i -5
 
 [group]
+Channel=2
 Key=#MUTE
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio mute
 
 [group]
-Key=#STEP
+Channel=2
+Key=#PAUSE
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio pause
 
 [group]
+Channel=2
 Key=#PLAY
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio play
 
 [group]
+Channel=2
 Key=#PREVIOUS
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio previous
 
 [group]
+Channel=2
 Key=#STOP
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio stop
 
 [group]
+Channel=2
 Key=#NEXT
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio next
 
 [group]
-Key=pbc
+Channel=2
+Key=#RED
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
@@ -168,7 +193,8 @@ Arg=setState in b true
 Arg=id in u 0
 
 [group]
-Key=#MAINMENU
+Channel=2
+Key=#GREEN
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
@@ -176,7 +202,8 @@ Arg=setState in b true
 Arg=id in u 1
 
 [group]
-Key=title
+Channel=2
+Key=#YELLOW
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
@@ -184,7 +211,8 @@ Arg=setState in b true
 Arg=id in u 2
 
 [group]
-Key=#SUBTITLE
+Channel=2
+Key=#BLUE
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
@@ -192,7 +220,8 @@ Arg=setState in b true
 Arg=id in u 3
 
 [group]
-Key=#ANGLE
+Channel=2
+Key=#GUIDE
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
@@ -200,7 +229,8 @@ Arg=setState in b true
 Arg=id in u 4
 
 [group]
-Key=#AUDIOMENU
+Channel=2
+Key=#TEXT
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
@@ -208,12 +238,17 @@ Arg=setState in b true
 Arg=id in u 5
 
 [group]
-Key=zoom
+Channel=2
+Key=#INFO
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
 Arg=setState in b true
 Arg=id in u 6
+
+[group]
+Channel=2
+Key=#BACK
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio resetallEffects

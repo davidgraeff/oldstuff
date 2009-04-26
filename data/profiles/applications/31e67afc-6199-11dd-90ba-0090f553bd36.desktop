@@ -9,6 +9,7 @@ Comment=Start/Quit the kde music player. Use MPRIS for controlling.
 Icon=amarok
 
 [group]
+Channel=1
 Mode=music
 Key=#RED
 
@@ -16,6 +17,7 @@ Key=#RED
 Program=killall amarok
 
 [group]
+Channel=1
 Mode=music
 Key=#GREEN
 

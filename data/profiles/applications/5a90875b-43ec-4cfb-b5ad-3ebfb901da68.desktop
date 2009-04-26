@@ -20,6 +20,7 @@ TRUE=b true
 FALSE=b false
 
 [group]
+Channel=1
 Mode=music
 Key=#RED
 
@@ -27,6 +28,7 @@ Key=#RED
 Program=/usr/bin/killall /usr/bin/rhythmbox
 
 [group]
+Channel=1
 Mode=music
 Key=#GREEN
 
@@ -34,6 +36,7 @@ Key=#GREEN
 Program=/usr/bin/rhythmbox
 
 [group]
+Channel=1
 Mode=music
 Key=#MUTE
 
@@ -50,6 +53,7 @@ Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbo
 Arg=mute in b MUTE
 
 [group]
+Channel=1
 Mode=music
 Key=#VOL+
 Repeat=700 250
@@ -67,6 +71,7 @@ Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbo
 Arg=volume in d VOLUME
 
 [group]
+Channel=1
 Mode=music
 Key=#VOL-
 Repeat=700 250
@@ -84,6 +89,7 @@ Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbo
 Arg=volume in d VOLUME
 
 [group]
+Channel=1
 Mode=music
 Key=#UP
 Repeat=700 250
@@ -101,6 +107,7 @@ Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbo
 Arg=volume in d VOLUME
 
 [group]
+Channel=1
 Mode=music
 Key=#DOWN
 Repeat=700 250
@@ -118,6 +125,7 @@ Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbo
 Arg=volume in d VOLUME
 
 [group]
+Channel=1
 Mode=music
 Key=#FORWARD
 Repeat=700 500
@@ -135,6 +143,7 @@ Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbo
 Arg=elapsed in u POSITION
 
 [group]
+Channel=1
 Mode=music
 Key=#REWIND
 Repeat=700 500
@@ -152,6 +161,7 @@ Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbo
 Arg=elapsed in u POSITION
 
 [group]
+Channel=1
 Mode=music
 Key=#PLAY
 
@@ -165,6 +175,7 @@ Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbo
 Arg=arg0 in b 1
 
 [group]
+Channel=1
 Mode=music
 Key=#PAUSE
 
@@ -178,6 +189,7 @@ Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbo
 Arg=arg0 in b 1
 
 [group]
+Channel=1
 Mode=music
 Key=#STOP
 
@@ -191,6 +203,7 @@ Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbo
 Arg=arg0 in b 1
 
 [group]
+Channel=1
 Mode=music
 Key=#NEXT
 
@@ -198,6 +211,7 @@ Key=#NEXT
 Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player next
 
 [group]
+Channel=1
 Mode=music
 Key=#PREVIOUS
 

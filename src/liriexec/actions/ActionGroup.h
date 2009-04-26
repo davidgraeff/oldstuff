@@ -13,6 +13,7 @@
 
 #include <QString>
 #include <QList>
+#include <QSet>
 
 class Action;
 
@@ -23,12 +24,13 @@ public:
 public:
 	void setRepeat(const QString& value);
 	QString getRepeat();
-	
+
 	/* trigger conditions */
 	QString key;
 	QString mode;
+	QSet<unsigned int> channels;
 	int keystate;
-	
+
 	/* repeat action? */
 	bool repeat;
 	unsigned int repeatlag; //repeat with an initial lag time
