@@ -17,6 +17,7 @@
 #include <QList>
 #include <QVariant>
 #include <QStringList>
+#include "ActionTree.h"
 
 class QDBusConnection;
 class Action;
@@ -71,7 +72,7 @@ class DeviceInstance: public QObject {
 		QDBusConnection* conn;
 		QMap< QString, QVariant > vars;
 		QList<QVariant> staticvars;
-		QMap< QString, ActionGroup* > actions;
+		ActionTree actions;
 		QString currentmode;
 		DeviceList* devicelist;
 		BusConnection* busconnection;

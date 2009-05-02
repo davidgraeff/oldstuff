@@ -79,7 +79,6 @@ DeviceInstance::~DeviceInstance() {
 }
 
 void DeviceInstance::clear() {
-	qDeleteAll(actions);
 	actions.clear();
 	appProUids.clear();
 }
@@ -109,15 +108,8 @@ void DeviceInstance::key(const QString &keycode, const QString &keyname, uint ch
 
 	if (!keyname.size()) return;
 
-	QMap< QString, ActionGroup* >::iterator it;
-	/* search for key+currentmode */
-	it = actions.find(keyname+QChar(46)+currentmode);
-	if (it == actions.end()) {
-		/* search just for the key */
-		it = actions.find(keyname+QChar(46));
-		if (it == actions.end()) return;
-	}
-	ActionGroup* actiongroup = it.value();
+	ActionGroup* actiongroup = actions.get(channel, keyname, currentmode);
+	if (!actiongroup) return;
 
 	/* only trigger if channel is fitting (if any) */
 	if (actiongroup->channels.size() && !actiongroup->channels.contains(channel)) return;
@@ -253,22 +245,8 @@ inline void DeviceInstance::addApplicationProfileFile(ApplicationProfileFile* ap
 		}
 
 		// add actiongroup
-		QString key = actiongroup->key+QChar(46)+actiongroup->mode;
-		QMap< QString, ActionGroup* >::iterator it;
-		it = actions.find(key);
-
-		if (it == actions.end()) {
-			actions[key] = actiongroup;
-		} else {
-			qWarning() << "Merging groups with the same triggers:"
-				<< actiongroup->mode << actiongroup->key;
-			ActionGroup* existinggroup = it.value();
-			if (!existinggroup) return;
-			for (int i=0; i < actiongroup->size(); ++i) {
-				existinggroup->append(actiongroup->at(i));
-			}
-		}
-	}
+		actions.add(actiongroup);
+	} // for (int i=0; i < ap->size(); ++i)
 }
 
 inline void DeviceInstance::evalChangeMode(ActionChangeMode* action) {

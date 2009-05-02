@@ -3,6 +3,7 @@ PROJECT(LIRIEXECUTION)
 set (liriexecution_SRCS ${FILEFORMAT_SRC} ${PROFILES_SRC} ${REMOTES_SRC} ${BUSINTERCONNECTION_SRC}
 device/DeviceInstance_dbusif.cpp
 device/DeviceInstance.cpp
+device/ActionTree.cpp
 ExecutionJob.cpp
 Control_dbusif.cpp
 Control.cpp
