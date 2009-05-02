@@ -16,117 +16,113 @@ Channel=2
 Key=#1
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s 1
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio sequence
+Arg=res in u 1
 
 [group]
 Channel=2
 Key=#2
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s 2
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio sequence
+Arg=res in u 2
 
 [group]
 Channel=2
 Key=#3
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s 3
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio sequence
+Arg=res in u 3
 
 [group]
 Channel=2
 Key=#4
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s 4
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio sequence
+Arg=res in u 4
 
 [group]
 Channel=2
 Key=#5
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s 5
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio sequence
+Arg=res in u 5
 
 [group]
 Channel=2
 Key=#6
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s 6
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio sequence
+Arg=res in u 6
 
 [group]
 Channel=2
 Key=#7
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s 7
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio sequence
+Arg=res in u 7
 
 [group]
 Channel=2
 Key=#8
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s 8
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio sequence
+Arg=res in u 8
 
 [group]
 Channel=2
 Key=#9
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s 9
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio sequence
+Arg=res in u 9
 
 [group]
 Channel=2
 Key=#0
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s 0
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio sequence
+Arg=res in u 0
 
 [group]
 Channel=2
-Key=#UP
+Key=#OK
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s valentin
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio confirm
 
 [group]
 Channel=2
-Key=#RIGHT
+Key=#BACK
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s david
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio back
 
 [group]
 Channel=2
-Key=#DOWN
+Key=#INFO
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s waldemar
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio info
 
 [group]
 Channel=2
-Key=#LEFT
+Key=#TEXT
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio loaddir
-Arg=res in s peihua
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio text
 
 [group]
 Channel=2
 Key=#VOL+
-Repeat=700 250
+Repeat=500 100
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio volume_relative
@@ -135,7 +131,7 @@ Arg=relative in i 5
 [group]
 Channel=2
 Key=#VOL-
-Repeat=700 250
+Repeat=500 100
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio volume_relative
@@ -182,6 +178,22 @@ Key=#NEXT
 
 [bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio next
+
+[group]
+Channel=2
+Key=#REWIND
+Repeat=500 100
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio rewind
+
+[group]
+Channel=2
+Key=#FORWARD
+Repeat=500 100
+
+[bus]
+Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio forward
 
 [group]
 Channel=2

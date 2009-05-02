@@ -4,7 +4,8 @@ Encoding=UTF-8
 Type=LiriRemote
 Icon=
 Authors=David Gräff
-Name[de_DE]=X10-Type2
+Name=X10-Type2
+Comment=X10-Type2
 X-Version=1
 
 [Settings]
