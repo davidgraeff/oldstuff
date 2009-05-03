@@ -12,17 +12,17 @@ ActionTree::~ActionTree()
 
 ActionGroup* ActionTree::get(uint channel, const QString& key, const QString& mode)
 {
-	qDebug() << "ActionTree find:" << mode << key << channel;
+	//qDebug() << "ActionTree find:" << mode << key << channel;
 	// Find key
 	itKey itK = actions.find(key);
 	if (itK == actions.end()) return 0;
-	qDebug() << "KEY ok";
+	//qDebug() << "KEY ok";
 
 	// Find mode
 	itMode itM = itK->find(mode);
 	if (itM != itK->end())
 	{ // Try with specific mode
-		qDebug() << "SPECIFIC MODE ok";
+		//qDebug() << "SPECIFIC MODE ok";
 		// Find channel
 		itChannel itC = itM->find((int)channel);
 		if (itC == itM->end())
@@ -31,12 +31,12 @@ ActionGroup* ActionTree::get(uint channel, const QString& key, const QString& mo
 			itC = itM->find(-1);
 			if (itC != itM->end())
 			{
-				qDebug() << "COMMON CHANNEL ok";
+				//qDebug() << "COMMON CHANNEL ok";
 				return itC.value();
 			}
 		} else
 		{
-			qDebug() << "SPECIFIC CHANNEL ok";
+			//qDebug() << "SPECIFIC CHANNEL ok";
 			return itC.value();
 		}
 	}
@@ -45,7 +45,7 @@ ActionGroup* ActionTree::get(uint channel, const QString& key, const QString& mo
 		itM = itK->find(QLatin1String(" "));
 		if (itM == itK->end())
 			return 0;
-		qDebug() << "COMMON MODE ok";
+		//qDebug() << "COMMON MODE ok";
 
 		// Find channel
 		itChannel itC = itM->find((int)channel);
@@ -57,12 +57,12 @@ ActionGroup* ActionTree::get(uint channel, const QString& key, const QString& mo
 				return 0;
 			else
 			{
-				qDebug() << "COMMON CHANNEL ok";
+				//qDebug() << "COMMON CHANNEL ok";
 				return itC.value();
 			}
 		} else
 		{
-			qDebug() << "SPECIFIC CHANNEL ok";
+			//qDebug() << "SPECIFIC CHANNEL ok";
 			return itC.value();
 		}
 	}
