@@ -12,9 +12,11 @@ ActionTree::~ActionTree()
 
 ActionGroup* ActionTree::get(uint channel, const QString& key, const QString& mode)
 {
+	qDebug() << "ActionTree find:" << mode << key << channel;
 	// Find key
 	itKey itK = actions.find(key);
 	if (itK == actions.end()) return 0;
+	qDebug() << "KEY ok";
 
 	// Find mode
 	itMode itM = itK->find(mode);
@@ -25,6 +27,7 @@ ActionGroup* ActionTree::get(uint channel, const QString& key, const QString& mo
 		if (itM == itK->end())
 			return 0;
 	}
+	qDebug() << "MODE ok";
 
 	// Find channel
 	itChannel itC = itM->find((int)channel);
@@ -35,6 +38,7 @@ ActionGroup* ActionTree::get(uint channel, const QString& key, const QString& mo
 		if (itC == itM->end()) // this should never happen, actually
 			return 0;
 	}
+	qDebug() << "CHANNEL ok";
 
 	return itC.value();
 }
@@ -76,7 +80,7 @@ void ActionTree::add(ActionGroup* actiongroup)
 		}
 		else
 		{
-			qWarning() << "Ignore groups with the same triggers:" << actiongroup->mode << actiongroup->key;
+			qWarning() << "ActionTree same triggers (Mode/Key/Channels):" << actiongroup->mode << actiongroup->key << actiongroup->channels;
 		}
 	}
 }
