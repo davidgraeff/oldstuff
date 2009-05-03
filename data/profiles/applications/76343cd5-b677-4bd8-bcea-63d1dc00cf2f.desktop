@@ -236,31 +236,4 @@ Channel=2
 Key=#GUIDE
 
 [bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
-Arg=setState in b true
-Arg=id in u 4
-
-[group]
-Channel=2
-Key=#TEXT
-
-[bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
-Arg=setState in b true
-Arg=id in u 5
-
-[group]
-Channel=2
-Key=#INFO
-
-[bus]
-Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio effect
-Arg=setState in b true
-Arg=id in u 6
-
-[group]
-Channel=2
-Key=#BACK
-
-[bus]
 Bus=session://org.kuechenradio /Kuechenradio org.kuechenradio resetallEffects

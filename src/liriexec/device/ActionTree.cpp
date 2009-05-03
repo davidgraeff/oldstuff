@@ -12,35 +12,43 @@ ActionTree::~ActionTree()
 
 ActionGroup* ActionTree::get(uint channel, const QString& key, const QString& mode)
 {
-	qDebug() << "ActionTree find:" << mode << key << channel;
 	// Find key
 	itKey itK = actions.find(key);
 	if (itK == actions.end()) return 0;
-	qDebug() << "KEY ok";
 
 	// Find mode
 	itMode itM = itK->find(mode);
-	if (itM == itK->end())
-	{
-		// Try with empty mode
+	if (itM != itK->end())
+	{ // Try with specific mode
+		// Find channel
+		itChannel itC = itM->find((int)channel);
+		if (itC == itM->end())
+		{
+			// Try with wildspace channel
+			itC = itM->find(-1);
+			if (itC != itM->end())
+				return itC.value();
+		} else
+			return itC.value();
+	}
+
+	{ // Try with empty common mode
 		itM = itK->find(QLatin1String(" "));
 		if (itM == itK->end())
 			return 0;
-	}
-	qDebug() << "MODE ok";
 
-	// Find channel
-	itChannel itC = itM->find((int)channel);
-	if (itC == itM->end())
-	{
-		// Try with wildspace channel
-		itC = itM->find(-1);
-		if (itC == itM->end()) // this should never happen, actually
-			return 0;
-	}
-	qDebug() << "CHANNEL ok";
+		// Find channel
+		itChannel itC = itM->find((int)channel);
+		if (itC == itM->end())
+		{
+			// Try with wildspace channel
+			itC = itM->find(-1);
+			if (itC == itM->end()) // this should never happen, actually
+				return 0;
+		}
 
-	return itC.value();
+		return itC.value();
+	}
 }
 
 void ActionTree::clear()
