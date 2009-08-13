@@ -1,3 +1,6 @@
+BUGS:
+- Wenn device init fehgeschlagen ist, dann kann lirid nicht beendet werden
+
 TODO list version 1.0beta1
 
 1) liriexec crash free

@@ -16,7 +16,7 @@ INSTALL(FILES ${files} DESTINATION share/liri/remotes)
 FILE(GLOB files "images/*.png")
 INSTALL(FILES ${files} DESTINATION share/pixmaps)
 
-FILE(GLOB files "modprobe.d/*.blacklist")
+FILE(GLOB files "modprobe.d/*.conf")
 INSTALL(FILES ${files} DESTINATION /etc/modprobe.d)
 
 FILE(GLOB files "remote_load_profiles/*.loader")
