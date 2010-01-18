@@ -1,72 +1,70 @@
 Linux Remotes
 Preliminary codename: Liri - LInux Remote Infrastructure
-Disclaimer: This framework uses qt4core. If you do not like qt from nokia for
-whatever reason this set of applications is not for you.
+Disclaimer: Core parts of this framework are build with Qt4core.
+  GUI tools are build with Qt4Gui.
+Requirements: OS with libudev, libusb-1.0 and qt4 such as GNU/Linux >= 2.6.30
 
 Content:
 1) What is Liri?
 2) Building from source
-3) Howto use liri
-4) Why not helping lirc?
-5) Other OSs
+3) How does liri work?
+4) What about lirc?
 6) Folder structure
 7) How to write a driver?
 8) More information
 9) License
 
-If you want to help out with designing, developing or translating the tools,
-the website or documentation please drop me a mail (david.graeff@cs.udo.edu).
+If you want to help out with designing, developing, translating the graphical tools,
+working on a website or documentation please drop me a mail (david.graeff@cs.udo.edu).
 Be aware that this text may not be up to date. Consider using the website for
-the latest news and information.
-
-Because english is not my mother tongue you will probably notice a few (or more;)
-mistakes in this text. I would appreciate if you help me to sort them out :)
+latest news and information.
 
 Sincerely,
 david
 
-Jan 7th, 2009
+Jan 18th, 2010
 
 ####################################
 1) What is Liri?
 Technical summary:
-- Written in c++ with additional support via the qt4 framework.
-- Drivers are pure c++ though
-- Only linux supported (libudev for device discovery is not cross platform)
-- GUI Tools, developed with the kde development platform 4.
-- Uses dbus to control applications. No special support needed by target applications.
+- Written in c++/qt4.
+- Drivers are pure c++ though.
+- GUI administration, editing and monitoring tools (developed with the kde development platform 4).
+- Uses the session bus to control applications. No special support needed by target applications.
 Statistics:
 - About 200 source code files
 - About 30 data/media files
 
-The tools and programs in this package aim to provide a full linux remote
-control infrastructure. Due to using many new possibilities that modern hardware
-and newer linux distributions provide features such as receiver hotplugging and
-instant-use is possible. You can install new drivers without recompiling or
-restarting the device daemon. It is easy for users connecting and instantly
-using new devices and also to use several remote control receivers at the same
-time that was not possible or difficult to set up on other linux remote control
-solutions.
+The tools and programs in this package aim to provide a pleasant, easy to use
+possibility to control applications on the Linux operating system.
+Due to using many new technologies and libraries that evolved over the last,
+recent time Liri provides features such as receiver hot-plugging and
+instant-use.
 
-No kernel drivers are needed, so there is no need to recompile modules with
-every new kernel release. Legacy hardware, on the downside, that uses deprecated
-ports like the parallel port or RS232 are not supported. But you can build a
-homebrew usb infrared receiver for just 7€/$ or even buy a 433Mhz radio remote control
-(in europe) for the same amount, so no problem here.
+You can install new drivers without recompiling or restarting the device daemon.
+It is easy for users connecting and instantly using new devices and to use
+several remote control receivers at the same time. This is not common among the
+existing linux remote control solutions.
 
-Graphical user interfaces are provided for the KDE 4 desktop to edit
-remote-control-key-layouts, desktop profiles, application profiles, to associate profiles
-to remotes and change various other settings but also to monitor and control the framework.
+Kernel drivers are an absolutely no-go for this project to avoid having to recompile
+modules with every new kernel release. Legacy hardware, on the downside, that uses deprecated
+ports like the parallel port or RS232 are not supported. But why bothering with such old
+ports, while you can build a homebrew usb infrared receiver for just 7€/$ or even buy
+a 433Mhz radio remote control (in europe) for the same amount, so no problem here.
+
+Graphical user interfaces are provided for the KDE 4 desktop to edit key layouts for remotes,
+edit desktop profiles, application profiles, to associate profiles with remotes
+and change various settings and monitor/control the framework.
 
 The device manager daemon lirid and the execution engine liriexec don't need
-a running X Server.
+a running X Server and are therefore suitable for home automatization.
 
 ####################################
 2) Building from source
 - You have to satisfy the following dependencies first:
   ALL: libqt4-core >= 4.4.3, libqt4-dbus >= 4.4.3
   USB DRIVERS: libusb
-  FIREWIRE DRIVERS: libraw1394
+  (FIREWIRE DRIVERS: libraw1394)
   GUI KDE4: libqt4-gui >= 4.4.3, kdelibs >= 4.2
 
 - Create a build directory, e.g. ./build.
@@ -76,14 +74,15 @@ a running X Server.
 - To install just type in "make install". (You probably need root privileges to install)
 
 ####################################
-3) How-to use liri
+3) How does liri work?
 
 Device Manager (lirid):
-Supported remote receivers trigger the start of the liri device manager (lirid).
-That daemon is responsible for receiving events from devices and propagate them
-over the system bus (dbus). Device associated remote-control key layouts are loaded
-automatically, too. Hint: Use "liri-control --messages" to see if
-remote events are received properly.
+Supported remote receivers trigger the start of the liri device manager (lirid)
+via a callout (liristarter) from udev.
+The Lirid daemon is responsible for receiving events from devices and propagate them
+over the system bus (dbus). Devices associated with a key layout are also providing
+well defined symbolic names. Hint: Use "liri-control --messages" to see if
+remote events are send over the bus correctly.
 
 Execution Engine (liriexec):
 Has to be started by the user if the autostart file in data/autostart was not
@@ -97,35 +96,35 @@ E.g. for switching from a home theater desktop (where you controlled Amarok, VLC
 DragonPlayer and such) to a presentation desk (Okular, Browser, etc).
 
 Editor (liri-editor-kde4):
-Associate remotes to devices and profiles to remotes to define which profiles
+Associate profiles with remotes and remotes with devices to define which profiles
 should be loaded when a new device has been detected. Edit remote-key-layouts
 for the remote controls that your receiver supports. Edit desktop profiles that
 bundle application profiles to compose the perfect selection of applications for
-your desktop environment. Edit application profiles to support your favourite
+your desktop environment. Edit application profiles to support your favorite
 dbus-aware applications (all KDE4, most gnome applications) or execute other
 actions that should take place (like starting any process, change current mode
 etc) when you press remote keys.
 
-Control (liri-control, liri-control-kde4):
+Control/Monitor (liri-control, liri-control-kde4):
 You can monitor the health of the framework (lirid, liriexec and installed drivers)
-with this tool. The commandline application provides a list of all supported
-commands via liri-control --help. The gui applications are largly self-explanatory.
+with this tool. The command line application provides a list of all supported
+commands via liri-control --help. The GUI applications are largely self-explanatory.
 
 Notifications:
 If you want to be notified about events like a plugged in device, a disconnected
 device, loaded remote description files etc start the legacy tool "liri-tray" or 
-on kde4.4+ add the plasmoid "liri notifications" to your desktop or panel.
+(on kde4.4+) add the plasmoid "liri notifications" to your desktop or panel.
 
 ####################################
-4) Why not helping lirc?
-Lirc is a historical grown code base. Unfortunately this is very obvious. Used
+4) What about lirc?
+Lirc has a historical grown code base. Unfortunately this is very obvious. Used
 technologies are no longer in active development, some design decisions prevent a
 user friendly way of configuring the program. It is quite difficult to add new drivers
 and the driver interface consider things like puls lengths, gaps and decoding algorithms.
 Newer devices do that on hardware level already and just propagate key events.
 For the sake of usability a modern remote-control framework should no longer bother
-with really legacy ports such as the LPT, or RS232. USB, Firewire, Bluetooth are technologies
-where hotplugging is available and key layouts can be associated to specific hardware.
+with legacy ports such as the LPT, or RS232. USB, Firewire, Bluetooth are technologies
+where hot-plugging is available and key layouts can be associated 1:1 to specific hardware.
 
 Lirc has a few of those raised design shortcomings. It does not provide a
 mechanism to let applications know of new devices and does not support multiple
@@ -133,13 +132,8 @@ devices. Applications need to integrate and explicitly support lirc,
 where as this framework only require a reasonably exported dbus interface.
 All kde4 applications and most modern gnome applications
 like rhythmbox, totem etc support dbus and are therefore supported by this
-framework, as long as a profile is written for them.
-
-####################################
-5) Other OSs
-QT and libusb for the usb drivers are also available for other operating systems
-like BSD, Solaris, Mac and Windows. In theory it would be possible to port liri
-programs and usb drivers to other os's but I didn't try so far.
+framework, as long as a profile is written for them. Writing profiles
+is dead simple with the bundled GUI tools.
 
 ####################################
 6) Folder structure
@@ -175,7 +169,6 @@ programs and usb drivers to other os's but I didn't try so far.
 ./src/liriexec: Executes commands of profiles
 ./src/liriconfig: the commandline tool to control and monitor the framework
 
-./src/gui/gnome2: Gui programs for gtk+
 ./src/gui/kde4: Gui programs for qt4/kde4
 
 ####################################
@@ -187,14 +180,14 @@ name of your driver. Adapt the content of the driver.desktop and driver.rules fi
 to your device. Now you just have to rewrite the code in driver.cpp.
 
 1) Change the defines DRIVER_VERSION and DRIVER_ID in driver.desktop.
-2) Driver.cpp: Open your device in open.
-   Initialize your device in init. You can block the process for a short time if necessary.
-3) Implement "activity". You may not block the thread, but that function should be called only
+2) Driver.cpp: Open your device in "open".
+   Initialize your device in "init". You can block the process for a short time if necessary.
+3) Implement "activity". You may not block the thread, but that function should be only called
    if new data is available anyway.
 
 ####################################
 8) More information
-Please visit the website http://cerebro.webhop.net/liri for more information!
+Please visit the website -na- for more information!
 
 ####################################
 9) License
