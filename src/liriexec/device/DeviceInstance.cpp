@@ -63,10 +63,8 @@ DeviceInstance::DeviceInstance(QDBusConnection* conn, DeviceList* devicelist, Bu
 	if (!receiver) {
 		qWarning() << "DeviceInstance: Couldn't find device manager object";
 	} else {
-		connect((QObject*)receiver, SIGNAL( remoteStateChanged(int) ), SLOT( remoteStateChanged(int) ));
 		connect((QObject*)receiver, SIGNAL( key(const QString &, const QString &, uint, int) ),
 			SLOT( key(const QString &, const QString &, uint, int) ));
-		remoteStateChanged(receiver->RemoteState());
 	}
 }
 
@@ -81,26 +79,6 @@ DeviceInstance::~DeviceInstance() {
 void DeviceInstance::clear() {
 	actions.clear();
 	appProUids.clear();
-}
-
-void DeviceInstance::remoteStateChanged(int state) {
-	/* loaded/reload = unload + load */
-	if (state == LIRI_REMOTE_LOADED || state == LIRI_REMOTE_RELOADED) {
-		reload();
-	}
-	/* unload */
-	else if (state == LIRI_REMOTE_UNLOADED) {
-		clear();
-		qDebug() << "RID:" << instance << "Clear";
-	}
-	/* ignore */
-	else if (state == LIRI_REMOTE_NO) {}
-	else if (state == LIRI_REMOTE_RELOAD) {}
-	else
-	/* something unexspected */
-	{
-		qDebug() << "RID:" << instance << "Unknown remote state:" << state;
-	}
 }
 
 void DeviceInstance::key(const QString &keycode, const QString &keyname, uint channel, int pressed) {

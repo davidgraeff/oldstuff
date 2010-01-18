@@ -65,7 +65,6 @@ class DeviceInstance: public QObject {
 		void reload();
 
 	private Q_SLOTS:;
-		void remoteStateChanged(int state);
 		void key(const QString &keycode, const QString &keyname, uint channel, int pressed);
 
 	private:

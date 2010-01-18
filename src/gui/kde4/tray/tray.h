@@ -46,7 +46,6 @@ public Q_SLOTS:
 	void driverChangedSettings(const QMap<QString,QString> &changedsettings);
 	void key(const QString &keycode, const QString &keyname, uint channel, int pressed);
 	void receiverStateChanged(int state);
-	void remoteStateChanged(int state);
 
 	// tray menu
 	void execEditor();

@@ -129,7 +129,7 @@ void Control::handleSigInt() {
 void Control::quit() {
 	if (quitFlag) return;
 	quitFlag = true;
-	QCoreApplication::exit(0);
+	emit shutdown();
 }
 
 void Control::start() {

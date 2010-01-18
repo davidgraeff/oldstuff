@@ -53,7 +53,6 @@ class DeviceInfo : public QObject {
 		void updatetext();
 	private Q_SLOTS:
 		void receiverStateChanged(int state);
-		void remoteStateChanged(int state);
 		void key(const QString &keycode, const QString &keyname, uint channel, int pressed);
 };
 

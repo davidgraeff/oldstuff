@@ -13,18 +13,10 @@
 
 #include <QString>
 #include <QObject>
+#include <QTimer>
 #include <QDBusConnection>
-#include <QReadWriteLock>
-#include <QReadLocker>
-#include <QWriteLocker>
 
-#include "driver-interface.h"
-#include "DeviceListenThread.h"
-#include "DeviceSettings.h"
-
-/* For dlopen and driver loading, freeing */
-typedef void liriDriver_Free(liri::IDriver* p);
-typedef liri::IDriver* liriDriver_Create(DeviceSettings*);
+#include "driver-common.h"
 
 /**
 * \brief Instance representing a device
@@ -38,10 +30,8 @@ typedef liri::IDriver* liriDriver_Create(DeviceSettings*);
 class DeviceInstance : public QObject
 {
 	Q_OBJECT
-	friend class DeviceListenThread;
-	friend class DeviceInitThread;
 	public:
-		DeviceInstance(QDBusConnection* conn, int instanceNr, const QString& udi);
+		DeviceInstance(const QString& uid);
 		~DeviceInstance();
 
 		/* release claimed device, release driver
@@ -53,63 +43,58 @@ class DeviceInstance : public QObject
 		bool loaddriver();
 
 		/* access */
-		const QString getUdi() const;
-		const int getInstanceNr() const;
-		DeviceSettings* deviceSettings();
+		const QString getUid() const;
 
 		/* states */
 		int ReceiverState();
-		int RemoteState();
-		void updateReceiverState(int receiverState);
-		void updateRemoteState(int remoteState);
-
-		void reloadAssociatedRemote();
-		void setAssociatedRemote(const QString &remoteid);
+		void updateReceiverState(int);
 
 		/* settings manipulation */
-		QMap<QString,QString> getAllSettings();
+		QMap<QString,QString> getAllSettings() const;
 		QStringList getSettings(const QStringList &keys);
 		void setSettings(const QMap<QString,QString> &settings);
-
-		void configAssociatedRemote();
-
+		void setSetting(const QString& key, const QString& value);
 	private:
-		QString getConfigPath();
-		void p_reloadAssociatedRemote();
 
 	Q_SIGNALS:
 		// a signal to the list to remove this instance
 		void releasedDevice(DeviceInstance* di);
-		void driverChangedSettings(const QMap<QString,QString> &changedsettings);
 		void key(const QString &keycode, const QString &keyname, uint channel, int pressed);
 		void receiverStateChanged(int state);
-		void remoteStateChanged(int state);
 
-	public Q_SLOTS:
-		// called by the listen thread when it finished
-		void listenfinished();
+	private Q_SLOTS:
+		void activity(int fd);
 
 	private:
 		// system bus connection
 		QDBusConnection* conn;
-		// device instance id, eg 1..n, 0=invalid
-		int instanceNr;
-		// settings and logging for communicating with pure c++-drivers
-		DeviceSettings psettings;
-		// the listen thread
-		DeviceListenThread* listenThread;
-
-		/* states */
-		QString udi;
+		QMap<QString, QString> m_settings;
+		QString uid;
 		int receiverState;
-		int remoteState;
-		QReadWriteLock lockReceiverState;
-		QReadWriteLock lockRemoteState;
+		int timeoutKeyRelease;
 
+		KeyCode lastkey;
+		QTimer quittimer;
+
+		/* to not always reallocate */
+		QByteArray hexcode;
+		QString keyname;
+
+		/* remote */
+		QMap< QByteArray, QString > keys;
+		
 		/* dlopen, driver loading and freeing */
-		liri::IDriver* driver;
-		liriDriver_Free* free_driver;
+		
 		void* driverhandle;
+		typedef struct pollstr** (*driver_open_t)(const char* udi, const char* usbVendorID, const char* usbProductID, const char* usbSerialID, const char* error_string);
+		driver_open_t driver_open;
+		typedef void (*driver_init_t)();
+		driver_init_t driver_init;
+		typedef KeyCode (*driver_activity_t)(const char* cmd, const char* value);
+		driver_activity_t driver_activity;
+		typedef void (*driver_close_t)();
+		driver_close_t driver_close;
+
 };
 
 #endif

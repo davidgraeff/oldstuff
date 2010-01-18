@@ -22,9 +22,6 @@ INSTALL(FILES ${files} DESTINATION /etc/modprobe.d)
 FILE(GLOB files "remote_load_profiles/*.loader")
 INSTALL(FILES ${files} DESTINATION share/liri/remote_load_profiles)
 
-FILE(GLOB files "receiver_load_remote/*")
-INSTALL(FILES ${files} DESTINATION share/liri/associatedRemote)
-
 FILE(GLOB files "profiles/desktop/*.desktop")
 INSTALL(FILES ${files} DESTINATION share/liri/profiles)
 

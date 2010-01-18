@@ -1,0 +1,8 @@
+ACTION!="add", GOTO="liri_end"
+
+ATTRS{DEVTYPE}=="usb_device", ATTRS{idVendor}=="0bc7", ATTRS{idProduct}=="0006",
+ENV{ID_SERIAL}=="X10_Wireless_Technology_Inc_USB_Receiver",
+ENV{liri_receiver_driver}="ati", ENV{liri_receiver_layout}="x10.0536"
+RUN+="/usr/bin/liricallout"
+
+LABEL="liri_end"

@@ -26,21 +26,15 @@ foreach(DRIVERNAME ${DRIVERDIRS})
 
 	SET (BUILDDRIVERS "${BUILDDRIVERS}${DRIVERNAME} " CACHE INTERNAL "" FORCE)
 
-	set(DRIVERSOURCE
-		${LIRISOURCE_SOURCE_DIR}/drivers/driver-interface.cpp
-		${LIRISOURCE_SOURCE_DIR}/drivers/driver-interface-usb.cpp
-		${LIRISOURCE_SOURCE_DIR}/drivers/driver-interface-infrared.cpp
-	)
-
 	add_subdirectory( ${DRIVERNAME} )
-	add_library( ${DRIVERNAME} SHARED ${DRIVERSOURCE} "${DRIVERNAME}/driver.cpp")
+	add_library( ${DRIVERNAME} SHARED "${DRIVERNAME}/driver.cpp")
 	set_target_properties(${DRIVERNAME} PROPERTIES PREFIX "")
 
 	target_link_libraries(${DRIVERNAME} ${LibUSB_LIBRARIES})
 
 	INSTALL(TARGETS ${DRIVERNAME} DESTINATION ${LIRI_SYSTEM_DRIVERS_DIR} CONFIGURATIONS Debug Release)
 	INSTALL(FILES "${DRIVERNAME}/driver.desktop" DESTINATION "${LIRI_SYSTEM_DATA_DIR}/drivers" RENAME "${DRIVERNAME}.desktop")
-	INSTALL(FILES "${DRIVERNAME}/driver.fdi" DESTINATION share/hal/fdi/information/10freedesktop RENAME "10-liri-${DRIVERNAME}.fdi")
+	INSTALL(FILES "${DRIVERNAME}/driver.rules" DESTINATION /lib/udev/rules.d RENAME "86-liri-${DRIVERNAME}.rules")
 
 endforeach(DRIVERNAME)
 

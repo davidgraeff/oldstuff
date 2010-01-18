@@ -60,6 +60,7 @@ class Control : public QObject
 	Q_SIGNALS: // SIGNALS
 		void deviceAdded(int rid);
 		void deviceRemoved(int rid);
+		void shutdown();
 };
 
 #endif

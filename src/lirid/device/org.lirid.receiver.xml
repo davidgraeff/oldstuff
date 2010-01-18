@@ -2,19 +2,9 @@
  "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
 <node>
   <interface name="org.liri.Device">
-    <method name="setAssociatedRemote">
-      <arg name="remoteid" direction="in" type="s"/>
-    </method>
-    <method name="reloadAssociatedRemote">
-    </method>
-    <method name="RemoteState">
-      <arg name="state" direction="out" type="i"/>
-    </method>
-
     <method name="ReceiverState">
       <arg name="state" direction="out" type="i"/>
     </method>
-
     <method name="getSettings">
       <arg name="keys" direction="in" type="as"/>
       <arg name="values" direction="out" type="as"/>
@@ -31,18 +21,11 @@
     <signal name="receiverStateChanged">
       <arg name="state" type="i"/>
     </signal>
-    <signal name="remoteStateChanged">
-      <arg name="state" type="i"/>
-    </signal>
     <signal name="key">
       <arg name="keycode" type="s"/>
       <arg name="keyname" type="s"/>
       <arg name="channel" type="u"/>
       <arg name="pressed" type="i"/>
-    </signal>
-    <signal name="driverChangedSettings">
-      <arg name="changedsettings" type="a{ss}"/>
-	  <annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="QMap&lt;QString,QString&gt;"/>
     </signal>
   </interface>
 </node>

@@ -46,11 +46,8 @@ DeviceInfo::DeviceInfo(DeviceListModel* model, BusConnection* busconnection, int
 			SLOT(key(const QString&, const QString&, uint, int)));
 		connect(iface, SIGNAL(receiverStateChanged(int)),
 			SLOT(receiverStateChanged(int)));
-		connect(iface, SIGNAL(remoteStateChanged(int)),
-			SLOT(remoteStateChanged(int)));
 
 		receiverStateChanged(iface->ReceiverState());
-		remoteStateChanged(iface->RemoteState());
 
 		QStringList keys;
 		keys << QLatin1String("remotereceiver.haludi") << QLatin1String("remotereceiver.duid");
@@ -86,26 +83,8 @@ void DeviceInfo::updatetext() {
 
 	if (receiverstate==LIRI_DEVICE_INIT)
 		icon = &(model->iconInit);
-	else if (receiverstate==LIRI_DEVICE_RUNNING)
-		icon = &(model->iconRunning);
-	else
-		icon = &(model->iconUnknown);
-
-	status = i18n("Status: %1, %2", model->trLiriMessages->msg(receiverstate), model->trLiriMessages->msg(remotestate));
-	text_ = caption + QLatin1Char('\n') + status + QLatin1Char('\n') + remote;
-
-	model->changed(this);
-}
-
-void DeviceInfo::receiverStateChanged(int state) {
-	receiverstate = state;
-	updatetext();
-}
-
-void DeviceInfo::remoteStateChanged(int state) {
-	remotestate = state;
-
-	if (state == LIRI_REMOTE_LOADED || state == LIRI_REMOTE_RELOADED) {
+	else if (receiverstate==LIRI_DEVICE_RUNNING_WITH_LAYOUT)
+	{
 		OrgLiriDevManagerReceiverInterface* iface = busconnection->getDeviceManagerReceiver(rid);
 		QStringList keys;
 		keys << QLatin1String("remote.uid");
@@ -114,8 +93,21 @@ void DeviceInfo::remoteStateChanged(int state) {
 			remoteuid = keys[0];
 			remote = i18n("Remote: %1", RemoteFile(keys[0]).getName());
 		}
-	}
+	  updatetext(); 
+	  icon = &(model->iconRunning);
+	} else if (receiverstate==LIRI_DEVICE_RUNNING_WITHOUT_LAYOUT)
+		icon = &(model->iconRunning);
+	else
+		icon = &(model->iconUnknown);
 
+	status = i18n("Status: %1", model->trLiriMessages->msg(receiverstate));
+	text_ = caption + QLatin1Char('\n') + status + QLatin1Char('\n') + remote;
+
+	model->changed(this);
+}
+
+void DeviceInfo::receiverStateChanged(int state) {
+	receiverstate = state;
 	updatetext();
 }
 

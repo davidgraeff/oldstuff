@@ -133,8 +133,6 @@ void TrayIconClient::deviceAdded(int rid) {
 		SLOT( key(const QString &, const QString &, uint, int) ));
 	connect(ri, SIGNAL( receiverStateChanged(int) ),
 		SLOT( receiverStateChanged(int) ));
-	connect(ri, SIGNAL( remoteStateChanged(int) ),
-		SLOT( remoteStateChanged(int) ));
 }
 
 void TrayIconClient::deviceRemoved(int rid) {
@@ -186,37 +184,16 @@ void TrayIconClient::key(const QString &keycode, const QString &keyname, uint ch
 	}
 }
 
-void TrayIconClient::remoteStateChanged(int state) {
-	if (state == LIRI_REMOTE_LOADED) {
-		KNotification *notification = new KNotification(QLatin1String("remoteLoaded"));
-		notification->setText( i18n("Remote description loaded") );
- 		notification->setComponentData(KGlobal::mainComponent());
-		notification->sendEvent();
-	}
-	else if (state == LIRI_REMOTE_RELOADED) {
-		KNotification *notification = new KNotification(QLatin1String("remoteLoaded"));
-		notification->setText( i18n("Remote description reloaded") );
- 		notification->setComponentData(KGlobal::mainComponent());
-		notification->sendEvent();
-	}
-	else if (state == LIRI_REMOTE_UNLOADED) {
-		KNotification *notification = new KNotification(QLatin1String("remoteUnloaded"));
-		notification->setText( i18n("Remote description unloaded") );
- 		notification->setComponentData(KGlobal::mainComponent());
-		notification->sendEvent();
-	}
-	else if (state < 0) {
-		KNotification *notification = new KNotification(QLatin1String("remoteFailure"));
-		notification->setText( i18n("Remote description load failure.\nError code: %1", state) );
- 		notification->setComponentData(KGlobal::mainComponent());
-		notification->sendEvent();
-	}
-}
-
 void TrayIconClient::receiverStateChanged(int state) {
-	if (state == LIRI_DEVICE_RUNNING) {
+	if (state == LIRI_DEVICE_RUNNING_WITH_LAYOUT) {
+		KNotification *notification = new KNotification(QLatin1String("receiverPluggedInLayout"));
+		notification->setText( i18n("Receiver plugged in with layout.") );
+ 		notification->setComponentData(KGlobal::mainComponent());
+		notification->sendEvent();
+	}
+	else if (state == LIRI_DEVICE_RUNNING_WITHOUT_LAYOUT) {
 		KNotification *notification = new KNotification(QLatin1String("receiverPluggedIn"));
-		notification->setText( i18n("Receiver plugged in.") );
+		notification->setText( i18n("Receiver plugged in without layout.") );
  		notification->setComponentData(KGlobal::mainComponent());
 		notification->sendEvent();
 	}

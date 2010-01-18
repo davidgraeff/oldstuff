@@ -10,99 +10,69 @@
 ****************************************************************************/
 #include "DeviceInstance.h"
 #include "DeviceInstance_dbusif.h"
+#include "fileformats/RemoteFile.h"
 #include "config.h"
 
 #include <dlfcn.h> //dlopen
+#include <poll.h>
 #include <QStringList>
 #include <QDateTime>
 #include <QFile>
+#include <QDir>
 #include <QDebug>
 
-DeviceInstance::DeviceInstance(QDBusConnection* conn, int instanceNr, const QString& udi) :
-conn(conn), instanceNr(instanceNr) {
+bool operator==(KeyCode const& a, KeyCode const& b)
+{
+	bool equal = (strcmp(a.receiver, b.receiver)==0);
+	equal = equal && (a.keycodeLen == b.keycodeLen) && (memcmp(a.keycode, b.keycode, a.keycodeLen)==0);
+	equal = equal && (a.channel == b.channel) && (a.pressed == b.pressed) && (a.state == b.state);
+	return equal;
+}
 
+bool operator!=(KeyCode const& a, KeyCode const& b)
+{
+	return !(a==b);
+}
 
-	psettings.set(QLatin1String("remotereceiver.haludi"), udi);
-	this->udi = udi;
+DeviceInstance::DeviceInstance(const QString& uid)
+{
+	this->uid = uid;
 
 	receiverState = LIRI_DEVICE_OFFLINE;
-	remoteState = LIRI_REMOTE_NO;
-	driver = 0;
-	free_driver = 0;
-	listenThread = new DeviceListenThread(this);
-	connect(listenThread, SIGNAL( finished() ), SLOT( listenfinished() ));
 
 	//important: Does not need to be deleted explicitly
-	new ReceiverAdaptor(this);
+	new DeviceAdaptor(this);
 
 	//register object
 	qRegisterMetaType< QMap<QString,QString> >("QMap<QString,QString>");
 	QString objectname;
 	objectname.append(QLatin1String(LIRI_DBUS_OBJECT_RECEIVERS"/"));
-	objectname.append(QString::number(instanceNr));
-	if ( !conn->registerObject(objectname, static_cast<QObject*>(this)) ) {
-		qWarning() << "RID:" << getInstanceNr() << ", Couldn't register DeviceInstance object:" << objectname;
+	objectname.append(uid);
+	if ( !QDBusConnection::systemBus().registerObject(objectname, static_cast<QObject*>(this)) ) {
+		qWarning() << "UID:" << uid << ", Couldn't register DeviceInstance object:" << objectname;
 	}
 	setObjectName(objectname);
 }
 
 DeviceInstance::~DeviceInstance() {
-	if (free_driver) {
-		qWarning() << "Destroying DeviceInstance while listenThread is still running!";
-		release();
-		listenfinished();
-	}
 	QString objectname;
 	objectname.append(QLatin1String(LIRI_DBUS_OBJECT_RECEIVERS"/"));
-	objectname.append(QString::number(instanceNr));
-	conn->unregisterObject(objectname);
-	delete listenThread;
-}
-
-void DeviceInstance::listenfinished() {
-	if (!listenThread->isFinished()) {
-		/* be rude and kill listen thread if still running */
-		listenThread->terminate();
-		listenThread->wait();
-	}
-
-	if (free_driver) free_driver(driver);
-	free_driver = 0;
-	driver = 0;
-	/* DriverHandle??? Shared between instances, but who frees it? */
-	//free (driverhandle);
-	//driverhandle = 0;
-
-	/* disconnection time */
-	psettings.set(QLatin1String("remotereceiver.disconnected"), QDateTime::currentDateTime().toString(Qt::ISODate));
-
-	/* inform about new states
-	   if receiverState is not LIRI_DEVICE_CANCEL then an error occurred
-	   and the state has already been propagated to the list */
-	if (ReceiverState() == LIRI_DEVICE_CANCEL)
-		updateReceiverState(LIRI_DEVICE_OFFLINE);
-
-	int rstate = RemoteState();
-	if (rstate == LIRI_REMOTE_LOADED|| rstate == LIRI_REMOTE_RELOADED)
-		updateRemoteState(LIRI_REMOTE_UNLOADED);
-
-	qDebug() << "Released device:";
-	qDebug() << "\tRID:" << getInstanceNr();
-	qDebug() << "\tUDI:" << getUdi();
-
-	emit releasedDevice(this);
+	objectname.append(uid);
+	QDBusConnection::systemBus().unregisterObject(objectname);
 }
 
 void DeviceInstance::release() {
-	/* if the driver is already released just emit some signals */
-	if (!free_driver)
-	{
-		listenfinished();
-	}
-	/* else end listen thread */
-	else {
-		updateReceiverState(LIRI_DEVICE_CANCEL);
-	}
+	if (!driverhandle) return;
+	driver_close();
+	free (driverhandle);
+	driverhandle = 0;
+
+	updateReceiverState(LIRI_DEVICE_OFFLINE);
+
+	qDebug() << "Released device:";
+	qDebug() << "\tUID:" << getUid();
+
+	emit releasedDevice(this);
 }
 
 /* load driver */
@@ -110,35 +80,34 @@ bool DeviceInstance::loaddriver() {
 
 	// debug info - part 1/2
 	qDebug() << "Initialise device:";
-	qDebug() << "\tRID:" << getInstanceNr();
-	qDebug() << "\tUDI:" << udi;
-	qDebug() << "\tvendorId:" << psettings.get(QLatin1String("usb_device.vendor_id"));
-	qDebug() << "\tproductId:" << psettings.get(QLatin1String("usb_device.product_id"));
+	qDebug() << "\tUID:" << uid;
+	qDebug() << "\tvendorId:" << m_settings.value(QLatin1String("ID_VENDOR_ID"));
+	qDebug() << "\tproductId:" << m_settings.value(QLatin1String("ID_MODEL_ID"));
 
 	/* udi - unique device id (= hal id) */
-	if (!udi.size()) {
-		qWarning() << "\tFailed: Udi missing. Initalizing aborted!";
+	if (!uid.size()) {
+		qWarning() << "\tFailed: Uid missing. Initalizing aborted!";
 		updateReceiverState(LIRIERR_settings);
 		return false;
 	}
 
 	/* connection time */
-	psettings.set(QLatin1String("remotereceiver.connected"), QDateTime::currentDateTime().toString(Qt::ISODate));
+	m_settings.insert(QLatin1String("CONNECTED"), QDateTime::currentDateTime().toString(Qt::ISODate));
 
 	/* new state */
 	updateReceiverState(LIRI_DEVICE_INIT);
 
-	// check if filename exists
-	if (!psettings.has(QLatin1String("remotereceiver.driver"))) {
-		qWarning() << "\tFailed: Driver filename not set!";
+	// check if driver is set
+	const QString driverid = m_settings.value(QLatin1String("liri_receiver_driver"));
+	if (driverid.isEmpty()) {
+		qWarning() << "\tFailed: Driver not set!";
 		updateReceiverState(LIRIERR_filename);
 		release();
 		return false;
 	}
 
 	// check if filename exists - part 2
-	QString driverid = psettings.get(QLatin1String("remotereceiver.driver"));
-	QString drivername = QString::fromLatin1(LIRI_SYSTEM_DRIVERS_DIR"/%1.so").arg(driverid);
+	const QString drivername = QString::fromLatin1(LIRI_SYSTEM_DRIVERS_DIR"/%1.so").arg(driverid);
 	if ( !QFile::exists(drivername) ) {
 		qWarning() << "\tFailed: Driver not accessable:" << drivername;
 		updateReceiverState(LIRIERR_permission);
@@ -156,8 +125,8 @@ bool DeviceInstance::loaddriver() {
 	}
 
 	// load the symbol for creating the class instance
-	liriDriver_Create* create_driver = (liriDriver_Create*) dlsym(driverhandle, "create");
-	if (!create_driver) {
+	driver_open = (driver_open_t) dlsym(driverhandle, "open");
+	if (!driver_open) {
 		qWarning() << "\tFailed: Symbol not found:" <<  dlerror();
 		updateReceiverState(LIRIERR_symbolCreate);
 		release();
@@ -165,148 +134,172 @@ bool DeviceInstance::loaddriver() {
 	}
 
 	// load the symbol for destroying the class instance
-	free_driver = (liriDriver_Free*) dlsym(driverhandle, "destroy");
-	if (!free_driver) {
+	driver_init = (driver_init_t) dlsym(driverhandle, "init");
+	if (!driver_init) {
 		qWarning() << "\tFailed: Symbol not found:" <<  dlerror();
 		updateReceiverState(LIRIERR_symbolDestroy);
 		release();
 		return false;
 	}
 
-	// create an instance
-	driver = create_driver(&psettings);
+	// load the symbol for destroying the class instance
+	driver_activity = (driver_activity_t) dlsym(driverhandle, "activity");
+	if (!driver_activity) {
+		qWarning() << "\tFailed: Symbol not found:" <<  dlerror();
+		updateReceiverState(LIRIERR_symbolDestroy);
+		release();
+		return false;
+	}
 
+	// load the symbol for destroying the class instance
+	driver_close = (driver_close_t) dlsym(driverhandle, "close");
+	if (!driver_close) {
+		qWarning() << "\tFailed: Symbol not found:" <<  dlerror();
+		updateReceiverState(LIRIERR_symbolDestroy);
+		release();
+		return false;
+	}
+	
 	// read version info from the meta driver file "driver.desktop"
-	drivername = QString::fromLatin1(LIRI_SYSTEM_DRIVER_DESCRIPTION_DIR"/%1.desktop").arg(driverid);
-	QFile file(drivername);
+	const QString driverdescname = QString::fromLatin1(LIRI_SYSTEM_DRIVER_DESCRIPTION_DIR"/%1.desktop").arg(driverid);
+	QFile file(driverdescname);
+	QString driver_version;
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 		// not successful, default = 0.0
-		psettings.set(QLatin1String("remotereceiver.version"), QLatin1String("0.0"));
-		qWarning() << "\tFailed: Can not read version for driver. Filename:" << drivername;
+		m_settings.insert(QLatin1String("DRIVER_VERSION"), QLatin1String("0.0"));
+		qWarning() << "\tFailed: Can not read version for driver. Filename:" << driverdescname;
 	} else {
 		QStringList line;
 		while (file.isReadable() && !file.atEnd()) {
 			line = QString::fromUtf8(file.readLine()).split(QLatin1Char('='));
 			if (line.size() && line[0] == QLatin1String("X-Driver-Version")) {
 				// success
-				psettings.set(QLatin1String("remotereceiver.version"), line[1].left(line[1].size()-1));
+				driver_version = line[1].left(line[1].size()-1);
+				m_settings.insert(QLatin1String("DRIVER_VERSION"), driver_version);
 				break;
 			}
 		}
 	}
 	file.close();
 
-	//read out config file -> get associated remote uid
-	p_reloadAssociatedRemote();
+	if (timeoutKeyRelease < 100) timeoutKeyRelease = 100;
+
+	// load layout if possible
+	RemoteFile remote(m_settings.value(QLatin1String("liri_receiver_layout")));
+	if (remote.getState() == DesktopFile::Valide)
+	{
+		const int size = remote.countKeys();
+		// fill map with keys
+		for (int i=0;i<size;++i) {
+			keys.insert(remote.getKey(i).first.toAscii(), remote.getKey(i).second);
+		}
+	}
+	
+	// open device
+	char errorBuffer[100];
+	pollstr** fds = driver_open(uid.toAscii().data(),
+								m_settings.value(QLatin1String("VENDORID")).toAscii().data(),
+								m_settings.value(QLatin1String("PRODUCTID")).toAscii().data(),
+								m_settings.value(QLatin1String("SERIALID")).toAscii().data(),errorBuffer);
+	// watch for changes of the filehandles
+	while (fds[0])
+	{
+		QSocketNotifier* sn = new QSocketNotifier(fds[0]->fd, (fds[0]->events==POLLIN?QSocketNotifier::Read :QSocketNotifier::Write), this);
+		connect(sn, SIGNAL(activated(int)), SLOT(activity(int)));
+		fds += sizeof(pollstr);
+	}
+
+	// init device, wait for callback
+	driver_init();
 
 	// debug info - part 2/2
 	qDebug() << "\tDriver:" << driverid;
-	qDebug() << "\tVersion:" << psettings.get(QLatin1String("remotereceiver.version"));
-	qDebug() << "\tConfigfile:" << getConfigPath();
-	qDebug() << "\tAss. Remote:" << psettings.get(QLatin1String("remote.new.uid"));
+	qDebug() << "\tVersion:" << driver_version;
+	qDebug() << "\tLayout:" << QLatin1String("liri_receiver_layout");
 
-	// start listen thread
-	listenThread->start();
 	return true;
 }
 
-QString DeviceInstance::getConfigPath() {
-	return QLatin1String(LIRI_SYSTEM_ASSOCIATED_REMOTE_DIR"/") + psettings.get(QLatin1String("remotereceiver.did"));
+void DeviceInstance::activity(int fd)
+{
+	KeyCode keycode = driver_activity("","");
+	if (keycode.state == 1)
+	{
+		/* get hex code */
+		hexcode = QByteArray(keycode.keycode,keycode.keycodeLen).toHex();
+
+		if (keys.size()) {
+			keyname = keys.value(hexcode);
+		} else {
+			keyname.clear();
+		}
+
+		emit key(QString::fromAscii(hexcode), keyname, keycode.channel, keycode.pressed);
+	}
 }
 
-//read out config file -> get associated remote uid
-void DeviceInstance::p_reloadAssociatedRemote() {
-	QFile file(getConfigPath());
-	file.open(QIODevice::ReadOnly);
-	psettings.set(QLatin1String("remote.new.uid"), QString::fromAscii(file.readLine()));
+/*
+		// key event and synthetic key release event //
+		if (key.state == 1 && lastkey.state == 1) {
+			timeout = timeoutKeyRelease;
+			if ( key != lastkey ) {
+				lastkey.pressed = 0;
+				keyevent(lastkey);
+				keyevent(key);
+				lastkey = key;
+			}
+		// just synthetic key release event; no new key pressed //
+		} else if (key.state == 0 && lastkey.state == 1) {
+			lastkey.state = 0;
+			lastkey.pressed = 0;
+			timeout = timeoutListen;
+			keyevent(lastkey);
+		// no lastkey event just the new one //
+		} else if (key.state == 1 && lastkey.state == 0) {
+			lastkey = key;
+			timeout = timeoutKeyRelease;
+			keyevent(key);
+		}
+*/
+		
+int DeviceInstance::ReceiverState()
+{
+	return receiverState;
 }
 
-void DeviceInstance::reloadAssociatedRemote() {
-	/* do nothing if not active */
-	if (ReceiverState() != LIRI_DEVICE_RUNNING) return;
-
-	p_reloadAssociatedRemote();
-
-	/* do the actuall work in the listen thread */
-	updateRemoteState(LIRI_REMOTE_RELOAD);
-}
-
-void DeviceInstance::setAssociatedRemote(const QString &remoteid) {
-	/* do nothing if not active */
-	if (ReceiverState() != LIRI_DEVICE_RUNNING) return;
-
-	psettings.set(QLatin1String("remote.new.uid"), remoteid);
-
-	QFile file(getConfigPath());
-	file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-	file.write(remoteid.toAscii());
-	file.close();
-
-	/* do the actuall work in the listen thread */
-	updateRemoteState(LIRI_REMOTE_RELOAD);
+void DeviceInstance::updateReceiverState(int s)
+{
+	receiverState = s;
+	emit receiverStateChanged(s);
 }
 
 /* access */
 
-const QString DeviceInstance::getUdi() const {
-	return udi;
+const QString DeviceInstance::getUid() const {
+	return uid;
 }
 
-const int DeviceInstance::getInstanceNr() const {
-	return instanceNr;
-}
-
-DeviceSettings* DeviceInstance::deviceSettings() {
-	return &psettings;
-}
-
-/* states */
-int DeviceInstance::ReceiverState() {
-	int tmp;
-	lockReceiverState.lockForRead();
-	tmp = receiverState;
-	lockReceiverState.unlock();
-	return tmp;
-}
-
-int DeviceInstance::RemoteState() {
-	int tmp;
-	lockRemoteState.lockForRead();
-	tmp = remoteState;
-	lockRemoteState.unlock();
-	return tmp;
-}
-
-void DeviceInstance::updateReceiverState(int receiverState) {
-	lockReceiverState.lockForWrite();
-	this->receiverState = receiverState;
-	lockReceiverState.unlock();
-	emit receiverStateChanged(receiverState);
-}
-
-void DeviceInstance::updateRemoteState(int remoteState) {
-	lockRemoteState.lockForWrite();
-	this->remoteState = remoteState;
-	lockRemoteState.unlock();
-	emit remoteStateChanged(remoteState);
-}
-
-QMap<QString,QString> DeviceInstance::getAllSettings() {
-	return psettings.getSettings();
+QMap<QString,QString> DeviceInstance::getAllSettings() const {
+	return m_settings;
 }
 
 QStringList DeviceInstance::getSettings(const QStringList &keys) {
 	QStringList tmp;
 	foreach (QString key, keys) {
-		tmp.append(psettings.get(key));
+		tmp.append(m_settings.value(key));
 	}
 	return tmp;
+}
+
+void DeviceInstance::setSetting(const QString& key, const QString& value)
+{
+	m_settings.insert(key, value);
 }
 
 void DeviceInstance::setSettings(const QMap<QString,QString> &settings) {
 	QMap<QString,QString>::const_iterator i = settings.constBegin();
 	while (i != settings.constEnd()) {
-		psettings.set(i.key(), i.value());
+		m_settings.insert(i.key(), i.value());
 		++i;
 	}
 }
