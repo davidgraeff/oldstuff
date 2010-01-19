@@ -55,8 +55,8 @@ int main( int argc, char * argv[]) {
 	Control* control = new Control(&conn);
 	ManagedDeviceList* devicelist = new ManagedDeviceList();
 	devicelist->connect(control,SIGNAL(shutdown()), SLOT(shutdown()));
-	control->connect(devicelist, SIGNAL( deviceAdded(int) ), SIGNAL( deviceAdded(int) ));
-	control->connect(devicelist, SIGNAL( deviceRemoved(int) ), SIGNAL( deviceRemoved(int) ));
+	control->connect(devicelist, SIGNAL( deviceAdded(const QString&) ), SIGNAL( deviceAdded(const QString&) ));
+	control->connect(devicelist, SIGNAL( deviceRemoved(const QString&) ), SIGNAL( deviceRemoved(const QString&) ));
 
 	// mainloop
 	int exitcode = QCoreApplication::exec();

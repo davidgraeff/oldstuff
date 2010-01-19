@@ -14,7 +14,7 @@
 #include "driver-common.h"
 
 extern "C" {
-	extern struct pollstr** open(const char* udi, const char* usbVendorID, const char* usbProductID, const char* usbSerialID, const char* error_string);
+	extern struct pollstr** open(const char* udi, const char* usbVendorID, const char* usbProductID, const char* usbSerialID, char* error_string);
 	extern void init();
 	extern KeyCode activity(const char* cmd, const char* value);
 	extern void close();

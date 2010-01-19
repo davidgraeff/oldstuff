@@ -10,12 +10,10 @@
       <arg name="values" direction="out" type="as"/>
     </method>
     <method name="getAllSettings">
-      <arg name="settings" direction="out" type="a{ss}"/>
-	  <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QMap&lt;QString,QString&gt;"/>
+      <arg name="settings" direction="out" type="as"/>
     </method>
     <method name="setSettings">
-      <arg name="settings" direction="in" type="a{ss}"/>
-	  <annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="QMap&lt;QString,QString&gt;"/>
+      <arg name="settings" direction="in" type="as"/>
     </method>
 
     <signal name="receiverStateChanged">

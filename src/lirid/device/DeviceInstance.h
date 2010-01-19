@@ -29,72 +29,75 @@
 **/
 class DeviceInstance : public QObject
 {
-	Q_OBJECT
-	public:
-		DeviceInstance(const QString& uid);
-		~DeviceInstance();
+    Q_OBJECT
+public:
+    DeviceInstance(const QString& uid);
+    ~DeviceInstance();
 
-		/* release claimed device, release driver
-		   if wait is set to false the terminating process is asynchronous.
-		   When terminating completed the signal "released" will be emitted. */
-		void release();
+    /* release claimed device, release driver
+       if wait is set to false the terminating process is asynchronous.
+       When terminating completed the signal "released" will be emitted. */
+    void release();
 
-		/* load driver and start listen thread */
-		bool loaddriver();
+    /* load driver and start listen thread */
+    bool loaddriver();
 
-		/* access */
-		const QString getUid() const;
+    /* access */
+    const QString getUid() const;
 
-		/* states */
-		int ReceiverState();
-		void updateReceiverState(int);
+    /* states */
+    int ReceiverState();
+    void updateReceiverState(int);
 
-		/* settings manipulation */
-		QMap<QString,QString> getAllSettings() const;
-		QStringList getSettings(const QStringList &keys);
-		void setSettings(const QMap<QString,QString> &settings);
-		void setSetting(const QString& key, const QString& value);
-	private:
+    /* settings manipulation */
+    QStringList getAllSettings();
+    QStringList getSettings(const QStringList &keys);
+    void setSettings(const QStringList &settings);
+    void setSetting(const QString& key, const QString& value);
+private:
 
-	Q_SIGNALS:
-		// a signal to the list to remove this instance
-		void releasedDevice(DeviceInstance* di);
-		void key(const QString &keycode, const QString &keyname, uint channel, int pressed);
-		void receiverStateChanged(int state);
+Q_SIGNALS:
+    // a signal to the list to remove this instance
+    void releasedDevice(DeviceInstance* di);
+    void key(const QString &keycode, const QString &keyname, uint channel, int pressed);
+    void receiverStateChanged(int state);
 
-	private Q_SLOTS:
-		void activity(int fd);
+private Q_SLOTS:
+    void activity();
+    void keyevent_timeout();
+private:
+    // system bus connection
+    QDBusConnection* conn;
+    QMap<QString, QString> m_settings;
+    QString uid;
+    QString busname;
+    int receiverState;
 
-	private:
-		// system bus connection
-		QDBusConnection* conn;
-		QMap<QString, QString> m_settings;
-		QString uid;
-		int receiverState;
-		int timeoutKeyRelease;
+    KeyCode lastkey;
+    QTimer keyevent_timer;
 
-		KeyCode lastkey;
-		QTimer quittimer;
+    /* to not always reallocate */
+    QByteArray hexcode;
+    QString keyname;
 
-		/* to not always reallocate */
-		QByteArray hexcode;
-		QString keyname;
+    /* remote */
+    QMap< QByteArray, QString > keys;
+    void keyevent(KeyCode key);
 
-		/* remote */
-		QMap< QByteArray, QString > keys;
-		
-		/* dlopen, driver loading and freeing */
-		
-		void* driverhandle;
-		typedef struct pollstr** (*driver_open_t)(const char* udi, const char* usbVendorID, const char* usbProductID, const char* usbSerialID, const char* error_string);
-		driver_open_t driver_open;
-		typedef void (*driver_init_t)();
-		driver_init_t driver_init;
-		typedef KeyCode (*driver_activity_t)(const char* cmd, const char* value);
-		driver_activity_t driver_activity;
-		typedef void (*driver_close_t)();
-		driver_close_t driver_close;
-
+    /* dlopen, driver loading and freeing */
+    void* driverhandle;
+    typedef struct pollstr** (*driver_open_t)(const char* udi,
+                        const char* usbVendorID,
+                        const char* usbProductID,
+                        const char* usbSerialID,
+                        char* error_string);
+    driver_open_t driver_open;
+    typedef void (*driver_init_t)();
+    driver_init_t driver_init;
+    typedef KeyCode (*driver_activity_t)(const char* cmd, const char* value);
+    driver_activity_t driver_activity;
+    typedef void (*driver_close_t)();
+    driver_close_t driver_close;
 };
 
 #endif

@@ -39,12 +39,10 @@ class DeviceAdaptor: public QDBusAbstractAdaptor
 "      <arg direction=\"out\" type=\"as\" name=\"values\"/>\n"
 "    </method>\n"
 "    <method name=\"getAllSettings\">\n"
-"      <arg direction=\"out\" type=\"a{ss}\" name=\"settings\"/>\n"
-"      <annotation value=\"QMap&lt;QString,QString>\" name=\"com.trolltech.QtDBus.QtTypeName.Out0\"/>\n"
+"      <arg direction=\"out\" type=\"as\" name=\"settings\"/>\n"
 "    </method>\n"
 "    <method name=\"setSettings\">\n"
-"      <arg direction=\"in\" type=\"a{ss}\" name=\"settings\"/>\n"
-"      <annotation value=\"QMap&lt;QString,QString>\" name=\"com.trolltech.QtDBus.QtTypeName.In0\"/>\n"
+"      <arg direction=\"in\" type=\"as\" name=\"settings\"/>\n"
 "    </method>\n"
 "    <signal name=\"receiverStateChanged\">\n"
 "      <arg type=\"i\" name=\"state\"/>\n"
@@ -66,9 +64,9 @@ public:
 public: // PROPERTIES
 public Q_SLOTS: // METHODS
     int ReceiverState();
-    QMap<QString,QString> getAllSettings();
+    QStringList getAllSettings();
     QStringList getSettings(const QStringList &keys);
-    void setSettings(const QMap<QString,QString> &settings);
+    void setSettings(const QStringList &settings);
 Q_SIGNALS: // SIGNALS
     void key(const QString &keycode, const QString &keyname, uint channel, int pressed);
     void receiverStateChanged(int state);

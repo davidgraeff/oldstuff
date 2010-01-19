@@ -23,7 +23,7 @@
  */
 
 DeviceAdaptor::DeviceAdaptor(DeviceInstance *parent)
-    : QDBusAbstractAdaptor(parent)
+        : QDBusAbstractAdaptor(parent)
 {
     // constructor
     setAutoRelaySignals(true);
@@ -34,9 +34,9 @@ DeviceAdaptor::~DeviceAdaptor()
     // destructor
 }
 
-DeviceInstance* DeviceAdaptor::parent() const
+DeviceInstance *DeviceAdaptor::parent() const
 {
-	return static_cast<DeviceInstance *>(QObject::parent());
+    return static_cast<DeviceInstance *>(QObject::parent());
 }
 
 int DeviceAdaptor::ReceiverState()
@@ -45,7 +45,7 @@ int DeviceAdaptor::ReceiverState()
     return parent()->ReceiverState();
 }
 
-QMap<QString,QString> DeviceAdaptor::getAllSettings()
+QStringList DeviceAdaptor::getAllSettings()
 {
     // handle method call org.liri.Device.getAllSettings
     return parent()->getAllSettings();
@@ -57,7 +57,7 @@ QStringList DeviceAdaptor::getSettings(const QStringList &keys)
     return parent()->getSettings(keys);
 }
 
-void DeviceAdaptor::setSettings(const QMap<QString,QString> &settings)
+void DeviceAdaptor::setSettings(const QStringList &settings)
 {
     // handle method call org.liri.Device.setSettings
     parent()->setSettings(settings);
