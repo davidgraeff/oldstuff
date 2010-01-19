@@ -1,18 +1,1 @@
-BUGS:
-- Wenn device init fehgeschlagen ist, dann kann lirid nicht beendet werden
-
-TODO list version 1.0beta1
-
-1) liriexec crash free
-2) liri-control-kde4
-3) liri-editor-kde4: ApplicationProfiles
-4) liri-editor-kde4: Remotes: edit->copy to /usr/share.. directory via policyKit or alternative
-5) Plasmoid
-
-TODO list version 1.0beta2
-
-1) driver that reads from  "Linux Input Event Devices" like inputlirc:
-	Mit den entsprechenden HAL Anweisungen wird dann dieser Treiber geladen
-	und als Eigenschaft auch der device string übergeben.
-	So können auch alle von Kerneltreibern unterstütze Geräte in die Infrastruktur
-	eingebunden werden.
+TODO is in the github wiki page for this project!
