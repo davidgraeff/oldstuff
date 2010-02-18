@@ -102,14 +102,14 @@ int main( int argc, char * argv[]) {
 	qDebug() << ABOUT_SUMMARY << ABOUT_VERSION;
 
 	//get DEV_NUM
-	int device = 0;
-	if (QCoreApplication::arguments().last()[0].isNumber()) device = QCoreApplication::arguments().last().toInt();
+	QString device;
+	if (QCoreApplication::arguments().last()[0].isNumber()) device = QCoreApplication::arguments().last();
 
 	if (QCoreApplication::arguments().contains(QLatin1String("--devices"))) {
 		did = true;
 		if (connection->deviceManagerState()==LIRI_RUNNING) {
-			QList<int> instancelist = connection->receivers();
-			foreach(int instance, instancelist) {
+			QStringList instancelist = connection->receivers();
+			foreach(QString instance, instancelist) {
 				OrgLiriDevManagerReceiverInterface * const ri = connection->getDeviceManagerReceiver(instance);
 				if (!ri) continue;
 				QStringList keys;

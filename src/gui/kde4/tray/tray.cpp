@@ -63,18 +63,18 @@ TrayIconClient::TrayIconClient(const KIcon& icon, const KIcon& icon_event, BusCo
 
 	connect(connection, SIGNAL( devicemanagerStateChanged(int) ), SLOT( devicemanagerStateChanged(int) ));
 	connect(connection, SIGNAL( executionengineStateChanged(int) ), SLOT( executionengineStateChanged(int) ));
-	connect(connection, SIGNAL( deviceAdded(int) ), SLOT( deviceAdded(int) ));
-	connect(connection, SIGNAL( deviceRemoved(int) ), SLOT( deviceRemoved(int) ));
-	connect(connection, SIGNAL( executed(int, int, const QString &) ), SLOT( executed(int, int, const QString &) ));
-	connect(connection, SIGNAL( modeChanged(int, const QString &, const QString &) ), SLOT( modeChanged(int, const QString &, const QString &) ));
+	connect(connection, SIGNAL( deviceAdded(const QString&) ), SLOT( deviceAdded(const QString&) ));
+	connect(connection, SIGNAL( deviceRemoved(const QString&) ), SLOT( deviceRemoved(const QString&) ));
+	connect(connection, SIGNAL( executed(const QString&, int, const QString &) ), SLOT( executed(const QString&, int, const QString &) ));
+	connect(connection, SIGNAL( modeChanged(const QString&, const QString &, const QString &) ), SLOT( modeChanged(const QString&, const QString &, const QString &) ));
 	connect(connection, SIGNAL( targetChanged(int, const QString &) ), SLOT( targetChanged(int, const QString &) ));
 
 	setIcon(icon);
 	setToolTip(i18n("Liri Tray Client"));
 	show();
 
-	QList<int> receivers = connection->receivers();
-	foreach(int rid, receivers) emit deviceAdded(rid);
+	QStringList receivers = connection->receivers();
+	foreach(QString rid, receivers) emit deviceAdded(rid);
 }
 
 TrayIconClient::~TrayIconClient() {
@@ -123,7 +123,7 @@ void TrayIconClient::executionengineStateChanged(int state) {
 	//qDebug() << "executionengineStateChanged" << state;
 }
 
-void TrayIconClient::deviceAdded(int rid) {
+void TrayIconClient::deviceAdded(const QString& rid) {
 	//qDebug() << "deviceAdded" << rid;
 	OrgLiriDevManagerReceiverInterface * const ri = connection->getDeviceManagerReceiver(rid);
 	if (!ri) return;
@@ -135,12 +135,12 @@ void TrayIconClient::deviceAdded(int rid) {
 		SLOT( receiverStateChanged(int) ));
 }
 
-void TrayIconClient::deviceRemoved(int rid) {
+void TrayIconClient::deviceRemoved(const QString& rid) {
 	Q_UNUSED(rid);
 	//qDebug() << "deviceRemoved" << rid;
 }
 
-void TrayIconClient::executed(int receiverinstance, int result, const QString &executed) {
+void TrayIconClient::executed(const QString& receiverinstance, int result, const QString &executed) {
 	Q_UNUSED(receiverinstance);
 	if (result == 0) {
 		KNotification *notification = new KNotification(QLatin1String("commandSuccessful"));
@@ -155,9 +155,9 @@ void TrayIconClient::executed(int receiverinstance, int result, const QString &e
 	}
 }
 
-void TrayIconClient::modeChanged(int receiverinstance, const QString &oldmode, const QString &newmode) {
+void TrayIconClient::modeChanged(const QString& receiverinstance, const QString &oldmode, const QString &newmode) {
 	KNotification *notification = new KNotification(QLatin1String("ModeChanged"));
-	notification->setText(i18n("Mode of instance %1 changed from \"%2\" to \"%3\"", QString::number(receiverinstance), oldmode, newmode));
+	notification->setText(i18n("Mode of instance %1 changed from \"%2\" to \"%3\"", receiverinstance, oldmode, newmode));
   	notification->setComponentData(KGlobal::mainComponent());
 	notification->sendEvent();
 }

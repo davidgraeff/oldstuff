@@ -11,9 +11,8 @@
 #ifndef LIRI_DAEMON_CONNECTION_H_
 #define LIRI_DAEMON_CONNECTION_H_
 
-#include <QString>
 #include <QObject>
-#include <QList>
+#include <QStringList>
 #include <QMap>
 
 class BusServiceList;
@@ -34,13 +33,13 @@ class BusConnection: public QObject {
 		~BusConnection();
 		int deviceManagerState();
 		int executionEngineState();
-		QList<int> receivers() const;
+		QStringList receivers() const;
 		void reemitAddedSignals(reemitSignalsEnum);
 		// dbus services
 		BusServiceList * getBusServicelist() const;
 		// receiver interfaces
-		OrgLiriDevManagerReceiverInterface * getDeviceManagerReceiver(int instance) const;
-		OrgLiriExecutionReceiverInterface  * getExecutionEngineReceiver(int instance) const;
+		OrgLiriDevManagerReceiverInterface * getDeviceManagerReceiver(const QString& instance) const;
+		OrgLiriExecutionReceiverInterface  * getExecutionEngineReceiver(const QString& instance) const;
 		// control interfaces
 		OrgLiriDevManagerControlInterface * getDeviceManagerControl() const;
 		OrgLiriExecutionControlInterface  * getExecutionEngineControl() const;
@@ -48,21 +47,21 @@ class BusConnection: public QObject {
 	private:
 		void startedExecutionEngine();
 		void startedDeviceManager();
-		QList<int> parseIntrospect();
+		QStringList parseIntrospect();
 	private:
 		BusServiceList* busServiceList;
 		OrgLiriDevManagerControlInterface* devicemanager_controlinterface;
 		OrgLiriExecutionControlInterface* execution_controlinterface;
-		QMap< int, OrgLiriDevManagerReceiverInterface* > devmanlist;
-		QMap< int, OrgLiriExecutionReceiverInterface* > executionlist;
+		QMap< QString, OrgLiriDevManagerReceiverInterface* > devmanlist;
+		QMap< QString, OrgLiriExecutionReceiverInterface* > executionlist;
 
 	private Q_SLOTS:
 		void slotServiceUnregistered(const QString& service, bool system);
 		void slotServiceRegistered(const QString& service, bool system);
-		void deviceAddedSlot(int rid);
-		void deviceRemovedSlot(int rid);
-		void deviceAddedExecutionSlot(int rid);
-		void deviceRemovedExecutionSlot(int rid);
+		void deviceAddedSlot(const QString& rid);
+		void deviceRemovedSlot(const QString& rid);
+		void deviceAddedExecutionSlot(const QString& rid);
+		void deviceRemovedExecutionSlot(const QString& rid);
 
 	Q_SIGNALS:
 		// state of a framework component changed
@@ -70,16 +69,16 @@ class BusConnection: public QObject {
 		void executionengineStateChanged(int state);
 
 		// device added/removed
-		void deviceAdded(int rid);
-		void deviceRemoved(int rid);
-		void deviceAddedExecution(int rid);
-		void deviceRemovedExecution(int rid);
+		void deviceAdded(const QString& uid);
+		void deviceRemoved(const QString& uid);
+		void deviceAddedExecution(const QString& rid);
+		void deviceRemovedExecution(const QString& rid);
 
 		// some notification signals from the execution engine
-		void executed(int rid, int result, const QString &executed);
-		void modeChanged(int rid, const QString &oldmode, const QString &newmode);
+		void executed(const QString& rid, int result, const QString &executed);
+		void modeChanged(const QString& rid, const QString &oldmode, const QString &newmode);
 		void targetChanged(int state, const QString &targetid);
-		void profilesLoaded(int rid);
+		void profilesLoaded(const QString& rid);
 };
 
 #endif

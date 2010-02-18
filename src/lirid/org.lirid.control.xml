@@ -16,10 +16,10 @@
 		<arg name="datetime" direction="out" type="s"/>
     </method>
     <signal name="deviceAdded">
-      <arg name="rid" type="i"/>
+      <arg name="rid" type="s"/>
     </signal>
     <signal name="deviceRemoved">
-      <arg name="rid" type="i"/>
+      <arg name="rid" type="s"/>
     </signal>
   </interface>
 </node>

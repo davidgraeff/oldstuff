@@ -43,16 +43,16 @@ class DeviceList: public QObject {
 
 	private Q_SLOTS:
 		void devicemanagerStateChanged(int state);
-		void deviceAdded(int rid);
-		void deviceRemoved(int rid);
+		void deviceAdded(QString rid);
+		void deviceRemoved(QString rid);
 
 	Q_SIGNALS:
-		void executed(int receiverinstance, int result, const QString &executedstring);
-		void modeChanged(int receiverinstance, const QString &oldmode, const QString &newmode);
+		void executed(QString receiverinstance, int result, const QString &executedstring);
+		void modeChanged(QString receiverinstance, const QString &oldmode, const QString &newmode);
 		void targetChanged(int state, const QString &targetid);
-		void deviceAddedExecution(int rid);
-		void deviceRemovedExecution(int rid);
-		void profilesLoaded(int rid);
+		void deviceAddedExecution(QString rid);
+		void deviceRemovedExecution(QString rid);
+		void profilesLoaded(QString rid);
 
 		void abortExecutionJobs();
 
@@ -60,7 +60,7 @@ class DeviceList: public QObject {
 		QDBusConnection* dbus;
 		BusConnection* busconnection;
 		QThreadPool executionjobs;
-		QVector<DeviceInstance*> instances;
+		QList<DeviceInstance*> instances;
 		QMap< QString, TargetList* > targetlists;
 };
 

@@ -34,7 +34,7 @@ enum DeviceListModelRoles {
 class DeviceInfo : public QObject {
 	Q_OBJECT
 	public:
-		DeviceInfo(DeviceListModel* model, BusConnection* busconnection, int rid);
+		DeviceInfo(DeviceListModel* model, BusConnection* busconnection, const QString & rid);
 		~DeviceInfo();
 		KIcon* icon;
 		QString text_;
@@ -43,7 +43,7 @@ class DeviceInfo : public QObject {
 		QString remote;
 		QString remoteuid;
 		QString tooltip; // connected, udi, rid etc
-		int rid;
+		QString  rid;
 		int remotestate;
 		int receiverstate;
 		bool updatetextflag;
@@ -70,8 +70,8 @@ public:
 	KIcon iconInit;
 	KIcon iconKey;
 private Q_SLOTS:
-	void deviceAdded(int rid);
-	void deviceRemoved(int rid);
+	void deviceAdded(const QString & rid);
+	void deviceRemoved(const QString & rid);
 private:
 	QList<DeviceInfo*> list;
 	BusConnection* busconnection;

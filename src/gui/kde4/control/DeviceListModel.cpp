@@ -27,7 +27,7 @@
 #include "businterconnect/Receiver_Execution_dbusproxy.h"
 #include "fileformats/RemoteFile.h"
 
-DeviceInfo::DeviceInfo(DeviceListModel* model, BusConnection* busconnection, int rid) :
+DeviceInfo::DeviceInfo(DeviceListModel* model, BusConnection* busconnection, const QString & rid) :
 	model(model), busconnection(busconnection) {
 
 	this->rid = rid;
@@ -126,8 +126,8 @@ DeviceListModel::DeviceListModel(BusConnection* busconnection) : busconnection(b
 	connect(busconnection, SIGNAL( deviceAdded(int) ), SLOT( deviceAdded(int) ));
 	connect(busconnection, SIGNAL( deviceRemoved(int) ), SLOT( deviceRemoved(int) ));
 
-	QList<int> receivers = busconnection->receivers();
-	foreach(int rid, receivers) deviceAdded(rid);
+	QStringList receivers = busconnection->receivers();
+	foreach(QString rid, receivers) deviceAdded(rid);
 
 }
 
@@ -172,7 +172,7 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const {
 	return QVariant();
 }
 
-void DeviceListModel::deviceAdded(int rid) {
+void DeviceListModel::deviceAdded(const QString & rid) {
 	// duplicate ?
 	for (int i=0; i < list.size(); ++i) if ( list[i]->rid == rid ) { return; }
 
@@ -182,7 +182,7 @@ void DeviceListModel::deviceAdded(int rid) {
 	endInsertRows();
 }
 
-void DeviceListModel::deviceRemoved(int rid) {
+void DeviceListModel::deviceRemoved(const QString & rid) {
 	// find device
 	int pos = -1;
 	for (int i=0; i < list.size(); ++i) if ( list[i]->rid == rid ) { pos = i; break; }

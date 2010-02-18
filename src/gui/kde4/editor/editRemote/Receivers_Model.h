@@ -13,9 +13,9 @@ class BusConnection;
 class Receiver : public QObject {
 	Q_OBJECT
 	public:
-		Receiver(BusConnection* connection, int rid);
+		Receiver(BusConnection* connection, const QString & rid);
 		~Receiver();
-		int rid;
+		QString rid;
 		QString name;
 		bool checked;
 		OrgLiriDevManagerReceiverInterface* iface;
@@ -44,8 +44,8 @@ class Receivers_Model : public QAbstractListModel {
 	Q_SIGNALS:
 		void keyevent(const QString& keycode);
 	private Q_SLOTS:
-		void deviceAdded(int rid);
-		void deviceRemoved(int rid);
+		void deviceAdded(const QString & rid);
+		void deviceRemoved(const QString & rid);
 	private:
 		BusConnection* connection;
 		QList<Receiver*> receivers;

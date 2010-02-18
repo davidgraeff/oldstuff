@@ -18,13 +18,13 @@
 ListenObject::ListenObject(BusConnection* busconnection) : busconnection(busconnection) {
 	connect(busconnection, SIGNAL( devicemanagerStateChanged(int) ), SLOT( devicemanagerStateChanged(int) ));
 	connect(busconnection, SIGNAL( executionengineStateChanged(int) ), SLOT( executionengineStateChanged(int) ));
-	connect(busconnection, SIGNAL( deviceAdded(int) ), SLOT( deviceAdded(int) ));
-	connect(busconnection, SIGNAL( deviceRemoved(int) ), SLOT( deviceRemoved(int) ));
-	connect(busconnection, SIGNAL( deviceAddedExecution(int) ), SLOT( deviceAddedExecution(int) ));
-	connect(busconnection, SIGNAL( deviceRemovedExecution(int) ), SLOT( deviceRemovedExecution(int) ));
-	connect(busconnection, SIGNAL( profilesLoaded(int) ), SLOT( profilesLoaded(int) ));
-	connect(busconnection, SIGNAL( executed(int, int, const QString &) ), SLOT( executed(int, int, const QString &) ));
-	connect(busconnection, SIGNAL( modeChanged(int, const QString &, const QString &) ), SLOT( modeChanged(int, const QString &, const QString &) ));
+	connect(busconnection, SIGNAL( deviceAdded(const QString&) ), SLOT( deviceAdded(const QString&) ));
+	connect(busconnection, SIGNAL( deviceRemoved(const QString&) ), SLOT( deviceRemoved(const QString&) ));
+	connect(busconnection, SIGNAL( deviceAddedExecution(const QString&) ), SLOT( deviceAddedExecution(const QString&) ));
+	connect(busconnection, SIGNAL( deviceRemovedExecution(const QString&) ), SLOT( deviceRemovedExecution(const QString&) ));
+	connect(busconnection, SIGNAL( profilesLoaded(const QString&) ), SLOT( profilesLoaded(const QString&) ));
+	connect(busconnection, SIGNAL( executed(const QString&, int, const QString &) ), SLOT( executed(const QString&, int, const QString &) ));
+	connect(busconnection, SIGNAL( modeChanged(const QString&, const QString &, const QString &) ), SLOT( modeChanged(const QString&, const QString &, const QString &) ));
 	connect(busconnection, SIGNAL( targetChanged(int, const QString &) ), SLOT( targetChanged(int, const QString &) ));
 	busconnection->reemitAddedSignals(reemitDeviceManager);
 	busconnection->reemitAddedSignals(reemitExecutionEngine);
@@ -38,19 +38,19 @@ void ListenObject::executionengineStateChanged(int state) {
 	qDebug() << "executionengineStateChanged" << state;
 }
 
-void ListenObject::deviceAddedExecution(int rid) {
+void ListenObject::deviceAddedExecution(const QString& rid) {
 	qDebug() << "deviceAddedExecution" << rid;
 }
 
-void ListenObject::deviceRemovedExecution(int rid) {
+void ListenObject::deviceRemovedExecution(const QString& rid) {
 	qDebug() << "deviceRemovedExecution" << rid;
 }
 
-void ListenObject::profilesLoaded(int rid) {
+void ListenObject::profilesLoaded(const QString& rid) {
 	qDebug() << "profilesLoaded" << rid;
 }
 
-void ListenObject::deviceAdded(int rid) {
+void ListenObject::deviceAdded(const QString& rid) {
 	qDebug() << "deviceAdded" << rid;
 	OrgLiriDevManagerReceiverInterface * const ri = busconnection->getDeviceManagerReceiver(rid);
 	if (!ri) return;
@@ -64,15 +64,15 @@ void ListenObject::deviceAdded(int rid) {
 		SLOT( remoteStateChanged(int) ));
 }
 
-void ListenObject::deviceRemoved(int rid) {
+void ListenObject::deviceRemoved(const QString& rid) {
 	qDebug() << "deviceRemoved" << rid;
 }
 
-void ListenObject::executed(int receiverinstance, int result, const QString &executed) {
+void ListenObject::executed(const QString& receiverinstance, int result, const QString &executed) {
 	qDebug() << "executed" << receiverinstance << result << executed;
 }
 
-void ListenObject::modeChanged(int receiverinstance, const QString &oldmode, const QString &newmode) {
+void ListenObject::modeChanged(const QString& receiverinstance, const QString &oldmode, const QString &newmode) {
 	qDebug() << "modeChanged" << receiverinstance << oldmode << newmode;
 }
 

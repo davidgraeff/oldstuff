@@ -31,13 +31,13 @@ public:
 private Q_SLOTS:
 	void devicemanagerStateChanged(int state);
 	void executionengineStateChanged(int state);
-	void deviceAdded(int rid);
-	void deviceRemoved(int rid);
-	void deviceAddedExecution(int rid);
-	void deviceRemovedExecution(int rid);
-	void profilesLoaded(int rid);
-	void executed(int rid, int result, const QString &executed);
-	void modeChanged(int rid, const QString &oldmode, const QString &newmode);
+	void deviceAdded(const QString & rid);
+	void deviceRemoved(const QString & rid);
+	void deviceAddedExecution(const QString & rid);
+	void deviceRemovedExecution(const QString & rid);
+	void profilesLoaded(const QString & rid);
+	void executed(const QString & rid, int result, const QString &executed);
+	void modeChanged(const QString & rid, const QString &oldmode, const QString &newmode);
 	void targetChanged(int state, const QString &targetname);
 	void driverChangedSettings(const QMap<QString,QString> &changedsettings);
 	void key(const QString &keycode, const QString &keyname, uint channel, int pressed);

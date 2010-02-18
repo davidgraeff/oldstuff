@@ -29,14 +29,9 @@
 #define LIRI_DBUS_SERVICE_DEVMAN "org.liri.Devices"
 #define LIRI_DBUS_SERVICE_CALLOUT "org.liri.HalCallout"
 #define LIRI_DBUS_SERVICE_EXECUTION "org.liri.Execution"
-#define LIRI_DBUS_SERVICE_HAL "org.freedesktop.Hal"
 #define LIRI_DBUS_OBJECT_RECEIVERS "/org/liri/Devicelist"
-#define LIRI_DBUS_OBJECT_HAL "/org/freedesktop/Hal/Manager"
-#define LIRI_DBUS_OBJECT_HALdev "/org/freedesktop/Hal/devices"
 #define LIRI_DBUS_INTERFACE_CONTROL "org.liri.Control"
 #define LIRI_DBUS_INTERFACE_RECEIVER "org.liri.Device"
-#define LIRI_DBUS_INTERFACE_HAL "org.freedesktop.Hal.Manager"
-#define LIRI_DBUS_INTERFACE_HALdev "org.freedesktop.Hal.Device"
 #define LIRI_DBUS_TIMEOUT 1000
 
 /* initial settings */

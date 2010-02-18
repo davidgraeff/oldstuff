@@ -43,7 +43,7 @@
 #include "businterconnect/Receiver_DevManager_dbusproxy.h"
 
 DeviceInstance::DeviceInstance(QDBusConnection* conn, DeviceList* devicelist, BusConnection* busconnection,
-			int instance, QObject* parent)
+			QString instance, QObject* parent)
 			: QObject(parent), conn(conn), devicelist(devicelist), busconnection(busconnection), instance(instance) {
 	Q_ASSERT(conn);
 	Q_ASSERT(devicelist);
@@ -52,7 +52,7 @@ DeviceInstance::DeviceInstance(QDBusConnection* conn, DeviceList* devicelist, Bu
 	new DeviceInstanceAdaptor(this);
 	QString objectname;
 	objectname.append(QLatin1String(LIRI_DBUS_OBJECT_RECEIVERS"/"));
-	objectname.append(QString::number(instance));
+	objectname.append(instance);
 	setObjectName(objectname);
 	if ( !conn->registerObject(objectname, static_cast<QObject*>(this)) ) {
 		qWarning() << "DeviceInstance: Couldn't register object:" << objectname;
@@ -72,7 +72,7 @@ DeviceInstance::~DeviceInstance() {
 	clear();
 	QString objectname;
 	objectname.append(QLatin1String(LIRI_DBUS_OBJECT_RECEIVERS"/"));
-	objectname.append(QString::number(instance));
+	objectname.append(instance);
 	conn->unregisterObject(objectname);
 }
 
@@ -158,7 +158,7 @@ QStringList DeviceInstance::getProfileUids() {
 	return appProUids;
 }
 
-int DeviceInstance::getInstance() {
+QString DeviceInstance::getInstance() {
 	return instance;
 }
 

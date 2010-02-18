@@ -74,12 +74,12 @@ public Q_SLOTS: // METHODS
     }
 
 Q_SIGNALS: // SIGNALS
-	void executed(int rid, int result, const QString &executed);
-	void modeChanged(int rid, const QString &oldmode, const QString &newmode);
+	void executed(const QString & rid, int result, const QString &executed);
+	void modeChanged(const QString & rid, const QString &oldmode, const QString &newmode);
 	void targetChanged(int state, const QString &targetid);
-	void deviceAddedExecution(int rid);
-	void deviceRemovedExecution(int rid);
-	void profilesLoaded(int rid);
+	void deviceAddedExecution(const QString & rid);
+	void deviceRemovedExecution(const QString & rid);
+	void profilesLoaded(const QString & rid);
 };
 
 #endif

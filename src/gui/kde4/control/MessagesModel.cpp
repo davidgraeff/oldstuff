@@ -34,19 +34,19 @@ MessagesModel::MessagesModel(BusConnection* busconnection) :
 
 	connect(busconnection, SIGNAL( devicemanagerStateChanged(int) ), SLOT( devicemanagerStateChanged(int) ));
 	connect(busconnection, SIGNAL( executionengineStateChanged(int) ), SLOT( executionengineStateChanged(int) ));
-	connect(busconnection, SIGNAL( deviceAdded(int) ), SLOT( deviceAdded(int) ));
-	connect(busconnection, SIGNAL( deviceRemoved(int) ), SLOT( deviceRemoved(int) ));
-	connect(busconnection, SIGNAL( executed(int, int, const QString &) ), SLOT( executed(int, int, const QString &) ));
-	connect(busconnection, SIGNAL( modeChanged(int, const QString &, const QString &) ), SLOT( modeChanged(int, const QString &, const QString &) ));
+	connect(busconnection, SIGNAL( deviceAdded(const QString &) ), SLOT( deviceAdded(const QString &) ));
+	connect(busconnection, SIGNAL( deviceRemoved(const QString &) ), SLOT( deviceRemoved(const QString &) ));
+	connect(busconnection, SIGNAL( executed(const QString &, int, const QString &) ), SLOT( executed(const QString &, int, const QString &) ));
+	connect(busconnection, SIGNAL( modeChanged(const QString &, const QString &, const QString &) ), SLOT( modeChanged(const QString &, const QString &, const QString &) ));
 	connect(busconnection, SIGNAL( targetChanged(int, const QString &) ), SLOT( targetChanged(int, const QString &) ));
-	connect(busconnection, SIGNAL( deviceAddedExecution(int) ), SLOT( deviceAddedExecution(int) ));
-	connect(busconnection, SIGNAL( deviceRemovedExecution(int) ), SLOT( deviceRemovedExecution(int) ));
-	connect(busconnection, SIGNAL( profilesLoaded(int) ), SLOT( profilesLoaded(int) ));
+	connect(busconnection, SIGNAL( deviceAddedExecution(const QString &) ), SLOT( deviceAddedExecution(const QString &) ));
+	connect(busconnection, SIGNAL( deviceRemovedExecution(const QString &) ), SLOT( deviceRemovedExecution(const QString &) ));
+	connect(busconnection, SIGNAL( profilesLoaded(const QString &) ), SLOT( profilesLoaded(const QString &) ));
 
 	// inital device adding
-	QList<int> receivers = busconnection->receivers();
-	foreach(int rid, receivers) deviceAdded(rid);
-	foreach(int rid, receivers) deviceAddedExecution(rid);
+	QStringList receivers = busconnection->receivers();
+	foreach(QString rid, receivers) deviceAdded(rid);
+	foreach(QString rid, receivers) deviceAddedExecution(rid);
 }
 
 MessagesModel::~MessagesModel() {
@@ -96,20 +96,20 @@ void MessagesModel::executionengineStateChanged(int state) {
 	addMessage(QLatin1String("Execution engine state changed: ") +trLiriMessages->msg(state));
 }
 
-void MessagesModel::deviceAddedExecution(int rid) {
-	addMessage(QLatin1String("Execution Device added. UID: ") + QString::number(rid));
+void MessagesModel::deviceAddedExecution(const QString & rid) {
+	addMessage(QLatin1String("Execution Device added. UID: ") + rid);
 }
 
-void MessagesModel::deviceRemovedExecution(int rid) {
-	addMessage(QLatin1String("Execution Device removed. UID: ") + QString::number(rid));
+void MessagesModel::deviceRemovedExecution(const QString & rid) {
+	addMessage(QLatin1String("Execution Device removed. UID: ") + rid);
 }
 
-void MessagesModel::profilesLoaded(int rid) {
-	addMessage(QLatin1String("Profiles loaded. UID: ") + QString::number(rid));
+void MessagesModel::profilesLoaded(const QString & rid) {
+	addMessage(QLatin1String("Profiles loaded. UID: ") + rid);
 }
 
-void MessagesModel::deviceAdded(int rid) {
-	addMessage(QLatin1String("Device added. UID: ") + QString::number(rid));
+void MessagesModel::deviceAdded(const QString & rid) {
+	addMessage(QLatin1String("Device added. UID: ") + rid);
 	OrgLiriDevManagerReceiverInterface * const ri = busconnection->getDeviceManagerReceiver(rid);
 
 	if (!ri) return;
@@ -123,17 +123,17 @@ void MessagesModel::deviceAdded(int rid) {
 		SLOT( remoteStateChanged(int) ));
 }
 
-void MessagesModel::deviceRemoved(int rid) {
-	addMessage(QLatin1String("Device removed. UID: ") + QString::number(rid));
+void MessagesModel::deviceRemoved(const QString & rid) {
+	addMessage(QLatin1String("Device removed. UID: ") + rid);
 }
 
-void MessagesModel::executed(int rid, int /*result*/, const QString &executed) {
-	addMessage(QLatin1String("Command executed: ") + executed + QLatin1String(", UID: ") + QString::number(rid));
+void MessagesModel::executed(const QString & rid, int /*result*/, const QString &executed) {
+	addMessage(QLatin1String("Command executed: ") + executed + QLatin1String(", UID: ") + rid);
 }
 
-void MessagesModel::modeChanged(int rid, const QString &oldmode, const QString &newmode) {
+void MessagesModel::modeChanged(const QString & rid, const QString &oldmode, const QString &newmode) {
 	addMessage(QLatin1String("Mode changed from ") + oldmode +
-		QLatin1String(" to ") + newmode + QLatin1String(", UID: ") + QString::number(rid));
+		QLatin1String(" to ") + newmode + QLatin1String(", UID: ") + rid);
 }
 
 void MessagesModel::targetChanged(int state, const QString &targetname) {

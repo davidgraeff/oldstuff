@@ -20,8 +20,8 @@
 #include <QStringList>
 
 DeviceList::DeviceList(QDBusConnection* dbus, BusConnection* busconnection) : dbus(dbus), busconnection(busconnection) {
-	connect(busconnection, SIGNAL( deviceAdded(int) ), SLOT( deviceAdded(int) ));
-	connect(busconnection, SIGNAL( deviceRemoved(int) ), SLOT( deviceRemoved(int) ));
+	connect(busconnection, SIGNAL( deviceAdded(QString) ), SLOT( deviceAdded(QString) ));
+	connect(busconnection, SIGNAL( deviceRemoved(QString) ), SLOT( deviceRemoved(QString) ));
 	connect(busconnection, SIGNAL( devicemanagerStateChanged(int) ), SLOT( devicemanagerStateChanged(int) ));
 	devicemanagerStateChanged(busconnection->deviceManagerState());
 }
@@ -102,22 +102,24 @@ void DeviceList::devicemanagerStateChanged(int state) {
 		instances.clear();
 		emit abortExecutionJobs();
 	} else if (state == LIRI_RUNNING) {
-		QList<int> receivers = busconnection->receivers();
-		foreach(int rid, receivers) deviceAdded(rid);
+		QStringList receivers = busconnection->receivers();
+		foreach(QString rid, receivers) deviceAdded(rid);
 	}
 }
 
-void DeviceList::deviceRemoved(int rid) {
-	if (rid < instances.size()) {
-		delete instances[rid];
-		instances[rid] = 0;
-		emit deviceRemovedExecution(rid);
+void DeviceList::deviceRemoved(QString rid) {
+	for (int i=instances.size()-1;i>=0;--i) {
+	  if (instances[i]->getInstance() == rid) {
+	    delete instances.takeAt(i);
+	    emit deviceRemovedExecution(rid);
+	  }
 	}
 }
 
-void DeviceList::deviceAdded(int rid) {
-	if (rid >= instances.size()) instances.resize(rid+1);
-	if (instances.value(rid,0)) return; //only add if not already added
-	instances[rid] = new DeviceInstance(dbus, this, busconnection, rid);
+void DeviceList::deviceAdded(QString rid) {
+  for (int i=instances.size()-1;i>=0;--i) {
+    if (instances[i]->getInstance()==rid) return;
+  }
+	instances.append(new DeviceInstance(dbus, this, busconnection, rid));
 	emit deviceAddedExecution(rid);
 }
