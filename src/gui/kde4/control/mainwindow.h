@@ -46,7 +46,7 @@ private:
 	ExecutionListModel* executionlistmodel;
 	KIcon onlineIcon;
 	KIcon offlineIcon;
-	int current_rid;
+	QString current_rid;
 private Q_SLOTS:
 	/* running detection: for dis/enabling menu buttons */
 	void devicemanagerStateChanged(int state);

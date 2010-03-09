@@ -22,19 +22,19 @@ class SelectRemoteWindow : public QDialog, public Ui::SelectRemoteWindow
 {
   Q_OBJECT
 public:
-	SelectRemoteWindow(BusConnection* busconnection, int rid, const QString& remoteuid, QWidget *parent=0);
+	SelectRemoteWindow(BusConnection* busconnection, const QString & rid, const QString& remoteuid, QWidget *parent=0);
 	~SelectRemoteWindow();
 
 private:
 	QFileSystemWatcher fwatcher;
 	RemotesModel* remotesmodel;
 	BusConnection* busconnection;
-	int rid;
+	const QString & rid;
 	bool initok;
 private Q_SLOTS:
 	// to react on signals from QFileSystemWatcher
 	void pathChanged(const QString & path);
-	void deviceRemoved(int rid);
+	void deviceRemoved(const QString & rid);
 	void currentIndexChanged(int index);
 Q_SIGNALS:
 	void closednow();

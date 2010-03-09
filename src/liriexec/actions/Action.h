@@ -37,7 +37,7 @@ public:
 	/* condition */
 	bool isConditionOK() const;
 
-	void setDeviceInstance(int);
+	void setDeviceInstance(QString);
 
 	static int getVariantType(char dbustype);
 	static QVariant convert(int varianttype, const QString& text);
@@ -45,7 +45,7 @@ public:
 	/* type */
 	ActionType type;
 
-	int deviceinstance; //EVALonly
+	QString deviceinstance; //EVALonly
 
 	/* condition */
 	QString conditiontext;
@@ -56,7 +56,7 @@ public:
 	/* execution engine */
 	bool pressed;
 Q_SIGNALS:
-	void executed(int receiverinstance, int result, const QString &executedstring);
+	void executed(QString receiverinstance, int result, const QString &executedstring);
 
 };
 

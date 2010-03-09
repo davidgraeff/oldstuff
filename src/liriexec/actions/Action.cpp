@@ -12,7 +12,7 @@
 #include "config.h"
 #include <QDebug>
 
-Action::Action(Action::ActionType type) : type(type), deviceinstance(0), conditioncmp(cmpUndefined) {
+Action::Action(Action::ActionType type) : type(type), conditioncmp(cmpUndefined) {
 
 }
 
@@ -20,7 +20,7 @@ bool Action::work() {
 	return false;
 }
 
-void Action::setDeviceInstance(int ri) {
+void Action::setDeviceInstance(QString ri) {
 	deviceinstance = ri;
 }
 

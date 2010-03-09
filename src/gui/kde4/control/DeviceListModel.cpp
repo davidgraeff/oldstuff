@@ -27,7 +27,7 @@
 #include "businterconnect/Receiver_Execution_dbusproxy.h"
 #include "fileformats/RemoteFile.h"
 
-DeviceInfo::DeviceInfo(DeviceListModel* model, BusConnection* busconnection, int rid) :
+DeviceInfo::DeviceInfo(DeviceListModel* model, BusConnection* busconnection, const QString & rid) :
 	model(model), busconnection(busconnection) {
 
 	this->rid = rid;
@@ -46,11 +46,8 @@ DeviceInfo::DeviceInfo(DeviceListModel* model, BusConnection* busconnection, int
 			SLOT(key(const QString&, const QString&, uint, int)));
 		connect(iface, SIGNAL(receiverStateChanged(int)),
 			SLOT(receiverStateChanged(int)));
-		connect(iface, SIGNAL(remoteStateChanged(int)),
-			SLOT(remoteStateChanged(int)));
 
 		receiverStateChanged(iface->ReceiverState());
-		remoteStateChanged(iface->RemoteState());
 
 		QStringList keys;
 		keys << QLatin1String("remotereceiver.haludi") << QLatin1String("remotereceiver.duid");
@@ -86,26 +83,8 @@ void DeviceInfo::updatetext() {
 
 	if (receiverstate==LIRI_DEVICE_INIT)
 		icon = &(model->iconInit);
-	else if (receiverstate==LIRI_DEVICE_RUNNING)
-		icon = &(model->iconRunning);
-	else
-		icon = &(model->iconUnknown);
-
-	status = i18n("Status: %1, %2", model->trLiriMessages->msg(receiverstate), model->trLiriMessages->msg(remotestate));
-	text_ = caption + QLatin1Char('\n') + status + QLatin1Char('\n') + remote;
-
-	model->changed(this);
-}
-
-void DeviceInfo::receiverStateChanged(int state) {
-	receiverstate = state;
-	updatetext();
-}
-
-void DeviceInfo::remoteStateChanged(int state) {
-	remotestate = state;
-
-	if (state == LIRI_REMOTE_LOADED || state == LIRI_REMOTE_RELOADED) {
+	else if (receiverstate==LIRI_DEVICE_RUNNING_WITH_LAYOUT)
+	{
 		OrgLiriDevManagerReceiverInterface* iface = busconnection->getDeviceManagerReceiver(rid);
 		QStringList keys;
 		keys << QLatin1String("remote.uid");
@@ -114,8 +93,21 @@ void DeviceInfo::remoteStateChanged(int state) {
 			remoteuid = keys[0];
 			remote = i18n("Remote: %1", RemoteFile(keys[0]).getName());
 		}
-	}
+	  updatetext(); 
+	  icon = &(model->iconRunning);
+	} else if (receiverstate==LIRI_DEVICE_RUNNING_WITHOUT_LAYOUT)
+		icon = &(model->iconRunning);
+	else
+		icon = &(model->iconUnknown);
 
+	status = i18n("Status: %1", model->trLiriMessages->msg(receiverstate));
+	text_ = caption + QLatin1Char('\n') + status + QLatin1Char('\n') + remote;
+
+	model->changed(this);
+}
+
+void DeviceInfo::receiverStateChanged(int state) {
+	receiverstate = state;
 	updatetext();
 }
 
@@ -134,8 +126,8 @@ DeviceListModel::DeviceListModel(BusConnection* busconnection) : busconnection(b
 	connect(busconnection, SIGNAL( deviceAdded(int) ), SLOT( deviceAdded(int) ));
 	connect(busconnection, SIGNAL( deviceRemoved(int) ), SLOT( deviceRemoved(int) ));
 
-	QList<int> receivers = busconnection->receivers();
-	foreach(int rid, receivers) deviceAdded(rid);
+	QStringList receivers = busconnection->receivers();
+	foreach(QString rid, receivers) deviceAdded(rid);
 
 }
 
@@ -180,7 +172,7 @@ QVariant DeviceListModel::data(const QModelIndex &index, int role) const {
 	return QVariant();
 }
 
-void DeviceListModel::deviceAdded(int rid) {
+void DeviceListModel::deviceAdded(const QString & rid) {
 	// duplicate ?
 	for (int i=0; i < list.size(); ++i) if ( list[i]->rid == rid ) { return; }
 
@@ -190,7 +182,7 @@ void DeviceListModel::deviceAdded(int rid) {
 	endInsertRows();
 }
 
-void DeviceListModel::deviceRemoved(int rid) {
+void DeviceListModel::deviceRemoved(const QString & rid) {
 	// find device
 	int pos = -1;
 	for (int i=0; i < list.size(); ++i) if ( list[i]->rid == rid ) { pos = i; break; }

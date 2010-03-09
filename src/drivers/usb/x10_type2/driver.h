@@ -11,17 +11,13 @@
 #ifndef DRIVER_H_
 #define DRIVER_H_
 
-#include "driver-interface-usb.h"
+#include "driver-common.h"
 
-class Driver : public liri::IDriverUSB {
-public:
-	Driver(DeviceSettings* settings);
-	inline int init();
-	inline liri::KeyCode listen(int timeout);
-private:
-	int readed;
+extern "C" {
+	extern struct pollstr** open(const char* udi, const char* usbVendorID, const char* usbProductID, const char* usbSerialID, char* error_string);
+	extern void init();
+	extern KeyCode activity(const char* cmd, const char* value);
+	extern void close();
 };
-
-LIRIDRIVER_OPENDL(Driver)
 
 #endif

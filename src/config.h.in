@@ -11,7 +11,6 @@
 #define LIRI_HOME_REMOTE_TEMP_DIR LIRI_USER_DATA_DIR"/remote_temp"
 
 #define LIRI_SYSTEM_REMOTE_LOAD_PROFILES_DIR LIRI_SYSTEM_DATA_DIR"/remote_load_profiles"
-#define LIRI_SYSTEM_ASSOCIATED_REMOTE_DIR LIRI_SYSTEM_DATA_DIR "/associatedRemote"
 #define LIRI_SYSTEM_REMOTES_DIR LIRI_SYSTEM_DATA_DIR "/remotes"
 #define LIRI_SYSTEM_DESKTOPPROFILES_DIR LIRI_SYSTEM_DATA_DIR"/profiles"
 #define LIRI_SYSTEM_APPPROFILES_DIR LIRI_SYSTEM_DATA_DIR"/profiles/applications"
@@ -30,14 +29,9 @@
 #define LIRI_DBUS_SERVICE_DEVMAN "org.liri.Devices"
 #define LIRI_DBUS_SERVICE_CALLOUT "org.liri.HalCallout"
 #define LIRI_DBUS_SERVICE_EXECUTION "org.liri.Execution"
-#define LIRI_DBUS_SERVICE_HAL "org.freedesktop.Hal"
 #define LIRI_DBUS_OBJECT_RECEIVERS "/org/liri/Devicelist"
-#define LIRI_DBUS_OBJECT_HAL "/org/freedesktop/Hal/Manager"
-#define LIRI_DBUS_OBJECT_HALdev "/org/freedesktop/Hal/devices"
 #define LIRI_DBUS_INTERFACE_CONTROL "org.liri.Control"
 #define LIRI_DBUS_INTERFACE_RECEIVER "org.liri.Device"
-#define LIRI_DBUS_INTERFACE_HAL "org.freedesktop.Hal.Manager"
-#define LIRI_DBUS_INTERFACE_HALdev "org.freedesktop.Hal.Device"
 #define LIRI_DBUS_TIMEOUT 1000
 
 /* initial settings */
@@ -64,16 +58,9 @@
 
 /* receiver states : ok */
 #define LIRI_DEVICE_INIT 5
-#define LIRI_DEVICE_RUNNING 6
-#define LIRI_DEVICE_CANCEL 7
+#define LIRI_DEVICE_RUNNING_WITHOUT_LAYOUT 6
+#define LIRI_DEVICE_RUNNING_WITH_LAYOUT 7
 #define LIRI_DEVICE_OFFLINE 8
-
-/* remote state : ok */
-#define LIRI_REMOTE_NO 10
-#define LIRI_REMOTE_LOADED 11
-#define LIRI_REMOTE_RELOAD 12
-#define LIRI_REMOTE_RELOADED 13
-#define LIRI_REMOTE_UNLOADED 14
 
 /* execution engine : ok */
 #define LIRIOK_executed 20

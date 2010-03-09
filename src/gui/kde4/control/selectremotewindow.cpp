@@ -26,7 +26,7 @@
 
 #include "RemotesModel.h"
 
-SelectRemoteWindow::SelectRemoteWindow(BusConnection* busconnection, int rid, const QString& remoteuid, QWidget *parent) :
+SelectRemoteWindow::SelectRemoteWindow(BusConnection* busconnection, const QString & rid, const QString& remoteuid, QWidget *parent) :
 	QDialog(parent), busconnection(busconnection), rid(rid)
 {
 	// ui
@@ -57,7 +57,7 @@ SelectRemoteWindow::~SelectRemoteWindow() {
 	emit closednow();
 }
 
-void SelectRemoteWindow::deviceRemoved(int rid) {
+void SelectRemoteWindow::deviceRemoved(const QString & rid) {
 	// the device we are currently editing doesn't exist anymore
 	// -> close this modal dialog
 	if (this->rid == rid) close();

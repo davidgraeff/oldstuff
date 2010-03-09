@@ -45,10 +45,10 @@ class ControlAdaptor: public QDBusAbstractAdaptor
 "      <arg direction=\"out\" type=\"s\" name=\"datetime\" />\n"
 "    </method>\n"
 "    <signal name=\"deviceAdded\" >\n"
-"      <arg type=\"i\" name=\"rid\" />\n"
+"      <arg type=\"s\" name=\"rid\" />\n"
 "    </signal>\n"
 "    <signal name=\"deviceRemoved\" >\n"
-"      <arg type=\"i\" name=\"rid\" />\n"
+"      <arg type=\"s\" name=\"rid\" />\n"
 "    </signal>\n"
 "  </interface>\n"
         "")
@@ -65,8 +65,8 @@ public Q_SLOTS: // METHODS
 	QString lastHalCallout();
 	QString started();
 Q_SIGNALS: // SIGNALS
-	void deviceAdded(int rid);
-	void deviceRemoved(int rid);
+	void deviceAdded(const QString& rid);
+	void deviceRemoved(const QString& rid);
 };
 
 #endif

@@ -73,9 +73,7 @@ ${LIRISOURCE_SOURCE_DIR}/businterconnect/Receiver_Execution_dbusproxy.h
 ${LIRISOURCE_SOURCE_DIR}/businterconnect/BusConnection.h
 )
 add_subdirectory(drivers/usb)
-add_subdirectory(drivers/alsa)
-add_subdirectory(drivers/ieee1394)
-add_subdirectory(liridhalhelper)
+add_subdirectory(liridstarter)
 add_subdirectory(lirid)
 add_subdirectory(liriexec)
 add_subdirectory(liricontrol)

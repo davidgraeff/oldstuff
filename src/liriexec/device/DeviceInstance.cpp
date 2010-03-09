@@ -43,7 +43,7 @@
 #include "businterconnect/Receiver_DevManager_dbusproxy.h"
 
 DeviceInstance::DeviceInstance(QDBusConnection* conn, DeviceList* devicelist, BusConnection* busconnection,
-			int instance, QObject* parent)
+			QString instance, QObject* parent)
 			: QObject(parent), conn(conn), devicelist(devicelist), busconnection(busconnection), instance(instance) {
 	Q_ASSERT(conn);
 	Q_ASSERT(devicelist);
@@ -52,7 +52,7 @@ DeviceInstance::DeviceInstance(QDBusConnection* conn, DeviceList* devicelist, Bu
 	new DeviceInstanceAdaptor(this);
 	QString objectname;
 	objectname.append(QLatin1String(LIRI_DBUS_OBJECT_RECEIVERS"/"));
-	objectname.append(QString::number(instance));
+	objectname.append(instance);
 	setObjectName(objectname);
 	if ( !conn->registerObject(objectname, static_cast<QObject*>(this)) ) {
 		qWarning() << "DeviceInstance: Couldn't register object:" << objectname;
@@ -63,10 +63,8 @@ DeviceInstance::DeviceInstance(QDBusConnection* conn, DeviceList* devicelist, Bu
 	if (!receiver) {
 		qWarning() << "DeviceInstance: Couldn't find device manager object";
 	} else {
-		connect((QObject*)receiver, SIGNAL( remoteStateChanged(int) ), SLOT( remoteStateChanged(int) ));
 		connect((QObject*)receiver, SIGNAL( key(const QString &, const QString &, uint, int) ),
 			SLOT( key(const QString &, const QString &, uint, int) ));
-		remoteStateChanged(receiver->RemoteState());
 	}
 }
 
@@ -74,33 +72,13 @@ DeviceInstance::~DeviceInstance() {
 	clear();
 	QString objectname;
 	objectname.append(QLatin1String(LIRI_DBUS_OBJECT_RECEIVERS"/"));
-	objectname.append(QString::number(instance));
+	objectname.append(instance);
 	conn->unregisterObject(objectname);
 }
 
 void DeviceInstance::clear() {
 	actions.clear();
 	appProUids.clear();
-}
-
-void DeviceInstance::remoteStateChanged(int state) {
-	/* loaded/reload = unload + load */
-	if (state == LIRI_REMOTE_LOADED || state == LIRI_REMOTE_RELOADED) {
-		reload();
-	}
-	/* unload */
-	else if (state == LIRI_REMOTE_UNLOADED) {
-		clear();
-		qDebug() << "RID:" << instance << "Clear";
-	}
-	/* ignore */
-	else if (state == LIRI_REMOTE_NO) {}
-	else if (state == LIRI_REMOTE_RELOAD) {}
-	else
-	/* something unexspected */
-	{
-		qDebug() << "RID:" << instance << "Unknown remote state:" << state;
-	}
 }
 
 void DeviceInstance::key(const QString &keycode, const QString &keyname, uint channel, int pressed) {
@@ -180,7 +158,7 @@ QStringList DeviceInstance::getProfileUids() {
 	return appProUids;
 }
 
-int DeviceInstance::getInstance() {
+QString DeviceInstance::getInstance() {
 	return instance;
 }
 

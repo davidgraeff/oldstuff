@@ -71,8 +71,8 @@ public Q_SLOTS: // METHODS
     }
 
 Q_SIGNALS: // SIGNALS
-    void deviceAdded(int rid);
-    void deviceRemoved(int rid);
+    void deviceAdded(const QString& rid);
+    void deviceRemoved(const QString& rid);
 };
 
 #endif

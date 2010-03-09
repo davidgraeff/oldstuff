@@ -38,12 +38,12 @@ ExecutionListModel::ExecutionListModel(BusConnection* busconnection) : busconnec
 
 	root = new ExecutionInfo();
 
-	connect(busconnection, SIGNAL( deviceAddedExecution(int) ), SLOT( deviceAddedExecution(int) ));
-	connect(busconnection, SIGNAL( deviceRemovedExecution(int) ), SLOT( deviceRemovedExecution(int) ));
-	connect(busconnection, SIGNAL( profilesLoaded(int) ), SLOT( changed(int) ));
+	connect(busconnection, SIGNAL( deviceAddedExecution(const QString &) ), SLOT( deviceAddedExecution(const QString &) ));
+	connect(busconnection, SIGNAL( deviceRemovedExecution(const QString &) ), SLOT( deviceRemovedExecution(const QString &) ));
+	connect(busconnection, SIGNAL( profilesLoaded(const QString &) ), SLOT( changed(const QString &) ));
 
-	QList<int> receivers = busconnection->receivers();
-	foreach(int rid, receivers) deviceAddedExecution(rid);
+	QStringList receivers = busconnection->receivers();
+	foreach(QString rid, receivers) deviceAddedExecution(rid);
 }
 
 ExecutionListModel::~ExecutionListModel() {
@@ -121,7 +121,7 @@ QString ExecutionListModel::getApplicationProfileName(const QString& uid) {
 	return name;
 }
 
-void ExecutionListModel::deviceAddedExecution(int rid) {
+void ExecutionListModel::deviceAddedExecution(const QString & rid) {
 	// duplicate?
 	for (int i=0;i<root->childs.size();++i)
 		if (root->childs[i]->rid == rid) return;
@@ -158,7 +158,7 @@ void ExecutionListModel::deviceAddedExecution(int rid) {
 	endInsertRows();
 }
 
-void ExecutionListModel::deviceRemovedExecution(int rid) {
+void ExecutionListModel::deviceRemovedExecution(const QString & rid) {
 	int movePos = 0;
 	for (int i=0;i<root->childs.size();++i) {
 		root->childs[i]->row += movePos;
@@ -171,7 +171,7 @@ void ExecutionListModel::deviceRemovedExecution(int rid) {
 	reset();
 }
 
-void ExecutionListModel::changed(int rid) {
+void ExecutionListModel::changed(const QString & rid) {
 	deviceRemovedExecution(rid);
 	deviceAddedExecution(rid);
 }

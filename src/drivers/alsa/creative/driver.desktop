@@ -1,7 +1,0 @@
-[Desktop Entry]
-Version=1.0
-X-Driver-Version=1.0
-Encoding=UTF-8
-Authors=David Gräff <david.graeff@cs.udo.edu>
-Name=Creative IR Remotes
-Comment=Creative Soundcard IR Receiver through alsa

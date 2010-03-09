@@ -33,6 +33,7 @@ class Control : public QObject
 		QString version();
 		QString lastHalCallout();
 		QString started();
+		static QDBusConnection* getBus() { return m_conn; }
 
 		// Unix signal handlers.
 		static void intSignalHandler(int unused);
@@ -45,7 +46,7 @@ class Control : public QObject
 		QSocketNotifier *snInt;
 		QSocketNotifier *snTerm;
 
-		QDBusConnection* conn;
+		static QDBusConnection* m_conn;
 
 		QDateTime halcallout;
 		QDateTime startedtimedate;
@@ -58,8 +59,9 @@ class Control : public QObject
 		void handleSigTerm();
 
 	Q_SIGNALS: // SIGNALS
-		void deviceAdded(int rid);
-		void deviceRemoved(int rid);
+		void deviceAdded(const QString& uid);
+		void deviceRemoved(const QString& uid);
+		void shutdown();
 };
 
 #endif

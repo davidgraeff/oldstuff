@@ -38,15 +38,14 @@ public Q_SLOTS:
 	// framework notifications
 	void devicemanagerStateChanged(int state);
 	void executionengineStateChanged(int state);
-	void deviceAdded(int rid);
-	void deviceRemoved(int rid);
-	void executed(int receiverinstance, int result, const QString &executed);
-	void modeChanged(int receiverinstance, const QString &oldmode, const QString &newmode);
+	void deviceAdded(const QString& rid);
+	void deviceRemoved(const QString& rid);
+	void executed(const QString& receiverinstance, int result, const QString &executed);
+	void modeChanged(const QString& receiverinstance, const QString &oldmode, const QString &newmode);
 	void targetChanged(int state, const QString &targetname);
 	void driverChangedSettings(const QMap<QString,QString> &changedsettings);
 	void key(const QString &keycode, const QString &keyname, uint channel, int pressed);
 	void receiverStateChanged(int state);
-	void remoteStateChanged(int state);
 
 	// tray menu
 	void execEditor();

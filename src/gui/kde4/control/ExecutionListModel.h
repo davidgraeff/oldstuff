@@ -19,7 +19,7 @@ class BusConnection;
 
 class ExecutionInfo {
 	public:
-		int rid;
+		QString rid;
 		QString title;
 		ExecutionInfo* parent;
 		int row;
@@ -42,9 +42,9 @@ public:
 	QVariant headerData(int section, Qt::Orientation orientation,
 			    int role = Qt::DisplayRole) const;
 private Q_SLOTS:
-	void deviceAddedExecution(int rid);
-	void deviceRemovedExecution(int rid);
-	void changed(int rid);
+	void deviceAddedExecution(const QString & rid);
+	void deviceRemovedExecution(const QString & rid);
+	void changed(const QString & rid);
 private:
 	ExecutionInfo* root;
 	BusConnection* busconnection;

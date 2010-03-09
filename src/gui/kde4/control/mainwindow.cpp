@@ -148,7 +148,7 @@ void MainWindow::clicked ( const QModelIndex & index ) {
 
 void MainWindow::doubleClicked ( const QModelIndex & index ) {
 	if (!index.isValid()) return;
-	current_rid = devicelistmodel->data(index, RIDRole).toInt();
+	current_rid = devicelistmodel->data(index, RIDRole).toString();
 	QString remoteuid = devicelistmodel->data(index, RemoteUIDRole).toString();
 	SelectRemoteWindow rm(busconnection, current_rid, remoteuid);
 	rm.exec();

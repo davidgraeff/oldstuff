@@ -28,7 +28,7 @@ public:
 
 	QString* currentmode; //EVALonly
 Q_SIGNALS:
-	void modeChanged(int receiverinstance, const QString &oldmode, const QString &newmode);
+	void modeChanged(QString receiverinstance, const QString &oldmode, const QString &newmode);
 };
 
 #endif

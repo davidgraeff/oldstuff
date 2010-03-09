@@ -38,7 +38,7 @@ class DeviceInstance: public QObject {
 	Q_OBJECT
 	public:
 		DeviceInstance(QDBusConnection* conn, DeviceList* devicelist, BusConnection* busconnection,
-			int instance, QObject* parent = 0);
+			QString instance, QObject* parent = 0);
 		~DeviceInstance();
 
 		/* about actions */
@@ -60,12 +60,11 @@ class DeviceInstance: public QObject {
 		void setMode(const QString &mode);
 
 		/* instance */
-		int getInstance();
+		QString getInstance();
 		void clear();
 		void reload();
 
 	private Q_SLOTS:;
-		void remoteStateChanged(int state);
 		void key(const QString &keycode, const QString &keyname, uint channel, int pressed);
 
 	private:
@@ -78,7 +77,7 @@ class DeviceInstance: public QObject {
 		BusConnection* busconnection;
 		OrgLiriDevManagerReceiverInterface * receiver;
 		QStringList appProUids;
-		int instance;
+		QString instance;
 };
 
 #endif /*LIRI_ACTIONSOFINSTANCE_H_*/

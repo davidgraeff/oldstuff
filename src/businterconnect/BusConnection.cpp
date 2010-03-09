@@ -60,20 +60,20 @@ int BusConnection::executionEngineState() {
 	return ((execution_controlinterface != 0) ?  LIRI_RUNNING :  LIRI_UNKNOWN);
 }
 
-QList<int> BusConnection::receivers() const {
+QStringList BusConnection::receivers() const {
 	return devmanlist.keys();
 }
 
 void BusConnection::reemitAddedSignals(reemitSignalsEnum sig) {
-	QList<int> list;
+	QStringList list;
 	switch (sig) {
 		case reemitDeviceManager:
 			list = devmanlist.keys();
-			foreach(int rid, list) emit deviceAdded(rid);
+			foreach(QString rid, list) emit deviceAdded(rid);
 			break;
 		case reemitExecutionEngine:
 			list = executionlist.keys();
-			foreach(int rid, list) emit deviceAddedExecution(rid);
+			foreach(QString rid, list) emit deviceAddedExecution(rid);
 			break;
 		default:
 			break;
@@ -84,11 +84,11 @@ BusServiceList *  BusConnection::getBusServicelist() const {
 	return busServiceList;
 }
 
-OrgLiriDevManagerReceiverInterface * BusConnection::getDeviceManagerReceiver(int instance) const {
+OrgLiriDevManagerReceiverInterface * BusConnection::getDeviceManagerReceiver(const QString& instance) const {
 	return devmanlist.value(instance);
 }
 
-OrgLiriExecutionReceiverInterface  * BusConnection::getExecutionEngineReceiver(int instance) const {
+OrgLiriExecutionReceiverInterface  * BusConnection::getExecutionEngineReceiver(const QString& instance) const {
 	return executionlist.value(instance);
 }
 
@@ -100,7 +100,7 @@ OrgLiriExecutionControlInterface  * BusConnection::getExecutionEngineControl() c
 	return execution_controlinterface;
 }
 
-void BusConnection::deviceAddedSlot(int rid) {
+void BusConnection::deviceAddedSlot(const QString& rid) {
 	// be on the safe side, although this slot should only be called if these
 	// prerequires are fulfilled anyway
 	if (!devicemanager_controlinterface) return;
@@ -109,7 +109,7 @@ void BusConnection::deviceAddedSlot(int rid) {
 	if (devmanlist.contains(rid)) return;
 
 	// create device-manager device bus object. Bus objectpath: /org/liri/Devicelist/N
-	QString devicename = QLatin1String(LIRI_DBUS_OBJECT_RECEIVERS"/") + QString::number(rid);
+	QString devicename = QLatin1String(LIRI_DBUS_OBJECT_RECEIVERS"/") + rid;
 	OrgLiriDevManagerReceiverInterface* tmp;
 	tmp = new OrgLiriDevManagerReceiverInterface(
 		QLatin1String(LIRI_DBUS_SERVICE_DEVMAN),
@@ -130,7 +130,7 @@ void BusConnection::deviceAddedSlot(int rid) {
 }
 
 
-void BusConnection::deviceAddedExecutionSlot(int rid) {
+void BusConnection::deviceAddedExecutionSlot(const QString& rid) {
 	// be on the safe side, although this slot should only be called if these
 	// prerequires are fulfilled anyway
 	if (!devicemanager_controlinterface || !execution_controlinterface) return;
@@ -139,7 +139,7 @@ void BusConnection::deviceAddedExecutionSlot(int rid) {
 	if (executionlist.contains(rid)) return;
 
 	// create execution device bus object. Bus objectpath: /org/liri/Devicelist/N
-	QString devicename = QLatin1String(LIRI_DBUS_OBJECT_RECEIVERS"/") + QString::number(rid);
+	QString devicename = QLatin1String(LIRI_DBUS_OBJECT_RECEIVERS"/") + rid;
 	OrgLiriExecutionReceiverInterface* tmp;
 	tmp = new OrgLiriExecutionReceiverInterface(
 		QLatin1String(LIRI_DBUS_SERVICE_EXECUTION),
@@ -159,9 +159,9 @@ void BusConnection::deviceAddedExecutionSlot(int rid) {
 	emit deviceAddedExecution(rid);
 }
 
-void BusConnection::deviceRemovedSlot(int rid) {
+void BusConnection::deviceRemovedSlot(const QString& rid) {
 	// only do something if this rid is in our map
-	QMap< int, OrgLiriDevManagerReceiverInterface* >::iterator it = devmanlist.find(rid);
+	QMap< QString, OrgLiriDevManagerReceiverInterface* >::iterator it = devmanlist.find(rid);
 	if (it == devmanlist.end()) return;
 
 	// make no sense to have an execution-engine device but no
@@ -178,9 +178,9 @@ void BusConnection::deviceRemovedSlot(int rid) {
 	devmanlist.erase(it);
 }
 
-void BusConnection::deviceRemovedExecutionSlot(int rid) {
+void BusConnection::deviceRemovedExecutionSlot(const QString& rid) {
 	// only do something if this rid is in our map
-	QMap< int, OrgLiriExecutionReceiverInterface* >::iterator it = executionlist.find(rid);
+	QMap< QString, OrgLiriExecutionReceiverInterface* >::iterator it = executionlist.find(rid);
 	if (it == executionlist.end()) return;
 
 	// emit signals
@@ -202,8 +202,8 @@ void BusConnection::slotServiceUnregistered(const QString& service, bool system)
 		devicemanager_controlinterface = 0;
 
 		// remove all entries one after the other
-		QList<int> rids = devmanlist.keys();
-		foreach(int rid, rids) deviceRemovedSlot(rid);
+		QStringList rids = devmanlist.keys();
+		foreach(QString rid, rids) deviceRemovedSlot(rid);
 	} else
 	// execution engine shutdown
 	if (!system && service == QLatin1String(LIRI_DBUS_SERVICE_EXECUTION)) {
@@ -215,8 +215,8 @@ void BusConnection::slotServiceUnregistered(const QString& service, bool system)
 		execution_controlinterface = 0;
 
 		// remove all entries one after the other
-		QList<int> rids = executionlist.keys();
-		foreach(int rid, rids) deviceRemovedExecutionSlot(rid);
+		QStringList rids = executionlist.keys();
+		foreach(QString rid, rids) deviceRemovedExecutionSlot(rid);
 	}
 }
 
@@ -258,15 +258,15 @@ void BusConnection::startedExecutionEngine() {
 	connect(execution_controlinterface, SIGNAL ( profilesLoaded(int) ),
 		SIGNAL( profilesLoaded(int) ));
 
-	connect(execution_controlinterface, SIGNAL ( deviceAddedExecution(int) ),
-		SLOT( deviceAddedExecutionSlot(int) ));
+	connect(execution_controlinterface, SIGNAL ( deviceAddedExecution(const QString&) ),
+		SLOT( deviceAddedExecutionSlot(const QString&) ));
 
-	connect(execution_controlinterface, SIGNAL ( deviceRemovedExecution(int) ),
-		SLOT( deviceRemovedExecutionSlot(int) ));
+	connect(execution_controlinterface, SIGNAL ( deviceRemovedExecution(const QString&) ),
+		SLOT( deviceRemovedExecutionSlot(const QString&) ));
 
 	// add devices (have to be known be the device manager already!)
-	QList<int> list = devmanlist.keys();
-	foreach(int rid, list) deviceAddedExecutionSlot(rid);
+	QStringList list = devmanlist.keys();
+	foreach(QString rid, list) deviceAddedExecutionSlot(rid);
 
 	// emit signal
 	emit executionengineStateChanged(LIRI_RUNNING);
@@ -289,22 +289,22 @@ void BusConnection::startedDeviceManager() {
 	}
 
 	// connect signals
-	connect(devicemanager_controlinterface, SIGNAL ( deviceAdded(int) ),
-		SLOT( deviceAddedSlot(int) ));
+	connect(devicemanager_controlinterface, SIGNAL ( deviceAdded(const QString&) ),
+		SLOT( deviceAddedSlot(const QString&) ));
 
-	connect(devicemanager_controlinterface, SIGNAL ( deviceRemoved(int) ),
-		SLOT( deviceRemovedSlot(int) ));
+	connect(devicemanager_controlinterface, SIGNAL ( deviceRemoved(const QString&) ),
+		SLOT( deviceRemovedSlot(const QString&) ));
 
 	// add devices through parsing dbus introsspect xml
-	QList<int> list = parseIntrospect();
-	foreach(int rid, list) deviceAddedSlot(rid);
+	QStringList list = parseIntrospect();
+	foreach(QString rid, list) deviceAddedSlot(rid);
 
 	// emit signal
 	emit devicemanagerStateChanged(LIRI_RUNNING);
 }
 
-QList<int> BusConnection::parseIntrospect() {
-	QList<int> tmp;
+QStringList BusConnection::parseIntrospect() {
+	QStringList tmp;
 	QDBusInterface iface(QLatin1String(LIRI_DBUS_SERVICE_DEVMAN), QLatin1String(LIRI_DBUS_OBJECT_RECEIVERS),
 		QLatin1String("org.freedesktop.DBus.Introspectable"), QDBusConnection::systemBus());
 	if (!iface.isValid()) {
@@ -332,7 +332,7 @@ QList<int> BusConnection::parseIntrospect() {
 	while (!child.isNull()) {
 		QString name = child.attribute(QLatin1String("name"));
 		if (child.tagName() == QLatin1String("node") && name[0].isNumber()) {
-			tmp.append(name.toInt());
+			tmp.append(name);
 		}
 		child = child.nextSiblingElement();
 	}

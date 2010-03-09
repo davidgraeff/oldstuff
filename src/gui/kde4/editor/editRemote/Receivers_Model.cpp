@@ -13,7 +13,7 @@
 #include "businterconnect/Receiver_Execution_dbusproxy.h"
 
 //////////////// Receiver (item) class /////////////////
-Receiver::Receiver(BusConnection* connection, int rid) {
+Receiver::Receiver(BusConnection* connection, const QString & rid) {
 	Q_ASSERT(connection);
 	iface = connection->getDeviceManagerReceiver(rid);
 	if (iface) {
@@ -39,15 +39,15 @@ void Receiver::key(const QString &keycode, const QString &keyname, uint channel,
 
 Receivers_Model::Receivers_Model(BusConnection* connection, QObject *parent)
 	: QAbstractListModel(parent), connection(connection) {
-	QList<int> receivers = connection->receivers();
-	foreach(int rid, receivers) deviceAdded(rid);
+	QStringList receivers = connection->receivers();
+	foreach(QString rid, receivers) deviceAdded(rid);
 }
 
 Receivers_Model::~Receivers_Model() {
 
 }
 
-void Receivers_Model::deviceAdded(int rid) {
+void Receivers_Model::deviceAdded(const QString & rid) {
 	int position = -1;
 	for (int i=0; i < receivers.size(); ++i)
 		if (receivers.at(i)->rid == rid) { position = i; return; }
@@ -59,7 +59,7 @@ void Receivers_Model::deviceAdded(int rid) {
 	endInsertRows();
 }
 
-void Receivers_Model::deviceRemoved(int rid) {
+void Receivers_Model::deviceRemoved(const QString & rid) {
 	int position = -1;
 	for (int i=0; i < receivers.size(); ++i)
 		if (receivers.at(i)->rid == rid) { position = i; break; }

@@ -17,13 +17,8 @@ trLiriClass::trLiriClass() {
 	msgs[LIRI_RUNNING] = i18n("Running");
 	msgs[LIRI_DEVICE_OFFLINE] = i18n("Offline/Disconnected");
 	msgs[LIRI_DEVICE_INIT] = i18n("Opening...");
-	msgs[LIRI_DEVICE_RUNNING] = i18n("Running");
-	msgs[LIRI_DEVICE_CANCEL] = i18n("Closing...");
-	msgs[LIRI_REMOTE_LOADED] = i18n("Remote loaded");
-	msgs[LIRI_REMOTE_NO] = i18n("No remote");
-	msgs[LIRI_REMOTE_RELOAD] = i18n("Reload remote");
-	msgs[LIRI_REMOTE_RELOADED] = i18n("Remote reloaded");
-	msgs[LIRI_REMOTE_UNLOADED] = i18n("Remote unloaded");
+	msgs[LIRI_DEVICE_RUNNING_WITH_LAYOUT] = i18n("Running with layout");
+	msgs[LIRI_DEVICE_RUNNING_WITHOUT_LAYOUT] = i18n("Running");
 	msgs[LIRIOK_executed] = i18n("Executed successfully");
 	msgs[LIRIERR_permission] = i18n("Permission denied");
 	msgs[LIRIERR_filename] = i18n("Invalid filename");
