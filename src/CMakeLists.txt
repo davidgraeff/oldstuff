@@ -1,7 +1,7 @@
 PROJECT(LIRISOURCE)
 
 # Include the root build directory for the configuration file
-include_directories( ${CMAKE_BINARY_DIR})
+include_directories( ${CMAKE_BINARY_DIR}/src)
 
 # Include dbus directory
 # Necessary for the dbus types

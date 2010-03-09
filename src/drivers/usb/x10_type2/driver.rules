@@ -1,5 +1,5 @@
 ACTION!="add", GOTO="liri_end"
 
-ENV{ID_MODEL}=="USB_Receiver", ENV{ID_VENDOR_ID}=="0bc7", ENV{ID_MODEL_ID}=="0006", ENV{ID_SERIAL}=="X10_Wireless_Technology_Inc_USB_Receiver", ENV{liri_receiver_driver}="x10_type2", ENV{liri_receiver_layout}="x10.0536", RUN+="/usr/bin/liricallout"
+ENV{ID_VENDOR_ID}=="0bc7", ENV{ID_MODEL_ID}=="0006", ENV{liri_receiver_driver}="x10_type2", ENV{liri_receiver_layout}="x10.0536", RUN+="/usr/bin/liricallout"
 
 LABEL="liri_end"

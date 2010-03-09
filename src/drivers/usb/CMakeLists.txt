@@ -3,9 +3,13 @@ PROJECT(LIRIUSBDRIVERS)
 #additional modules
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-find_package(LibUSB REQUIRED)
+#find_package(LibUSB REQUIRED)
 
 ######## USB via liusb0.1 #########
+
+set(LibUSB_FOUND 1)
+set(LibUSB_INCLUDE_DIRS "/usr/include/libusb-1.0")
+set(LibUSB_LIBRARIES "usb-1.0")
 
 if (LibUSB_FOUND)
 
