@@ -1,8 +1,6 @@
 PROJECT(LIRI)
 
-cmake_minimum_required(VERSION 2.6.0)
-
-cmake_policy(SET CMP0003 NEW)
+cmake_minimum_required(VERSION 2.8.0)
 
 IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   SET(CMAKE_INSTALL_PREFIX
