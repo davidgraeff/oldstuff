@@ -1,0 +1,27 @@
+IDI_ICON1 ICON DISCARDABLE "icons/computers.ico"
+1 VERSIONINFO
+FILEVERSION 0,0,0,1
+PRODUCTVERSION 0,0,0,1
+FILEOS 0x4
+FILETYPE 0x1
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904B0"
+    BEGIN
+      VALUE "CompanyName", "roomcontrol"
+      VALUE "FileDescription", "Edit roomcontrol collections"
+      VALUE "FileVersion", "0,0,0,1"
+      VALUE "InternalName", "collectioneditor"
+      VALUE "LegalCopyright", "Copyright © 2012 roomcontrol"
+      VALUE "ProductName", "roomcontrol.windows.collectioneditor"
+      VALUE "OriginalFilename", "collectioneditor.exe"
+      VALUE "ProductVersion", "0,0,0,1"
+    END
+  END
+
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x0407, 1200
+  END
+END

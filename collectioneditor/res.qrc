@@ -1,0 +1,40 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/">
+	<file>qml/components/Panel.qml</file>
+	<file>qml/components/ButtonA.qml</file>
+	<file>qml/components/ComboBoxA.qml</file>
+	<file>qml/components/Input.qml</file>
+	<file>qml/components/InputLabel.qml</file>
+	<file>qml/components/IntLabel.qml</file>
+	<file>qml/components/BoolLabel.qml</file>
+	<file>qml/components/DoubleLabel.qml</file>
+	<file>qml/components/EnumLabel.qml</file>
+	<file>qml/components/MultipleSelectLabel.qml</file>
+	<file>qml/components/Loading.qml</file>
+	<file>qml/components/InputDialog.qml</file>
+	<file>qml/components/Toolbar.qml</file>
+	<file>qml/core/main.qml</file>
+	<file>qml/core/ConnectView.qml</file>
+	<file>qml/core/CollectionsView.qml</file>
+	<file>qml/core/CollectionView.qml</file>
+	<file>qml/core/ServicesView.qml</file>
+	<file>qml/core/ServiceView.qml</file>
+	<file>qml/core/qmlprivate.js</file>
+	<file>qml/images/button.png</file>
+	<file>qml/images/button_pressed.png</file>
+	<file>qml/images/gloss.png</file>
+	<file>qml/images/clear.png</file>
+	<file>qml/images/lineedit-bg.png</file>
+	<file>qml/images/lineedit-bg-focus.png</file>
+	<file>qml/images/loading.png</file>
+	<file>qml/images/stripes.png</file>
+	<file>qml/images/titlebar.png</file>
+	<file>qml/images/titlebar.sci</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>icons/accept.png</file>
+        <file>icons/computers.png</file>
+        <file>icons/info.png</file>
+        <file alias="close">icons/process_remove.png</file>
+    </qresource>
+</RCC>
