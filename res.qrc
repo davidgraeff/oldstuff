@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/accept.png</file>
+        <file>icons/info.png</file>
+        <file alias="close">icons/process_remove.png</file>
+        <file alias="connected">icons/connected.png</file>
+        <file alias="disconnected">icons/disconnected.png</file>
+    </qresource>
+</RCC>
