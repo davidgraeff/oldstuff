@@ -1,3 +1,10 @@
+DEPRECEATED DUE TO KERNEL ADVANCEMENTS
+This project tried to overcome some problems with usb kernel drivers for hid devices
+and propagated the recogniced events via dbus.
+
+
+------ 2012
+
 Linux Remotes
 Preliminary codename: Liri - LInux Remote Infrastructure
 Disclaimer: Core parts of this framework are build with Qt4core.
@@ -14,17 +21,6 @@ Content:
 8) More information
 9) License
 
-If you want to help out with designing, developing, translating the graphical tools,
-working on a website or documentation please drop me a mail (david.graeff@cs.udo.edu).
-Be aware that this text may not be up to date. Consider using the website for
-latest news and information.
-
-Sincerely,
-david
-
-Jan 18th, 2010
-
-####################################
 1) What is Liri?
 Technical summary:
 - Written in c++/qt4.
