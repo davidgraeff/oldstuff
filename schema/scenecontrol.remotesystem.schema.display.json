@@ -1,0 +1,1 @@
+{"componentid_":"scenecontrol.remotesystem","id_":"scenecontrol.remotesystem.schema.display","method_":"display","name":"Bildschirm","parameters":{"power":{"data":["Aus","An","Umschalten"],"name":"Power","type":"enum"}},"targettype":"action","type_":"schema"}
