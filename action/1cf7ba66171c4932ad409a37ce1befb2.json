@@ -1,1 +1,1 @@
-{"channel":"Tischlicht","componentid_":"scenecontrol.scenecontrol.switches","delay_":0,"id_":"1cf7ba66171c4932ad409a37ce1befb2","instanceid_":"null","method_":"toggleSwitch","sceneid_":"fa92d8830eac4e75bf6eacc5a0cc3940","type_":"action"}
+{"channel":"Tischlicht","componentid_":"scenecontrol.switches","delay_":0,"id_":"1cf7ba66171c4932ad409a37ce1befb2","instanceid_":"null","method_":"toggleSwitch","sceneid_":"fa92d8830eac4e75bf6eacc5a0cc3940","type_":"action"}

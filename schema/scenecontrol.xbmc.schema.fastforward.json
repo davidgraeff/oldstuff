@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.scenecontrol.scenecontrol.xbmc","id_":"scenecontrol.xbmc.schema.fastforward","method_":"FastForward","name":"Schnell vorwärts","parameters":{},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.xbmc","id_":"scenecontrol.xbmc.schema.fastforward","method_":"FastForward","name":"Schnell vorwärts","parameters":{},"targettype":"action","type_":"schema"}

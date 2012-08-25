@@ -1,1 +1,1 @@
-{"channel":"Brunnen","componentid_":"scenecontrol.scenecontrol.switches","delay_":0,"id_":"e20a34bdb61a4aa99f828d8dcfc22f7c","instanceid_":"null","method_":"toggleSwitch","sceneid_":"61fa9a03472549c291de0bffe541607f","type_":"action"}
+{"channel":"Brunnen","componentid_":"scenecontrol.switches","delay_":0,"id_":"e20a34bdb61a4aa99f828d8dcfc22f7c","instanceid_":"null","method_":"toggleSwitch","sceneid_":"61fa9a03472549c291de0bffe541607f","type_":"action"}

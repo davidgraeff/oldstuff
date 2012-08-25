@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.scenecontrol.scenecontrol.projector.sanyo_z700","id_":"scenecontrol.projector.sanyo_z700.schema.projector_sanyo_lamp","method_":"projector_sanyo_lamp","name":"Lampe","parameters":{"eco":{"name":"Eco","type":"boolean"}},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.projector.sanyo_z700","id_":"scenecontrol.projector.sanyo_z700.schema.projector_sanyo_lamp","method_":"projector_sanyo_lamp","name":"Lampe","parameters":{"eco":{"name":"Eco","type":"boolean"}},"targettype":"action","type_":"schema"}

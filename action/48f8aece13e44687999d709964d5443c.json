@@ -1,1 +1,1 @@
-{"channel":"SofaBett","componentid_":"scenecontrol.scenecontrol.switches","delay_":0,"id_":"48f8aece13e44687999d709964d5443c","instanceid_":"null","method_":"setSwitch","sceneid_":"54114e2456df4aa2a15b161a47a3d8d1","type_":"action","value":true}
+{"channel":"SofaBett","componentid_":"scenecontrol.switches","delay_":0,"id_":"48f8aece13e44687999d709964d5443c","instanceid_":"null","method_":"setSwitch","sceneid_":"54114e2456df4aa2a15b161a47a3d8d1","type_":"action","value":true}

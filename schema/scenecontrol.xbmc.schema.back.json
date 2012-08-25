@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.scenecontrol.scenecontrol.xbmc","id_":"scenecontrol.xbmc.schema.back","method_":"back","name":"Zurück","parameters":{},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.xbmc","id_":"scenecontrol.xbmc.schema.back","method_":"back","name":"Zurück","parameters":{},"targettype":"action","type_":"schema"}

@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.scenecontrol.scenecontrol.modes","id_":"scenecontrol.modes.schema.eventmode","method_":"eventmode","name":"Bei Moduswechsel","parameters":{"mode":{"name":"Modus","type":"string","value":null}},"targettype":"event","type_":"schema"}
+{"componentid_":"scenecontrol.modes","id_":"scenecontrol.modes.schema.eventmode","method_":"eventmode","name":"Bei Moduswechsel","parameters":{"mode":{"name":"Modus","type":"string","value":null}},"targettype":"event","type_":"schema"}

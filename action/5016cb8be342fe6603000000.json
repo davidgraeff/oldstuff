@@ -1,1 +1,1 @@
-{"channel":"MediaExternals","componentid_":"scenecontrol.scenecontrol.switches","delay_":0,"id_":"5016cb8be342fe6603000000","instanceid_":"null","method_":"toggleSwitch","sceneid_":"936417d3f4204f928ce092f9c3fb6aac","type_":"action"}
+{"channel":"MediaExternals","componentid_":"scenecontrol.switches","delay_":0,"id_":"5016cb8be342fe6603000000","instanceid_":"null","method_":"toggleSwitch","sceneid_":"936417d3f4204f928ce092f9c3fb6aac","type_":"action"}

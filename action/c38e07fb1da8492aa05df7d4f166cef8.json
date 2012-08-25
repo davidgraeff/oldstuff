@@ -1,1 +1,1 @@
-{"channel":"Rotlicht","componentid_":"scenecontrol.scenecontrol.switches","delay_":0,"id_":"c38e07fb1da8492aa05df7d4f166cef8","instanceid_":"null","method_":"toggleSwitch","sceneid_":"62689c690e1a4d66a1717ee78f71768c","type_":"action"}
+{"channel":"Rotlicht","componentid_":"scenecontrol.switches","delay_":0,"id_":"c38e07fb1da8492aa05df7d4f166cef8","instanceid_":"null","method_":"toggleSwitch","sceneid_":"62689c690e1a4d66a1717ee78f71768c","type_":"action"}

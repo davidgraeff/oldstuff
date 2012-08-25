@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.scenecontrol.scenecontrol.xbmc","id_":"scenecontrol.xbmc.schema.setVolume","method_":"setVolume","name":"Lautstärke setzen","parameters":{},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.xbmc","id_":"scenecontrol.xbmc.schema.setVolume","method_":"setVolume","name":"Lautstärke setzen","parameters":{},"targettype":"action","type_":"schema"}

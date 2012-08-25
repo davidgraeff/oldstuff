@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.scenecontrol.scenecontrol.remotesystem","id_":"scenecontrol.remotesystem.schema.media.stop","method_":"media_stop","name":"Medium stoppen","parameters":{},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.remotesystem","id_":"scenecontrol.remotesystem.schema.media.stop","method_":"media_stop","name":"Medium stoppen","parameters":{},"targettype":"action","type_":"schema"}
