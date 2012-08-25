@@ -1,1 +1,1 @@
-{"componentid_":"linux_input_events","id_":"62191ee88f774d2d8f4e89d5117a07d9","inputdevice":"0bc70006","instanceid_":"null","kernelkeyname":"KEY_4","method_":"inputevent","pressed":true,"repeat":false,"sceneid_":"499fc1c112ac42ca8b611e6febf7d0ee","type_":"event"}
+{"componentid_":"scenecontrol.scenecontrol.linux_input_events","id_":"62191ee88f774d2d8f4e89d5117a07d9","inputdevice":"0bc70006","instanceid_":"null","kernelkeyname":"KEY_4","method_":"inputevent","pressed":true,"repeat":false,"sceneid_":"499fc1c112ac42ca8b611e6febf7d0ee","type_":"event"}

@@ -1,1 +1,1 @@
-{"categories":["leds"],"componentid_":"server","enabled":true,"id_":"bab48e77e7f34999ba0b6d23c324ef95","name":"Led Rot +","type_":"scene"}
+{"categories":["leds"],"componentid_":"scenecontrol.scenecontrol.server","enabled":true,"id_":"bab48e77e7f34999ba0b6d23c324ef95","name":"Led Rot +","type_":"scene"}

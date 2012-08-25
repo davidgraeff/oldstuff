@@ -1,1 +1,1 @@
-{"channel":"Bettlicht","componentid_":"switches","delay_":0,"id_":"ce1c6116dd9c41a9a3c261fca7b2d02f","instanceid_":"null","method_":"setSwitch","sceneid_":"54114e2456df4aa2a15b161a47a3d8d1","type_":"action","value":true}
+{"channel":"Bettlicht","componentid_":"scenecontrol.scenecontrol.switches","delay_":0,"id_":"ce1c6116dd9c41a9a3c261fca7b2d02f","instanceid_":"null","method_":"setSwitch","sceneid_":"54114e2456df4aa2a15b161a47a3d8d1","type_":"action","value":true}

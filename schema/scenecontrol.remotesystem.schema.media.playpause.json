@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.remotesystem","id_":"scenecontrol.remotesystem.schema.media.playpause","method_":"media_playpause","name":"Medium abspielen\/pause","parameters":{},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.scenecontrol.scenecontrol.remotesystem","id_":"scenecontrol.remotesystem.schema.media.playpause","method_":"media_playpause","name":"Medium abspielen\/pause","parameters":{},"targettype":"action","type_":"schema"}

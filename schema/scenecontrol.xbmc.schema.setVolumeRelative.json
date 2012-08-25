@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.xbmc","id_":"scenecontrol.xbmc.schema.setVolumeRelative","method_":"setVolumeRelative","name":"Lautstärke setzen (Relativ)","parameters":{},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.scenecontrol.scenecontrol.xbmc","id_":"scenecontrol.xbmc.schema.setVolumeRelative","method_":"setVolumeRelative","name":"Lautstärke setzen (Relativ)","parameters":{},"targettype":"action","type_":"schema"}

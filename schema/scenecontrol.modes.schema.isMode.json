@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.modes","id_":"scenecontrol.modes.schema.isMode","method_":"isMode","name":"Modus?","parameters":{"mode":{"name":"Modus","type":"string","value":null}},"targettype":"condition","type_":"schema"}
+{"componentid_":"scenecontrol.scenecontrol.scenecontrol.modes","id_":"scenecontrol.modes.schema.isMode","method_":"isMode","name":"Modus?","parameters":{"mode":{"name":"Modus","type":"string","value":null}},"targettype":"condition","type_":"schema"}

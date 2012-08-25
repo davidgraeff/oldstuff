@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.remotesystem","id_":"scenecontrol.remotesystem.schema.media.next","method_":"media_next","name":"Medium nächstes","parameters":{},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.scenecontrol.scenecontrol.remotesystem","id_":"scenecontrol.remotesystem.schema.media.next","method_":"media_next","name":"Medium nächstes","parameters":{},"targettype":"action","type_":"schema"}

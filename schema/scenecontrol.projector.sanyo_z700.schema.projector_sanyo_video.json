@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.projector.sanyo_z700","id_":"scenecontrol.projector.sanyo_z700.schema.projector_sanyo_video","method_":"projector_sanyo_video","name":"Videostumm","parameters":{"mute":{"name":"Videostumm","type":"boolean"}},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.scenecontrol.scenecontrol.projector.sanyo_z700","id_":"scenecontrol.projector.sanyo_z700.schema.projector_sanyo_video","method_":"projector_sanyo_video","name":"Videostumm","parameters":{"mute":{"name":"Videostumm","type":"boolean"}},"targettype":"action","type_":"schema"}

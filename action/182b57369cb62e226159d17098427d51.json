@@ -1,1 +1,1 @@
-{"channel":"1","componentid_":"leds","delay_":0,"fade":1,"id_":"182b57369cb62e226159d17098427d51","instanceid_":"null","method_":"setLedRelative","sceneid_":"7fc14d7f4b1124a0eff850ed5c55e2a5","type_":"action","value":-10}
+{"channel":"1","componentid_":"scenecontrol.scenecontrol.leds","delay_":0,"fade":1,"id_":"182b57369cb62e226159d17098427d51","instanceid_":"null","method_":"setLedRelative","sceneid_":"7fc14d7f4b1124a0eff850ed5c55e2a5","type_":"action","value":-10}

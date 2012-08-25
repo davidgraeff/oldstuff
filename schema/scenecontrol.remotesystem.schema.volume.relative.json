@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.remotesystem","id_":"scenecontrol.remotesystem.schema.volume.relative","method_":"volume.relative","name":"Volume","parameters":{"volume":{"max":100,"min":-100,"name":"Volume","type":"integer","value":0}},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.scenecontrol.scenecontrol.remotesystem","id_":"scenecontrol.remotesystem.schema.volume.relative","method_":"volume.relative","name":"Volume","parameters":{"volume":{"max":100,"min":-100,"name":"Volume","type":"integer","value":0}},"targettype":"action","type_":"schema"}

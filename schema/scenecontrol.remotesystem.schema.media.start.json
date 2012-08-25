@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.remotesystem","id_":"scenecontrol.remotesystem.schema.media.start","method_":"media_start","name":"Medium starten","parameters":{},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.scenecontrol.scenecontrol.remotesystem","id_":"scenecontrol.remotesystem.schema.media.start","method_":"media_start","name":"Medium starten","parameters":{},"targettype":"action","type_":"schema"}

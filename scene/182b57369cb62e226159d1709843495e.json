@@ -1,1 +1,1 @@
-{"categories":["leds"],"componentid_":"server","enabled":true,"id_":"182b57369cb62e226159d1709843495e","name":"Led Weiß (t)","type_":"scene"}
+{"categories":["leds"],"componentid_":"scenecontrol.scenecontrol.server","enabled":true,"id_":"182b57369cb62e226159d1709843495e","name":"Led Weiß (t)","type_":"scene"}

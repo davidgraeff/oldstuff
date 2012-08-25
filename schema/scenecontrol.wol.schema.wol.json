@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.wol","id_":"scenecontrol.wol.schema.wol","method_":"wol","name":"WakeUpOnLan","parameters":{"mac":{"name":"Modus","type":"string","value":null}},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.scenecontrol.scenecontrol.wol","id_":"scenecontrol.wol.schema.wol","method_":"wol","name":"WakeUpOnLan","parameters":{"mac":{"name":"Modus","type":"string","value":null}},"targettype":"action","type_":"schema"}

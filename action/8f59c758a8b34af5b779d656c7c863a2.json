@@ -1,1 +1,1 @@
-{"channel":"Musik","componentid_":"switches","delay_":0,"id_":"8f59c758a8b34af5b779d656c7c863a2","instanceid_":"null","method_":"toggleSwitch","sceneid_":"936417d3f4204f928ce092f9c3fb6aac","type_":"action"}
+{"channel":"Musik","componentid_":"scenecontrol.scenecontrol.switches","delay_":0,"id_":"8f59c758a8b34af5b779d656c7c863a2","instanceid_":"null","method_":"toggleSwitch","sceneid_":"936417d3f4204f928ce092f9c3fb6aac","type_":"action"}

@@ -1,1 +1,1 @@
-{"componentid_":"scenecontrol.modes","id_":"scenecontrol.modes.schema.modeChange","method_":"modeChange","name":"Modus setzen","parameters":{"mode":{"name":"Modus","type":"string","value":null}},"targettype":"action","type_":"schema"}
+{"componentid_":"scenecontrol.scenecontrol.scenecontrol.modes","id_":"scenecontrol.modes.schema.modeChange","method_":"modeChange","name":"Modus setzen","parameters":{"mode":{"name":"Modus","type":"string","value":null}},"targettype":"action","type_":"schema"}

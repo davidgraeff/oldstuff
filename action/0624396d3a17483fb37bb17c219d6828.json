@@ -1,1 +1,1 @@
-{"channel":"Schranklicht","componentid_":"switches","delay_":0,"id_":"0624396d3a17483fb37bb17c219d6828","instanceid_":"null","method_":"toggleSwitch","sceneid_":"1a3880b6fc664a86a1d921ee8132cb68","type_":"action"}
+{"channel":"Schranklicht","componentid_":"scenecontrol.scenecontrol.switches","delay_":0,"id_":"0624396d3a17483fb37bb17c219d6828","instanceid_":"null","method_":"toggleSwitch","sceneid_":"1a3880b6fc664a86a1d921ee8132cb68","type_":"action"}

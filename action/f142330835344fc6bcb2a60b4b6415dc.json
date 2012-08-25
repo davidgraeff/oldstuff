@@ -1,1 +1,1 @@
-{"channel":"Wasserwand","componentid_":"switches","delay_":0,"id_":"f142330835344fc6bcb2a60b4b6415dc","instanceid_":"null","method_":"toggleSwitch","sceneid_":"6c867516488a4aa4a1353e28b04e579d","type_":"action"}
+{"channel":"Wasserwand","componentid_":"scenecontrol.scenecontrol.switches","delay_":0,"id_":"f142330835344fc6bcb2a60b4b6415dc","instanceid_":"null","method_":"toggleSwitch","sceneid_":"6c867516488a4aa4a1353e28b04e579d","type_":"action"}

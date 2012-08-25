@@ -1,1 +1,1 @@
-{"channel":"Faltlicht","componentid_":"switches","delay_":0,"id_":"727b00bf0f994c4095440d943a3e1db0","instanceid_":"null","method_":"setSwitch","sceneid_":"6798653640d44c7099e1af19841e0217","type_":"action","value":false}
+{"channel":"Faltlicht","componentid_":"scenecontrol.scenecontrol.switches","delay_":0,"id_":"727b00bf0f994c4095440d943a3e1db0","instanceid_":"null","method_":"setSwitch","sceneid_":"6798653640d44c7099e1af19841e0217","type_":"action","value":false}
