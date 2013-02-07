@@ -1,4 +1,3 @@
-SceneControl example documents
-==============================
-
-Contains some example documents for the SceneControl Server.
+SceneControl backup documents
+=============================
+Personal backup of my SceneControl Server configuration.
