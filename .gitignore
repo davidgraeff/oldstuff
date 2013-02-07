@@ -12,6 +12,8 @@
 LedControl/bin/
 LedControl/gen/
 LedControl/raw_sources
+ViewPagerIndicator-library/bin/
+ViewPagerIndicator-library/gen/
 
 # Local configuration file (sdk path, etc)
 local.properties
