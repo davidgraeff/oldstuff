@@ -1,0 +1,15 @@
+[Desktop Entry]
+Version=1.0
+X-Version=1.0
+Encoding=UTF-8
+Type=LiriDesktopProfile
+Icon=
+Authors=David Gräff
+Name=Audio Server WG
+Name[de_DE]=Audio Server WG
+Comment[de_DE]=For controlling the WG Media Server
+
+[Uses]
+76343cd5-b677-4bd8-bcea-63d1dc00cf2f
+bf5a76d6-72ed-44dc-97d4-cef15a61f2b1
+52268481-b0e9-41e0-b30c-99a709b7d0b0

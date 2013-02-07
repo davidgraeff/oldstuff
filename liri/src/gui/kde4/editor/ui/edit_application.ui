@@ -1,0 +1,394 @@
+<ui version="4.0" >
+ <class>EditApplication</class>
+ <widget class="QDialog" name="EditApplication" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>519</width>
+    <height>349</height>
+   </rect>
+  </property>
+  <property name="minimumSize" >
+   <size>
+    <width>470</width>
+    <height>330</height>
+   </size>
+  </property>
+  <property name="windowTitle" >
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" >
+   <item>
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tabAbout" >
+      <attribute name="title" >
+       <string>About</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLabel" name="lblName" >
+         <property name="text" >
+          <string>Name:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>txtname</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2" >
+        <widget class="QLineEdit" name="txtname" />
+       </item>
+       <item row="2" column="0" >
+        <widget class="QLabel" name="lblComment" >
+         <property name="text" >
+          <string>Comment:</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" >
+        <widget class="QLabel" name="lblAuthors" >
+         <property name="text" >
+          <string>Authors:</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" >
+        <widget class="QLabel" name="lblIcon" >
+         <property name="text" >
+          <string>Icon:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>txticon</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1" >
+        <widget class="QLineEdit" name="txticon" />
+       </item>
+       <item row="6" column="2" >
+        <widget class="QPushButton" name="btnSearch" >
+         <property name="text" >
+          <string>Search</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="2" >
+        <widget class="QPlainTextEdit" name="txtcomment" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize" >
+          <size>
+           <width>16777215</width>
+           <height>120</height>
+          </size>
+         </property>
+         <property name="tabChangesFocus" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1" >
+        <spacer name="verticalSpacer" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="1" colspan="2" >
+        <widget class="QPlainTextEdit" name="txtauthors" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize" >
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize" >
+          <size>
+           <width>16777215</width>
+           <height>120</height>
+          </size>
+         </property>
+         <property name="tabChangesFocus" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+      <zorder>lblName</zorder>
+      <zorder>txtname</zorder>
+      <zorder>lblComment</zorder>
+      <zorder>lblAuthors</zorder>
+      <zorder>lblIcon</zorder>
+      <zorder>txticon</zorder>
+      <zorder>btnSearch</zorder>
+      <zorder>txtcomment</zorder>
+      <zorder>verticalSpacer</zorder>
+      <zorder>txtauthors</zorder>
+     </widget>
+     <widget class="QWidget" name="tabGlobal" >
+      <attribute name="title" >
+       <string>Variables</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5" >
+       <item>
+        <widget class="QLabel" name="label_4" >
+         <property name="text" >
+          <string>Define variables that you can later use in your actions.</string>
+         </property>
+         <property name="textFormat" >
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="wordWrap" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTableView" name="viewVariables" />
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4" >
+         <item>
+          <spacer name="horizontalSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btnActionAdd_2" >
+           <property name="contextMenuPolicy" >
+            <enum>Qt::ActionsContextMenu</enum>
+           </property>
+           <property name="text" >
+            <string>Add</string>
+           </property>
+           <property name="popupMode" >
+            <enum>QToolButton::MenuButtonPopup</enum>
+           </property>
+           <property name="toolButtonStyle" >
+            <enum>Qt::ToolButtonIconOnly</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btnActionRemove_2" >
+           <property name="text" >
+            <string>Remove</string>
+           </property>
+           <property name="popupMode" >
+            <enum>QToolButton::MenuButtonPopup</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Seite" >
+      <attribute name="title" >
+       <string>Bus services</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6" >
+       <item>
+        <widget class="QLabel" name="label_5" >
+         <property name="text" >
+          <string>Define target applications via their bus-service-name</string>
+         </property>
+         <property name="textFormat" >
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="wordWrap" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTableView" name="viewBusservices" />
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_8" >
+         <item>
+          <spacer name="horizontalSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btnActionAdd_5" >
+           <property name="contextMenuPolicy" >
+            <enum>Qt::ActionsContextMenu</enum>
+           </property>
+           <property name="text" >
+            <string>Add</string>
+           </property>
+           <property name="popupMode" >
+            <enum>QToolButton::MenuButtonPopup</enum>
+           </property>
+           <property name="toolButtonStyle" >
+            <enum>Qt::ToolButtonIconOnly</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btnActionRemove_5" >
+           <property name="text" >
+            <string>Remove</string>
+           </property>
+           <property name="popupMode" >
+            <enum>QToolButton::MenuButtonPopup</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabActions" >
+      <attribute name="title" >
+       <string>Actiongroups</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2" >
+       <item>
+        <widget class="QLabel" name="label_6" >
+         <property name="text" >
+          <string>Doubleclick an action group to edit containing actions</string>
+         </property>
+         <property name="textFormat" >
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="wordWrap" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTableView" name="viewActiongroups" />
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_9" >
+         <item>
+          <spacer name="horizontalSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btnActionAdd_6" >
+           <property name="contextMenuPolicy" >
+            <enum>Qt::ActionsContextMenu</enum>
+           </property>
+           <property name="text" >
+            <string>Add</string>
+           </property>
+           <property name="popupMode" >
+            <enum>QToolButton::MenuButtonPopup</enum>
+           </property>
+           <property name="toolButtonStyle" >
+            <enum>Qt::ToolButtonIconOnly</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="btnActionRemove_6" >
+           <property name="text" >
+            <string>Remove</string>
+           </property>
+           <property name="popupMode" >
+            <enum>QToolButton::MenuButtonPopup</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3" >
+     <item>
+      <widget class="QLabel" name="lblStatus" >
+       <property name="text" >
+        <string>Ready</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox" >
+       <property name="standardButtons" >
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+  <action name="actionAdd" >
+   <property name="text" >
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="actionAdd_Child" >
+   <property name="text" >
+    <string>Add Child</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>txtname</tabstop>
+  <tabstop>txtcomment</tabstop>
+  <tabstop>txtauthors</tabstop>
+  <tabstop>txticon</tabstop>
+  <tabstop>btnSearch</tabstop>
+  <tabstop>tabWidget</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,23 @@
+<ui version="4.0" >
+ <class>DriverlistWindow</class>
+ <widget class="QDialog" name="DriverlistWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>322</width>
+    <height>207</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Driverlist</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" >
+   <item>
+    <widget class="QTableView" name="viewDriverList" />
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

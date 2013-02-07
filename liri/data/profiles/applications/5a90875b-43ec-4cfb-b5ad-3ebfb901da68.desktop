@@ -1,0 +1,220 @@
+[Desktop Entry]
+Version=1.0
+X-Version=1.0
+Encoding=UTF-8
+Type=LiriApplicationProfile
+Authors=David Gräff <david.graeff@cs.udo.edu>
+Name=Rhythmbox
+Comment=The gnome media player
+Icon=rhythmbox
+
+[busservices]
+session://org.gnome.Rhythmbox=autostart
+
+[variables]
+MUTE=b false
+PLAYING=b false
+POSITION=u 0
+VOLUME=d 0.0
+TRUE=b true
+FALSE=b false
+
+[group]
+Channel=1
+Mode=music
+Key=#RED
+
+[program]
+Program=/usr/bin/killall /usr/bin/rhythmbox
+
+[group]
+Channel=1
+Mode=music
+Key=#GREEN
+
+[program]
+Program=/usr/bin/rhythmbox
+
+[group]
+Channel=1
+Mode=music
+Key=#MUTE
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player getMute
+Arg=mute out b MUTE
+
+[changevariable]
+Name=MUTE
+Mod=@INVERT
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player setMute
+Arg=mute in b MUTE
+
+[group]
+Channel=1
+Mode=music
+Key=#VOL+
+Repeat=700 250
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player getVolume
+Arg=volume out d VOLUME
+
+[changevariable]
+Name=VOLUME
+Mod=@CHANGEVOLUME +
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player setVolume
+Arg=volume in d VOLUME
+
+[group]
+Channel=1
+Mode=music
+Key=#VOL-
+Repeat=700 250
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player getVolume
+Arg=volume out d VOLUME
+
+[changevariable]
+Name=VOLUME
+Mod=@CHANGEVOLUME -
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player setVolume
+Arg=volume in d VOLUME
+
+[group]
+Channel=1
+Mode=music
+Key=#UP
+Repeat=700 250
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player getVolume
+Arg=volume out d VOLUME
+
+[changevariable]
+Name=VOLUME
+Mod=@CHANGEVOLUME +
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player setVolume
+Arg=volume in d VOLUME
+
+[group]
+Channel=1
+Mode=music
+Key=#DOWN
+Repeat=700 250
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player getVolume
+Arg=volume out d VOLUME
+
+[changevariable]
+Name=VOLUME
+Mod=@CHANGEVOLUME -
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player setVolume
+Arg=volume in d VOLUME
+
+[group]
+Channel=1
+Mode=music
+Key=#FORWARD
+Repeat=700 500
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player getElapsed
+Arg=elapsed out u POSITION
+
+[changevariable]
+Name=POSITION
+Mod=@CHANGE 10
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player setElapsed
+Arg=elapsed in u POSITION
+
+[group]
+Channel=1
+Mode=music
+Key=#REWIND
+Repeat=700 500
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player getElapsed
+Arg=elapsed out u POSITION
+
+[changevariable]
+Name=POSITION
+Mod=@CHANGE -10
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player setElapsed
+Arg=elapsed in u POSITION
+
+[group]
+Channel=1
+Mode=music
+Key=#PLAY
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player getPlaying
+Arg=playing out b PLAYING
+
+[bus]
+Condition=PLAYING = FALSE
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player playPause
+Arg=arg0 in b 1
+
+[group]
+Channel=1
+Mode=music
+Key=#PAUSE
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player getPlaying
+Arg=playing out b PLAYING
+
+[bus]
+Condition=PLAYING = TRUE
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player playPause
+Arg=arg0 in b 1
+
+[group]
+Channel=1
+Mode=music
+Key=#STOP
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player getPlaying
+Arg=playing out b PLAYING
+
+[bus]
+Condition=PLAYING = TRUE
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player playPause
+Arg=arg0 in b 1
+
+[group]
+Channel=1
+Mode=music
+Key=#NEXT
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player next
+
+[group]
+Channel=1
+Mode=music
+Key=#PREVIOUS
+
+[bus]
+Bus=session://org.gnome.Rhythmbox /org/gnome/Rhythmbox/Player org.gnome.Rhythmbox.Player previous
+

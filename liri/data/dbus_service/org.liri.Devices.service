@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=org.liri.Devices
+Exec=/usr/bin/lirid
+User=root

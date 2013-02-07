@@ -1,0 +1,5 @@
+
+[Uses] Section:
+----------------
+Keys are irrelevant for this section. Usually keys are just consecutive numbers.
+Specify the application profiles that liriexec should load.

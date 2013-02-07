@@ -1,0 +1,51 @@
+[Desktop Entry]
+Version=1.0
+X-Version=1.0
+Encoding=UTF-8
+Type=LiriApplicationProfile
+Authors=David Gräff <david.graeff@cs.udo.edu>
+Name=Modes for Server
+Comment=Common modes defined and connected to common keynames
+Icon=
+
+[group]
+Channel=2
+Key=*TV
+
+[changemode]
+NewMode=tv
+
+[group]
+Channel=2
+Key=*RECTV
+
+[changemode]
+NewMode=rectv
+
+[group]
+Channel=2
+Key=*DISC
+
+[changemode]
+NewMode=disc
+
+[group]
+Channel=2
+Key=*MUSIC
+
+[changemode]
+NewMode=music
+
+[group]
+Channel=2
+Key=*VIDEO
+
+[changemode]
+NewMode=video
+
+[group]
+Channel=2
+Key=*PHOTO
+
+[changemode]
+NewMode=photo

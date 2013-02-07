@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<gui name="liri-control-kde4" version="4">
+  <ToolBar name="mainToolBar" hidden="true">
+		<text>Main Toolbar</text>
+		<Action name="messages" />
+		<Action name="driverlist" />
+		<Action name="startExecutionEngine" />
+  </ToolBar>
+  <MenuBar>
+    <Menu name="file" >
+		<Action name="messages" />
+		<Action name="driverlist" />
+		<Action name="reloadRemote" />
+		<Action name="reloadProfiles" />
+		<Action name="shutdownDevicemanager" />
+		<Action name="shutdownExecutionEngine" />
+		<Action name="startExecutionEngine" />
+		<Action name="quit" />
+    </Menu>
+  </MenuBar>
+</gui>

@@ -1,0 +1,35 @@
+<ui version="4.0" >
+ <class>SelectRemoteWindow</class>
+ <widget class="QDialog" name="SelectRemoteWindow" >
+  <property name="windowModality" >
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>290</width>
+    <height>41</height>
+   </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle" >
+   <string>Select associated remote</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" >
+   <property name="sizeConstraint" >
+    <enum>QLayout::SetFixedSize</enum>
+   </property>
+   <item>
+    <widget class="QComboBox" name="comboBox" />
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

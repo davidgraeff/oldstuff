@@ -1,0 +1,22 @@
+set (SRCS ${FILEFORMAT_SRC} ${PROFILES_SRC} ${REMOTES_SRC} ${BUSINTERCONNECTION_SRC}
+main.cpp
+ListenObject.cpp
+)
+
+set (SRCS_MOC
+${BUSINTERCONNECTION_SRC_MOC}
+${PROFILES_SRC_MOC}
+ListenObject.h
+)
+
+include_directories( . )
+
+#generate moc files
+QT4_WRAP_CPP(SRCS_MOC ${SRCS_MOC})
+
+set(EXECUTENAME "liri-control")
+
+add_executable(${EXECUTENAME} ${SRCS} ${SRCS_MOC})
+TARGET_LINK_LIBRARIES(${EXECUTENAME} ${QT_LIBRARIES} )
+
+install(TARGETS ${EXECUTENAME} DESTINATION bin CONFIGURATIONS Debug Release)

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Liri Tray
+Name[de]=Liri Tray
+Comment=For notifiactions of the liri framework
+Comment[de]=Zeigt Benachrichtigungen bezüglich Fernbedienungen an
+Icon=liri-tray
+Exec=/usr/bin/liri-tray-kde4
+Terminal=false
+Type=Application
+Categories=Qt;KDE;System;RemoteAccess;

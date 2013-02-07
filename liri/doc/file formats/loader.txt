@@ -1,0 +1,15 @@
+You can assign remote descriptors to drivers respectively to load that
+descriptor when a receiver - using the driver - is plugged in.
+For every remote descriptor you can specify which desktop profiles to load.
+This is the purpose of loader files.
+
+Every entry in a loader file is separated by a newline and
+except ALL represent filenames. 
+ALL is a special entry that cause liriexec to load all desktop entries.
+Has to be the first line. If ALL is set all further entries are ignored.
+
+Example Entries:
+--------
+ALL
+gnome2-0d5bd540-2fd7-11dd-88a7-0090f553bd36.desktop
+

@@ -1,0 +1,90 @@
+/* paths */
+#define LIRI_USER_DATA_DIR "@LIRI_USER_DATA_DIR@"
+#define LIRI_USER_CONFIG_FILE "@LIRI_USER_DATA_DIR@/@LIRI_USER_CONFIG_FILE@"
+#define LIRI_SYSTEM_DATA_DIR "@CMAKE_INSTALL_PREFIX@/@LIRI_SYSTEM_DATA_DIR@"
+#define LIRI_SYSTEM_CONFIG_FILE "@LIRI_SYSTEM_CONFIGDIR@/@LIRI_SYSTEM_CONFIGNAME@"
+#define LIRI_SYSTEM_DRIVERS_DIR "@CMAKE_INSTALL_PREFIX@/@LIRI_SYSTEM_DRIVERS_DIR@"
+
+#define LIRI_HOME_APPPROFILES_DIR LIRI_USER_DATA_DIR"/profiles/applications"
+#define LIRI_HOME_DESKTOPPROFILES_DIR LIRI_USER_DATA_DIR"/profiles"
+#define LIRI_HOME_REMOTE_LOAD_PROFILES_DIR LIRI_USER_DATA_DIR"/remote_load_profiles"
+#define LIRI_HOME_REMOTE_TEMP_DIR LIRI_USER_DATA_DIR"/remote_temp"
+
+#define LIRI_SYSTEM_REMOTE_LOAD_PROFILES_DIR LIRI_SYSTEM_DATA_DIR"/remote_load_profiles"
+#define LIRI_SYSTEM_REMOTES_DIR LIRI_SYSTEM_DATA_DIR "/remotes"
+#define LIRI_SYSTEM_DESKTOPPROFILES_DIR LIRI_SYSTEM_DATA_DIR"/profiles"
+#define LIRI_SYSTEM_APPPROFILES_DIR LIRI_SYSTEM_DATA_DIR"/profiles/applications"
+#define LIRI_SYSTEM_DRIVER_DESCRIPTION_DIR LIRI_SYSTEM_DATA_DIR"/drivers"
+
+#define LIRI_SYSTEM_RECEIVER_LOAD_REMOTE_FILE "liri.loader"
+
+/* file format */
+#define LIRI_FILEFORMAT_MIN 1.0
+#define LIRI_FILEFORMAT_MAX 1.0
+#define LIRI_FILEFORMAT_APPPROFILES "LiriApplicationProfile"
+#define LIRI_FILEFORMAT_DESKTOPPROFILES "LiriDesktopProfile"
+#define LIRI_FILEFORMAT_REMOTES "LiriRemote"
+
+/* bus specific */
+#define LIRI_DBUS_SERVICE_DEVMAN "org.liri.Devices"
+#define LIRI_DBUS_SERVICE_CALLOUT "org.liri.HalCallout"
+#define LIRI_DBUS_SERVICE_EXECUTION "org.liri.Execution"
+#define LIRI_DBUS_OBJECT_RECEIVERS "/org/liri/Devicelist"
+#define LIRI_DBUS_INTERFACE_CONTROL "org.liri.Control"
+#define LIRI_DBUS_INTERFACE_RECEIVER "org.liri.Device"
+#define LIRI_DBUS_TIMEOUT 1000
+
+/* initial settings */
+#define LIRI_DBUS_REPEAT_INIT 700
+#define LIRI_DBUS_REPEAT_TICK 250
+#define LIRI_DRIVERLISTEN_TIMEOUT 5000
+#define LIRI_DRIVERINIT_TIMEOUT 1500
+
+/* log files */
+#define LIRI_LOGFILE_CALLOUT "/var/log/liricallout"
+#define LIRI_LOGFILE_DAEMON "/var/log/lirid"
+#define LIRI_LOGFILE_EXECUTION LIRI_USER_DATA_DIR"/executionlog"
+
+/* about the program */
+#define ABOUT_COPYRIGHT "(c) 2008 The liri authors"
+#define ABOUT_AUTHOR "David Gräff"
+#define ABOUT_AUTHOR_EMAIL "david.graeff@cs.udo.edu"
+#define ABOUT_SUMMARY "Part of Linux Remote Infrastructure (liri)"
+#define ABOUT_VERSION "@LIRI_VERSION@"
+
+/* common states */
+#define LIRI_UNKNOWN 0
+#define LIRI_RUNNING 1
+
+/* receiver states : ok */
+#define LIRI_DEVICE_INIT 5
+#define LIRI_DEVICE_RUNNING_WITHOUT_LAYOUT 6
+#define LIRI_DEVICE_RUNNING_WITH_LAYOUT 7
+#define LIRI_DEVICE_OFFLINE 8
+
+/* execution engine : ok */
+#define LIRIOK_executed 20
+
+/* errors */
+#define LIRIERR_notFound -100
+#define LIRIERR_opendevice -101
+#define LIRIERR_endpoint_type -102
+#define LIRIERR_endpoint_direction -103
+#define LIRIERR_endpoint_missing -104
+#define LIRIERR_resetendpoint -105
+#define LIRIERR_initdevice -106
+#define LIRIERR_claiming -107
+#define LIRIERR_writing -108
+#define LIRIERR_reading -109
+#define LIRIERR_timeout -110
+#define LIRIERR_settings -111
+#define LIRIERR_filename -112
+#define LIRIERR_permission -113
+#define LIRIERR_opendriver -114
+#define LIRIERR_symbolCreate -150
+#define LIRIERR_symbolDestroy -151
+#define LIRIERR_noservices -200
+#define LIRIERR_noservicewithnumber -201
+#define LIRIERR_autostart -202
+#define LIRIERR_changebusinstance -203
+

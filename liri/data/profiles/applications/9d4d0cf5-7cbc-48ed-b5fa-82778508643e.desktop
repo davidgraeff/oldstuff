@@ -1,0 +1,27 @@
+[Desktop Entry]
+Version=1.0
+X-Version=1.0
+Encoding=UTF-8
+Type=LiriApplicationProfile
+Authors=David Gräff <david.graeff@cs.udo.edu>
+Name=GnomeScreenSaver
+Comment=For starting, stopping the screensaver
+Icon=gnome-computer
+
+[busservices]
+session://org.gnome.ScreenSaver=
+
+[group]
+Channel=2
+Key=#SETUP
+
+[bus]
+Bus=session://org.gnome.ScreenSaver / org.gnome.ScreenSaver SetActive
+Arg=value in b 0
+
+[group]
+Key=#EJECT
+
+[bus]
+Bus=session://org.gnome.ScreenSaver / org.gnome.ScreenSaver SetActive
+Arg=value in b 1

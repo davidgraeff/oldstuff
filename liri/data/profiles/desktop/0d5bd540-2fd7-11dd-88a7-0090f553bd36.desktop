@@ -1,0 +1,17 @@
+[Desktop Entry]
+Version=1.0
+X-Version=1.0
+Encoding=UTF-8
+Type=LiriDesktopProfile
+Icon=kde
+Authors=David Gräff <david.graeff@cs.udo.edu>
+Name=KDE4
+Comment=The new KDE4 (testet with 4.1) desktop with amarok2
+Comment[de_DE]=Der neue KDE4 Desktop (ab Version 4.1 getestet) mit z.B. Amarok2
+
+[Uses]
+c2e7f8e5-d620-45d0-95fe-505e4eebe2ab
+afef68ef-664e-4bf1-b07f-875bd735f0f5
+31e67afc-6199-11dd-90ba-0090f553bd36
+0d1e0e49-24b0-424d-a696-d4905ae1ce1d
+20e67afc-6199-11dd-90ba-0090f553bd35
