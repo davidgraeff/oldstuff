@@ -22,6 +22,8 @@ public class ExecutionServer extends Handler implements ConnectionObserverInterf
 	private TCPClient m_connection;
 	private ArrayList<ExecutionServerMessageInterface> mListens = new ArrayList<ExecutionServerMessageInterface>();
 	private ArrayList<ModelAvailableInterface> mModelAvailableListens = new ArrayList<ModelAvailableInterface>();
+	public static final String MODEL_EVENTS = "event";
+	public static final String MODEL_PROFILES = "profiles";
 
 	private void putModel(SceneModel model) {
 		m_models.put(model.getID(), model);
@@ -53,8 +55,8 @@ public class ExecutionServer extends Handler implements ConnectionObserverInterf
 				for (ExecutionServerMessageInterface o : mListens) {
 					o.executionServerConnected(m_connection);
 				}
-				putModel(new SceneModel("profiles", "id_","categories"));
-				putModel(new SceneModel("event", "id_", null));
+				putModel(new SceneModel(MODEL_PROFILES, "id_","categories"));
+				putModel(new SceneModel(MODEL_EVENTS, "id_", null));
 				
 				m_connection.write("{\"componentid_\":\"server\", \"type_\":\"execute\", \"method_\":\"version\"}",
 						"{\"componentid_\":\"server\", \"type_\":\"execute\", \"method_\":\"requestAllProperties\"}",
@@ -88,9 +90,9 @@ public class ExecutionServer extends Handler implements ConnectionObserverInterf
 						for (int i = 0; i < documents.length(); i++) {
 							JSONObject doc = documents.getJSONObject(i);
 							if (doc.getString("type_").equals("scene"))
-								m_models.get("profiles").change(doc);
-							else if (doc.getString("type_").equals("event"))
-								m_models.get("event").change(doc);
+								m_models.get(MODEL_PROFILES).change(doc);
+							else if (doc.getString("type_").equals(MODEL_EVENTS))
+								m_models.get(MODEL_EVENTS).change(doc);
 							//that.documentChanged(doc.documents[i], false);
 						}
 
@@ -98,13 +100,13 @@ public class ExecutionServer extends Handler implements ConnectionObserverInterf
 					} else if (id.equals("documentChanged")) {
 						JSONObject doc = json.getJSONObject("document");
 						if (doc.getString("type_").equals("scene"))
-							m_models.get("profiles").change(doc);
-						else if (doc.getString("type_").equals("event"))
-							m_models.get("events").change(doc);
+							m_models.get(MODEL_PROFILES).change(doc);
+						else if (doc.getString("type_").equals(MODEL_EVENTS))
+							m_models.get(MODEL_EVENTS).change(doc);
 
 //						that.documentChanged(doc.document, false);
 //						that.notifyDocumentChange(doc.document, false);
-//						if (doc.document.type_=="action"||doc.document.type_=="event"||doc.document.type_=="condition") {
+//						if (doc.document.type_=="action"||doc.document.type_==MODEL_EVENTS||doc.document.type_=="condition") {
 //							var scenedoc = that.scenes[that.unqiueSceneID(doc.document.sceneid_)]
 //							if (scenedoc)
 //								that.notifyDocumentChange(scenedoc, false);
@@ -112,14 +114,14 @@ public class ExecutionServer extends Handler implements ConnectionObserverInterf
 					} else if (id.equals("documentRemoved"))  {
 						JSONObject doc = json.getJSONObject("document");
 						if (doc.getString("type_").equals("scene"))
-							m_models.get("profiles").remove(doc);
-						else if (doc.getString("type_").equals("event"))
-							m_models.get("event").remove(doc);
+							m_models.get(MODEL_PROFILES).remove(doc);
+						else if (doc.getString("type_").equals(MODEL_EVENTS))
+							m_models.get(MODEL_EVENTS).remove(doc);
 
 //						that.documentChanged(doc.document, true);
 //						that.notifyDocumentChange(doc.document, true);
 						// update scene
-//						if (doc.document.type_=="action"||doc.document.type_=="event"||doc.document.type_=="condition")
+//						if (doc.document.type_=="action"||doc.document.type_==MODEL_EVENTS||doc.document.type_=="condition")
 //							that.notifyDocumentChange(doc.document.sceneid_, false);
 					} else if (id.equals("registerNotifier"))  {
 //						console.log("Document notifier registered:", doc.notifierstate);

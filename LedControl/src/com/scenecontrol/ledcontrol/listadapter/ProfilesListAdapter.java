@@ -100,7 +100,7 @@ public class ProfilesListAdapter extends BaseAdapter implements ModelAvailableIn
 	
 	@Override
 	public void onModelAvailable(SceneModel model) {
-		if (!model.getID().equals("profiles"))
+		if (!model.getID().equals(ExecutionServer.MODEL_PROFILES))
 			return;
 		m_model = model;
 		model.addChangeListener(this);

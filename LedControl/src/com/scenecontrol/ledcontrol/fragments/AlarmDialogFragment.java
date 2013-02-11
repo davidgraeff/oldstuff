@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import com.scenecontrol.ledcontrol.R;
 import com.scenecontrol.ledcontrol.LedApplication;
 import com.scenecontrol.ledcontrol.model.SceneModel;
+import com.scenecontrol.ledcontrol.network.ExecutionServer;
 import com.scenecontrol.ledcontrol.network.TCPClient;
 
 import android.app.DatePickerDialog;
@@ -92,7 +93,7 @@ public class AlarmDialogFragment extends DialogFragment   {
 		} else {
 			mRadioGroup.setVisibility(View.VISIBLE);
 			// find first time event for this scene id
-			SceneModel model = LedApplication.getServerconnection().getModel("event");
+			SceneModel model = LedApplication.getServerconnection().getModel(ExecutionServer.MODEL_EVENTS);
 			if (model != null) {
 				int len = model.getCount();
 				for (int i=0;i<len;++i) {

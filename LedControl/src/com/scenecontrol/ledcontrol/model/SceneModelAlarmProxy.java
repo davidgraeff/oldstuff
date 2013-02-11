@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import com.scenecontrol.ledcontrol.LedApplication;
 import com.scenecontrol.ledcontrol.model.SceneModel.ModelElement;
+import com.scenecontrol.ledcontrol.network.ExecutionServer;
 
 
 public class SceneModelAlarmProxy implements ModelChangeListener, ModelAvailableInterface {
@@ -157,10 +158,10 @@ public class SceneModelAlarmProxy implements ModelChangeListener, ModelAvailable
 
 	@Override
 	public void onModelAvailable(SceneModel model) {
-		if (model.getID().equals("event")) {
+		if (model.getID().equals(ExecutionServer.MODEL_EVENTS)) {
 		eventModel = model;
 		eventModel.addChangeListener(this);
-		} else if (model.getID().equals("profiles")) {
+		} else if (model.getID().equals(ExecutionServer.MODEL_PROFILES)) {
 			mModel = model;
 			onModelDataChange();
 		}
