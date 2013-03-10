@@ -30,24 +30,15 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication app(argc, argv);
-    if (argc<2) {
-		qWarning()<<"No instanceid provided!";
+	QCoreApplication app(argc, argv);
+	if (argc<4) {
+		qWarning()<<"Usage: plugin_id instance_id server_ip server_port";
 		return 1;
 	}
-    plugin p(QLatin1String(PLUGIN_ID), QString::fromAscii(argv[1]));
-    if(!p.createCommunicationSockets())
-        return -1;
-    return app.exec();
-}
-
-plugin::plugin(const QString& pluginid, const QString& instanceid) : AbstractPlugin(pluginid, instanceid), m_listenSocket(0)
-{
-	m_sendPort = 0;
-    m_writesocket = new QUdpSocket(this);
-    connect(&m_cacheTimer, SIGNAL(timeout()), SLOT(cacheToDevice()));
-    m_cacheTimer.setInterval(50);
-    m_cacheTimer.setSingleShot(true);
+	
+	if (plugin::createInstance(PLUGIN_ID,argv[1],argv[2],argv[3])==0)
+		return -1;
+	return app.exec();
 }
 
 plugin::~plugin() {}
@@ -62,8 +53,12 @@ void plugin::connectToIOs(int portSend, int portListen, const QString &user, con
     connect(m_listenSocket, SIGNAL(readyRead()), SLOT(readyRead()));
     if (!m_listenSocket->bind(QHostAddress::Broadcast, portListen)) {
 		qWarning()<<"Bind failed" << portListen;
-    } else 
-		initialize();
+    } else {
+		QByteArray str("wer da?");
+		str.append(0x0D);
+		str.append(0x0A);
+		m_writesocket->writeDatagram(str, QHostAddress::Broadcast, m_sendPort);
+	}
 }
 
 void plugin::readyRead()
@@ -121,12 +116,12 @@ void plugin::readyRead()
         // send to scenecontrol.switches plugin
 		SceneDocument doc;
 		doc.setMethod("subpluginChange");
-		doc.setComponentID(m_pluginid);
-		doc.setInstanceID(m_instanceid);
+		doc.setComponentID(QLatin1String("scenecontrol.switches"));
+		doc.setInstanceID(QLatin1String("null"));
 		doc.setData("channel",channelid);
 		doc.setData("value",value);
 		doc.setData("name",channelid);
-		callRemoteComponentMethod("scenecontrol.switchesnull", doc.getData());
+		callRemoteComponent(doc.getData());
 	
         // update cache
         if(value)
@@ -188,28 +183,24 @@ void plugin::cacheToDevice()
 
 void plugin::initialize()
 {
-	if (m_sendPort==0)
-		return;
-	
-    clear();
-    QByteArray str("wer da?");
-    str.append(0x0D);
-    str.append(0x0A);
-    m_writesocket->writeDatagram(str, QHostAddress::Broadcast, m_sendPort);
+	m_sendPort = 0;
+	m_writesocket = new QUdpSocket(this);
+	connect(&m_cacheTimer, SIGNAL(timeout()), SLOT(cacheToDevice()));
+	m_cacheTimer.setInterval(50);
+	m_cacheTimer.setSingleShot(true);
 }
 
 void plugin::clear()
 {
-    m_ios.clear();
     m_ios.clear();
 	
 	changeProperty(SceneDocument::createModelReset("switches.anel_sockets", "channel").getData());
 
     SceneDocument doc;
     doc.setMethod("clear");
-	doc.setComponentID(m_pluginid);
-	doc.setInstanceID(m_instanceid);
-    callRemoteComponentMethod("scenecontrol.switchesnull", doc.getData());
+	doc.setComponentID(QLatin1String("scenecontrol.switches"));
+	doc.setInstanceID(QLatin1String("null"));
+	callRemoteComponent(doc.getData());
 }
 
 void plugin::configChanged(const QByteArray &configid, const QVariantMap &data)

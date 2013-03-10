@@ -20,7 +20,7 @@
 #pragma once
 #include <QObject>
 #include <QStringList>
-#include "shared/plugins/abstractplugin.h"
+#include "abstractplugin.h"
 #include <QUdpSocket>
 #include <QTimer>
 
@@ -31,7 +31,6 @@ class plugin : public AbstractPlugin
 
 
 public:
-    plugin(const QString& pluginid, const QString& instanceid);
     virtual ~plugin();
 
     virtual void initialize();

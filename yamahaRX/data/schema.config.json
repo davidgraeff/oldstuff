@@ -1,0 +1,6 @@
+{
+	"version_":1, "type_":"schema", "targettype":"config", "configid_":"serverip", "name":"Yamaha RX per IP",
+	"parameters": {
+		"server":{"name":"IP", "type":"string", "value":"127.0.0.1"}
+	}
+}

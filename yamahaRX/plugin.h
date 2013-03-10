@@ -20,14 +20,13 @@
 #pragma once
 #include <QObject>
 #include <QStringList>
-#include "shared/plugins/abstractplugin.h"
+#include "abstractplugin.h"
 #include <QTcpSocket>
 
 class plugin : public AbstractPlugin
 {
     Q_OBJECT
 public:
-    plugin(const QString& pluginid, const QString& instanceid);
     virtual ~plugin();
 
     virtual void initialize();
