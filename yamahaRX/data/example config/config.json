@@ -1,1 +1,1 @@
-{"configid_":"serverip","server":"127.0.0.1", "instanceid_":"127.0.0.1","type_":"configuration"}
+{"configid_":"serverip","server":"127.0.0.1", "instanceid_":"127.0.0.1","type_":"configuration", "autostart": true}

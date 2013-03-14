@@ -47,9 +47,8 @@ void plugin::initialize()
 }
 
 
-void plugin::configChanged(const QByteArray& configid, const QVariantMap& data)
+void plugin::instanceConfiguration(const QVariantMap& data)
 {
-    Q_UNUSED(configid);
     if (data.contains(QLatin1String("serialport"))) {
         delete m_serial;
 		m_serial = 0;

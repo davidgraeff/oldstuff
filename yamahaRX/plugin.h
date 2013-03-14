@@ -31,7 +31,8 @@ public:
 
     virtual void initialize();
     virtual void clear();
-    virtual void configChanged(const QByteArray& configid, const QVariantMap& data);
+	virtual void requestProperties() {}
+	virtual void instanceConfiguration(const QVariantMap& data);
 public Q_SLOTS:
     // player
     void play();

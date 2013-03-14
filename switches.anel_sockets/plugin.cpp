@@ -114,13 +114,17 @@ void plugin::readyRead()
         changeProperty(sc.getData(), -1);
 
         // send to scenecontrol.switches plugin
+		SceneDocument target;
+		target.setComponentID(m_pluginid);
+		target.setInstanceID(m_instanceid);
 		SceneDocument doc;
 		doc.setMethod("subpluginChange");
-		doc.setComponentID(QLatin1String("scenecontrol.switches"));
-		doc.setInstanceID(QLatin1String("null"));
+		doc.setData("target",target.getData());
 		doc.setData("channel",channelid);
 		doc.setData("value",value);
 		doc.setData("name",channelid);
+		doc.setComponentID(QLatin1String("scenecontrol.switches"));
+		doc.setInstanceID(QLatin1String("null"));
 		callRemoteComponent(doc.getData());
 	
         // update cache
@@ -196,31 +200,36 @@ void plugin::clear()
 	
 	changeProperty(SceneDocument::createModelReset("switches.anel_sockets", "channel").getData());
 
+	SceneDocument target;
+	target.setComponentID(m_pluginid);
+	target.setInstanceID(m_instanceid);
+	
+	
     SceneDocument doc;
     doc.setMethod("clear");
+	doc.setData("target",target.getData());
 	doc.setComponentID(QLatin1String("scenecontrol.switches"));
 	doc.setInstanceID(QLatin1String("null"));
 	callRemoteComponent(doc.getData());
 }
 
-void plugin::configChanged(const QByteArray &configid, const QVariantMap &data)
+void plugin::instanceConfiguration(const QVariantMap &data)
 {
-    Q_UNUSED(configid);
     if(data.contains(QLatin1String("sendingport")) && data.contains(QLatin1String("listenport")) &&
             data.contains(QLatin1String("username")) && data.contains(QLatin1String("password")))
         connectToIOs(data[QLatin1String("sendingport")].toInt(), data[QLatin1String("listenport")].toInt(),
                      data[QLatin1String("username")].toString(), data[QLatin1String("password")].toString());
 }
 
-void plugin::requestProperties(int sessionid)
+void plugin::requestProperties()
 {
-    changeProperty(SceneDocument::createModelReset("switches.anel_sockets", "channel").getData(), sessionid);
+	changeProperty(SceneDocument::createModelReset("switches.anel_sockets", "channel").getData(), m_lastsessionid);
     QMap<QString, plugin::iochannel>::iterator i = m_ios.begin();
     for(; i != m_ios.end(); ++i) {
         const plugin::iochannel str = i.value();
         SceneDocument sc = SceneDocument::createModelChangeItem("switches.anel_sockets");
         sc.setData("channel", i.key());
         sc.setData("value", str.value);
-        changeProperty(sc.getData(), sessionid);
+		changeProperty(sc.getData(), m_lastsessionid);
     }
 }

@@ -28,8 +28,10 @@ class plugin : public AbstractPlugin
     Q_OBJECT
 public:
     virtual ~plugin();
-    virtual void configChanged(const QByteArray& configid, const QVariantMap& data);
+	virtual void instanceConfiguration(const QVariantMap& data);
+	virtual void requestProperties() {};
 public Q_SLOTS:
+  void initialize();
   void projector_sanyo_power(bool power);
   void projector_sanyo_video(bool mute);
   void projector_sanyo_lamp(bool eco);
