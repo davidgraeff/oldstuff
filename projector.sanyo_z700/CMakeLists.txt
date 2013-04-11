@@ -10,4 +10,5 @@ add_executable(${PROJECT_NAME} ${SRCS} ${SRCS_MOCS} $<TARGET_OBJECTS:PluginLib>
 ${SRCS_SERIAL_MOCS} ${SRCS_SERIAL})
 target_link_libraries(${PROJECT_NAME} ${QT_QTCORE_LIBRARY} ${QT_QTNETWORK_LIBRARIES})
 
+install_schemas()
 install_lib()
