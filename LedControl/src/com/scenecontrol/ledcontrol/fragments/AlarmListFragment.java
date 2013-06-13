@@ -1,20 +1,5 @@
 package com.scenecontrol.ledcontrol.fragments;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.scenecontrol.ledcontrol.LedApplication;
-import com.scenecontrol.ledcontrol.R;
-import com.scenecontrol.ledcontrol.fragments.AlarmDialogFragment.AlarmSetListener;
-import com.scenecontrol.ledcontrol.listadapter.ScenesForAlarmAdapter;
-import com.scenecontrol.ledcontrol.model.SceneModel.ModelElement;
-import com.scenecontrol.ledcontrol.network.ExecutionServerMessageInterface;
-import com.scenecontrol.ledcontrol.network.TCPClient;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,133 +14,138 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AlarmListFragment extends Fragment implements AlarmSetListener, OnItemClickListener,
-		ExecutionServerMessageInterface {
-	private ScenesForAlarmAdapter mProfilesListAdapter;
-	private TextView mNextAlarmText;
+import com.scenecontrol.ledcontrol.LedApplication;
+import com.scenecontrol.ledcontrol.R;
+import com.scenecontrol.ledcontrol.fragments.AlarmDialogFragment.AlarmSetListener;
+import com.scenecontrol.ledcontrol.listadapter.ScenesForAlarmAdapter;
+import com.scenecontrol.ledcontrol.model.SceneModel.ModelElement;
+import com.scenecontrol.ledcontrol.network.NotificationListenerInterface;
 
-	private class NextAlarmTextUpdater implements OnClickListener {
+import org.json.JSONException;
+import org.json.JSONObject;
 
-		@Override
-		public void onClick(View arg0) {
-			updateNextAlarmText();
-		}
-	}
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
-	class NextAlarmTextUpdaterTimer implements Runnable {
-		private Handler mNextAlarmTextUpdaterHandler = new Handler();
+public class AlarmListFragment extends Fragment implements AlarmSetListener, OnItemClickListener, NotificationListenerInterface {
+    private ScenesForAlarmAdapter mProfilesListAdapter;
+    private TextView mNextAlarmText;
 
-		public void setupTimer(int seconds) {
-			remainingSeconds = seconds;
-			mNextAlarmTextUpdaterHandler.removeCallbacks(this);
-			if (seconds > 60)
-				mNextAlarmTextUpdaterHandler.postDelayed(this, 1000 * (seconds - 60));
-			else
-				mNextAlarmTextUpdaterHandler.postDelayed(this, 1000);
-		}
+    private class NextAlarmTextUpdater implements OnClickListener {
 
-		public void disable() {
-			mNextAlarmTextUpdaterHandler.removeCallbacks(this);
-		}
+        @Override
+        public void onClick(View arg0) {
+            updateNextAlarmText();
+        }
+    }
 
-		public int remainingSeconds = 0;
+    class NextAlarmTextUpdaterTimer implements Runnable {
+        private Handler mNextAlarmTextUpdaterHandler = new Handler();
 
-		public void run() {
-			--remainingSeconds;
-			mNextAlarmText.setText("Alarm in " + Integer.valueOf(remainingSeconds).toString() + " Sekunden");
-			mNextAlarmTextUpdaterHandler.removeCallbacks(this);
-			if (remainingSeconds > 0)
-				mNextAlarmTextUpdaterHandler.postDelayed(this, 1000);
-			else if (remainingSeconds == 0)
-				updateNextAlarmText();
-		}
-	};
+        public void setupTimer(int seconds) {
+            remainingSeconds = seconds;
+            mNextAlarmTextUpdaterHandler.removeCallbacks(this);
+            if (seconds > 60)
+                mNextAlarmTextUpdaterHandler.postDelayed(this, 1000 * (seconds - 60));
+            else
+                mNextAlarmTextUpdaterHandler.postDelayed(this, 1000);
+        }
 
-	NextAlarmTextUpdaterTimer mNextAlarmTextUpdaterTimer = new NextAlarmTextUpdaterTimer();
+        public void disable() {
+            mNextAlarmTextUpdaterHandler.removeCallbacks(this);
+        }
 
-	private void updateNextAlarmText() {
-		mNextAlarmText.setText("Update...");
-		LedApplication.getServerconnection().getConnection().requestProperty("nextalarm", "scenecontrol.time", "null");
-	}
+        public int remainingSeconds = 0;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.alarm_fragment, container, false);
-		ListView listview = (ListView) v.findViewById(R.id.alarmlistview);
-		mNextAlarmText = (TextView) v.findViewById(R.id.nextalarmtext);
-		mNextAlarmText.setOnClickListener(new NextAlarmTextUpdater());
-		listview.setTextFilterEnabled(true);
-		mProfilesListAdapter = new ScenesForAlarmAdapter(getActivity());
-		listview.setAdapter(mProfilesListAdapter);
-		listview.setOnItemClickListener(this);
-		LedApplication.getServerconnection().addMessageHandler(this);
-		updateNextAlarmText();
-		return v;
-	}
+        public void run() {
+            --remainingSeconds;
+            mNextAlarmText.setText("Alarm in " + Integer.valueOf(remainingSeconds).toString() + " Sekunden");
+            mNextAlarmTextUpdaterHandler.removeCallbacks(this);
+            if (remainingSeconds > 0)
+                mNextAlarmTextUpdaterHandler.postDelayed(this, 1000);
+            else if (remainingSeconds == 0)
+                updateNextAlarmText();
+        }
+    }
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-		ScenesForAlarmAdapter.ViewHolder vh = (ScenesForAlarmAdapter.ViewHolder) v.getTag();
-		ModelElement modeldata = vh.data;
-		// Toast.makeText(getActivity(),"Execute: " +modeldata.cacheName,
-		// Toast.LENGTH_SHORT).show();
-		// String data =
-		// "{\"componentid_\":\"server\", \"type_\":\"execute\", \"method_\":\"runcollection\", \"sceneid_\":\""+modeldata.entryid+"\"}\n";
-		// LedApplication.getServerconnection().getConnection().Send(data);
-		AlarmDialogFragment alarmDialogFragment = new AlarmDialogFragment();
-		alarmDialogFragment.setAlarmSetListener(this);
-		Bundle bundle = new Bundle();
-		bundle.putString("sceneid", modeldata.entryid);
-		bundle.putString("scenename", modeldata.cacheName);
-		alarmDialogFragment.setArguments(bundle);
-		alarmDialogFragment.show(getFragmentManager(), "alarmDialogFragment");
-	}
+    ;
 
-	@Override
-	public void alarmSet(String sceneid, String scenename) {
-		Toast.makeText(getActivity(), "Speichere " + scenename, Toast.LENGTH_SHORT).show();
-	}
+    NextAlarmTextUpdaterTimer mNextAlarmTextUpdaterTimer = new NextAlarmTextUpdaterTimer();
 
-	@Override
-	public void executionServerMessage(TCPClient client, JSONObject json) {
-		try {
-			if (!json.has("componentid_") || !json.has("id_"))
-				return;
-			String id = json.getString("id_");
-			if (id.equals("nextalarm") && json.getString("componentid_").equals("scenecontrol.time")) {
-				mNextAlarmTextUpdaterTimer.disable();
-				if (json.has("seconds")) {
-					int seconds = json.getInt("seconds");
-					Calendar now = Calendar.getInstance();
-					now.add(Calendar.SECOND, seconds);
-					if (seconds >= 3600 * 24) {
-						mNextAlarmText.setText("Alarm: "
-								+ new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY).format(now.getTime())
-								+ " Uhr");
-					} else if (seconds <= 0) {
-						mNextAlarmText.setText("TimePlugin fehlerhaft!");
-					} else {
-						mNextAlarmText.setText("N�chster Alarm: "
-								+ new SimpleDateFormat("HH:mm", Locale.GERMANY).format(now.getTime()) + " Uhr");
-						mNextAlarmTextUpdaterTimer.setupTimer(seconds);
-					}
-				} else {
-					mNextAlarmText.setText("Kein Alarm");
-				}
+    private void updateNextAlarmText() {
+        mNextAlarmText.setText("Update...");
+        LedApplication.getSceneProtocol().requestProperty("nextalarm", "scenecontrol.time", "null");
+    }
 
-			}
-		} catch (JSONException e) {
-			Log.e("SERVER", e.getMessage());
-		}
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.alarm_fragment, container, false);
+        ListView listview = (ListView) v.findViewById(R.id.alarmlistview);
+        mNextAlarmText = (TextView) v.findViewById(R.id.nextalarmtext);
+        mNextAlarmText.setOnClickListener(new NextAlarmTextUpdater());
+        listview.setTextFilterEnabled(true);
+        mProfilesListAdapter = new ScenesForAlarmAdapter(getActivity());
+        listview.setAdapter(mProfilesListAdapter);
+        listview.setOnItemClickListener(this);
+        LedApplication.getModelManager().addNotificationListener(this);
+        updateNextAlarmText();
+        return v;
+    }
 
-	@Override
-	public void executionServerDisconnected(TCPClient client, String reason) {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        ScenesForAlarmAdapter.ViewHolder vh = (ScenesForAlarmAdapter.ViewHolder) v.getTag();
+        ModelElement modeldata = vh.data;
+        // Toast.makeText(getActivity(),"Execute: " +modeldata.cacheName,
+        // Toast.LENGTH_SHORT).show();
+        // String data =
+        // "{\"componentid_\":\"server\", \"type_\":\"execute\", \"method_\":\"runcollection\", \"sceneid_\":\""+modeldata.entryid+"\"}\n";
+        // LedApplication.getServerconnection().getConnection().Send(data);
+        AlarmDialogFragment alarmDialogFragment = new AlarmDialogFragment();
+        alarmDialogFragment.setAlarmSetListener(this);
+        Bundle bundle = new Bundle();
+        bundle.putString("sceneid", modeldata.entryid);
+        bundle.putString("scenename", modeldata.cacheName);
+        alarmDialogFragment.setArguments(bundle);
+        alarmDialogFragment.show(getFragmentManager(), "alarmDialogFragment");
+    }
 
-	}
+    @Override
+    public void alarmSet(String sceneid, String scenename) {
+        Toast.makeText(getActivity(), "Speichere " + scenename, Toast.LENGTH_SHORT).show();
+    }
 
-	@Override
-	public void executionServerConnected(TCPClient client) {
+    @Override
+    public void notification(JSONObject json) {
+        try {
+            if (!json.has("componentid_") || !json.has("id_"))
+                return;
+            String id = json.getString("id_");
+            if (id.equals("nextalarm") && json.getString("componentid_").equals("scenecontrol.time")) {
+                mNextAlarmTextUpdaterTimer.disable();
+                if (json.has("seconds")) {
+                    int seconds = json.getInt("seconds");
+                    Calendar now = Calendar.getInstance();
+                    now.add(Calendar.SECOND, seconds);
+                    if (seconds >= 3600 * 24) {
+                        mNextAlarmText.setText("Alarm: "
+                                + new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY).format(now.getTime())
+                                + " Uhr");
+                    } else if (seconds <= 0) {
+                        mNextAlarmText.setText("TimePlugin fehlerhaft!");
+                    } else {
+                        mNextAlarmText.setText("N�chster Alarm: "
+                                + new SimpleDateFormat("HH:mm", Locale.GERMANY).format(now.getTime()) + " Uhr");
+                        mNextAlarmTextUpdaterTimer.setupTimer(seconds);
+                    }
+                } else {
+                    mNextAlarmText.setText("Kein Alarm");
+                }
 
-	}
+            }
+        } catch (JSONException e) {
+            Log.e("SERVER", e.getMessage());
+        }
+    }
 }
