@@ -1,0 +1,34 @@
+3rd-Party
+-----
+Icons are from http://www.oxygen-icons.org and distributed under the terms
+of the "Creative Common Attribution-ShareAlike 3.0 License"
+(http://creativecommons.org/licenses/by-sa/3.0/)
+
+Binaries
+--------
+You can download binaries for linux and windows from http://github.com/davidgraeff/stellacontrol/downloads.
+
+Source code
+-----------
+Download from http://github.com/davidgraeff/stellacontrol
+or direct via git:
+git clone git://github.com/davidgraeff/stellacontrol.git
+
+
+Prerequires
+-----------
+* qt 4.5+ (http://qt.nokia.com/downloads)
+* cmake build system (www.cmake.org)
+
+How to compile?
+---------------
+* Create out-of-source build directory
+Windows:
+* Use cmake-gui and select this project, the build directory and compiler to use.
+* Compile the project
+Linux:
+* Go to the build directory
+* Enter "cmake path-to-source -DCMAKE_INSTALL_PREFIX=path-to-install"
+* make
+* make install
+You should be able to start the application "StellaControl" or "StellaControl.exe"
