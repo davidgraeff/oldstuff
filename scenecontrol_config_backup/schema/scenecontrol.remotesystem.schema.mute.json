@@ -1,0 +1,1 @@
+{"componentid_":"scenecontrol.remotesystem","id_":"scenecontrol.remotesystem.schema.mute","method_":"mute","name":"Stumm\/Laut","parameters":{"mute":{"data":["Stumm","Laut","Umschalten"],"name":"Wert","type":"enum"}},"targettype":"action","type_":"schema"}

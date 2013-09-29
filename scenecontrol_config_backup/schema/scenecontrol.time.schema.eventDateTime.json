@@ -1,0 +1,1 @@
+{"componentid_":"scenecontrol.time","id_":"scenecontrol.time.schema.eventDateTime","method_":"eventDateTime","name":"Alarmzeitpunkt","parameters":{"date":{"name":"Datum","type":"date"},"time":{"name":"Zeit","type":"time"}},"targettype":"event","type_":"schema"}
